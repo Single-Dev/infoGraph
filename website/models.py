@@ -31,17 +31,32 @@ class Category(models.Model):
         return self.category_name
 
 class Dashboard(models.Model):
-    author = models.OneToOneField(Users, on_delete=models.CASCADE)
+    author = models.ForeignKey(Users, on_delete=models.CASCADE)
     dahboard = models.CharField(max_length=200)
     dashboard_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.dahboard
 
-class Dash_dates(models.Model):
-    qaysinga  = models.ForeignKey(Dashboard, models.CASCADE)
-    item = models.CharField(max_length=15)
-    item_price = models.IntegerField(default=0)
+# class Dash_dates(models.Model):
+#     qaysinga  = models.ForeignKey(Dashboard, models.CASCADE)
+#     item = models.CharField(max_length=15)
+#     item_price = models.IntegerField(default=0)
+
+#     def __str__(self):
+#         return self.item
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Dashboard,on_delete=models.CASCADE,related_name='comments')
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['created_on']
 
     def __str__(self):
-        return self.item
+        return 'Comment {} by {}'.format(self.body, self.name)

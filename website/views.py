@@ -8,9 +8,7 @@ class Home(generic.TemplateView):
 
 def test(request, name):
     dash_name = Dashboard.objects.get(dahboard=name)
-    dash_all = Dash_dates.objects.all()
     context={
-        "dash_test":dash_name,
-        "dash_all":dash_all
+        "dash_test":dash_name
     }
     return render(request, "test.html", context)
