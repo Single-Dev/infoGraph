@@ -39,6 +39,7 @@ class Dashboard(models.Model):
         return self.dahboard
 
 class Dash_dates(models.Model):
+    qaysinga  = models.ForeignKey(Dashboard, models.CASCADE)
     item = models.CharField(max_length=15)
     item_price = models.IntegerField(default=0)
 
