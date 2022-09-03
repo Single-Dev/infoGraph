@@ -42,11 +42,9 @@ def post_detail(request, slug):
     return render(request, template_name, context)
 
 
-def new_coment(request, pk):
-    template_name = 'test.html'
-    post = get_object_or_404(Dashboard, dahboard=pk)
-    comments = post.comments.filter(active=True)
-    new_comment = None
+def new_comment(request, slug):
+    template_name = 'com.html'
+    post = get_object_or_404(Dashboard, dahboard=slug)
     # Comment posted
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
@@ -63,7 +61,6 @@ def new_coment(request, pk):
 
     context= {
         'post': post,
-        'comments': comments,
-        'new_comment': new_comment,
-        'comment_form': comment_form}
+        'comment_form': comment_form
+        }
     return render(request, template_name, context)
