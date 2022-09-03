@@ -1,5 +1,5 @@
 from .form import *
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from .models import *
 
@@ -43,6 +43,7 @@ def new_comment(request, slug):
             new_comment.post = post
             # Save the comment to the database
             new_comment.save()
+            return redirect('/')
     else:
         comment_form = CommentForm()
 

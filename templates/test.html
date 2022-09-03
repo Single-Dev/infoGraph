@@ -13,11 +13,8 @@
   <div class="comments" style="padding: 10px;">
     <p class="font-weight-bold">
       {{ comment.name }}
-      <span class=" text-muted font-weight-normal">
-        {{ comment.created_on }}
-      </span>
     </p>
-    {{ comment.body | linebreaks }}
+    {{ comment.body  }}
   </div>
   {% endfor %}
   <a  href="comment/">leave comment</a>
