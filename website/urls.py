@@ -3,5 +3,6 @@ from .views import *
 app_name = "app"
 
 urlpatterns = [
-    path('', Home.as_view(), name="home")
+    path('', Home.as_view(), name="home"),
+    path('<str:name>/dash/', test, name="test")
 ]
