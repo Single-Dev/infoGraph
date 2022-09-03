@@ -21,7 +21,7 @@ class Profile(models.Model):
     mobile_number = models.IntegerField(default=998)
     country = models.OneToOneField(Countrys, on_delete=models.CASCADE)
     def __str__(self):
-        return self.mobile_number
+        return self.bio
 
 
 class Category(models.Model):
@@ -34,8 +34,13 @@ class Dashboard(models.Model):
     author = models.OneToOneField(Users, on_delete=models.CASCADE)
     dahboard = models.CharField(max_length=200)
     dashboard_category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.dahboard
+
+class Dash_dates(models.Model):
     item = models.CharField(max_length=15)
     item_price = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.dahboard
+        return self.item

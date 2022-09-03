@@ -7,7 +7,9 @@
     <title>{{dash_test}}</title>
 </head>
 <body>
-    {{dash_all.item}}
-    {{dash_all.price}}
+    <h1>{{dash_test}}</h1>
+   {% for x in dash_all %}
+   {{ x.item }}
+   {% endfor %}
 </body>
 </html>
