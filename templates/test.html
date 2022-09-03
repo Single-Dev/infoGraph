@@ -18,9 +18,9 @@
       </span>
     </p>
     {{ comment.body | linebreaks }}
-    <a href="{% url 'app:new_comment' comment.pk %}">leave comment</a>
   </div>
   {% endfor %}
+  <a  href="comment/">leave comment</a>
 </body>
 
 </html>
