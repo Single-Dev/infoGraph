@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{dash_test}}</title>
-</head>
-<body>
-    <h1>{{dash_test}}</h1>
-
-</body>
-</html>
+{% for comment in comments %}
+<div class="comments" style="padding: 10px;">
+  <p class="font-weight-bold">
+    {{ comment.name }}
+    <span class=" text-muted font-weight-normal">
+      {{ comment.created_on }}
+    </span>
+  </p>
+  {{ comment.body | linebreaks }}
+  <a href="">leave comment</a>
+</div>
+{% endfor %}
