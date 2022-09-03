@@ -4,6 +4,6 @@
     box-sizing: border-box;
 }
 #chartdiv {
-    width: 100%;
+    width: 700px;
     height: 500px;
 }
