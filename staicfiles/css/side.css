@@ -1,0 +1,26 @@
+.side-bar{
+    position: fixed;
+    left: -250px;
+    transition: 0.2s all;
+}
+
+#menuIcon{
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#close{
+    cursor: pointer;
+    position: absolute;
+    top: 2px;
+    left: 190px;
+    color: red;
+    font-size: 2rem;
+    transition: 500ms all;
+}
+
+#close:hover{
+    transform: rotate(360deg);
+}

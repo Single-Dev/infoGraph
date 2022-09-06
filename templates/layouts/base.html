@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,12 +9,14 @@
     <title>Dashboards / {% block title %} Main {% endblock title %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+
 <body>
-    
+
     {% include 'includes/nav.html' %}
     {% block content %}
 
     {% endblock content %}
-    
+
 </body>
+
 </html>

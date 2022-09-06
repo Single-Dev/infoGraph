@@ -1,0 +1,109 @@
+/* General */
+body {
+    background-image: linear-gradient(#4594f6, #9c1db1);
+    background-repeat: no-repeat;
+    height: 100vh;
+  }
+  
+  ::placeholder {
+    color: #7b7e81;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #7b7e81;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: #7b7e81;
+  }
+  
+  textarea:focus, 
+  input:focus, 
+  input[type]:focus{   
+    box-shadow: 0 0 5px #7b4acb;
+  }
+  
+  textarea {
+    resize: none;
+  }
+  
+  /* Header */
+  .header__wrapper {
+    padding: 25px 0; 
+  }
+  
+  .header__wrapper h3 {
+    font-style: italic;
+  }
+  
+  /* Main body */
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+  }
+  
+  .container h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: 400;
+  }
+  
+  .form__wrapper {
+    background-color: #fff;
+    padding: 50px 50px 58px;
+    margin: 100px auto 95px;
+  }
+  
+  .form__btns {
+    text-align: center;
+  }
+  
+  .form__btns button {
+    padding: 6px 40px;
+    text-transform: capitalize;
+    margin-top: 0px;
+  }
+  .form__btns a {
+    text-transform: capitalize;
+    padding: 6px 40px;
+  }
+  
+  .form-control {
+    color: #717171;
+    background-color: #f7f7f7;
+    border-radius: 0;
+  }
+  
+  textarea.form-control {
+    height: 39px;
+  }
+  
+  .form__comments label:not(:first-child){
+    margin-top: 32px;
+  }
+  
+  .form-group {
+    margin-bottom: 2rem;
+  }
+  
+  /* Footer*/
+  footer {
+    color: #fff;
+    opacity: 0.8;
+  }
+  
+  footer a {
+    color: #c59ccb;
+  }
+  
+  footer a:hover {
+    color: #c59ccb;
+    text-decoration: underline;
+  }
+  
+  .text-small {
+    font-size: .8rem;
+  }
+  
+  /* Responsive */
