@@ -3,8 +3,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from .models import *
 
-class Home(generic.TemplateView):
-    template_name = "pages/home.html"
+
+def home(request):
+    # Dashboard.objects.get(dahboard=slug)
+    # Dashboard.objects.get(id=primkey)
+    dashboards = Dashboard.objects.all()
+    context={
+        "dashboards":dashboards
+    }
+    return render(request, "pages/home.html", context)
 
 # def test(request, name):
 #     dash_name = Dashboard.objects.get(dahboard=name)
@@ -15,7 +22,8 @@ class Home(generic.TemplateView):
 
 
 
-def post_detail(request, slug):
+def post_detail(request, slug, pk):
+    Dashboard.objects.get(id=pk)
     template_name = 'test.html'
     post = get_object_or_404(Dashboard, dahboard=slug)
     comments = post.comments.filter(active=True)
@@ -28,7 +36,9 @@ def post_detail(request, slug):
     return render(request, template_name, context)
 
 
-def new_comment(request, slug):
+
+def new_comment(request, slug, pk):
+    Dashboard.objects.get(id=pk)
     template_name = 'com.html'
     post = get_object_or_404(Dashboard, dahboard=slug)
     new_comment = None

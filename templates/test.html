@@ -12,12 +12,13 @@
   {% for comment in comments %}
   <div class="comments" style="padding: 10px;">
     <p class="font-weight-bold">
-      {{ comment.name }}
+      {{ comment.authour }}
     </p>
-    {{ comment.body  }}
+    {{ comment.message  }}
   </div>
   {% endfor %}
   <a  href="comment/">leave comment</a>
+  
 </body>
 
 </html>

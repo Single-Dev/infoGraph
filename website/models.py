@@ -32,7 +32,7 @@ class Category(models.Model):
 
 class Dashboard(models.Model):
     author = models.ForeignKey(Users, on_delete=models.CASCADE)
-    dahboard = models.CharField(max_length=200)
+    dahboard = models.CharField(max_length=200, verbose_name="Dashboard username")
     dashboard_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     
     def __str__(self):
@@ -49,8 +49,8 @@ class Dashboard(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Dashboard,on_delete=models.CASCADE,related_name='comments')
-    name = models.CharField(max_length=80)
-    body = models.TextField()
+    authour = models.ForeignKey(Users, on_delete=models.CASCADE)
+    message = models.TextField()
     active = models.BooleanField(default=True)
 
 

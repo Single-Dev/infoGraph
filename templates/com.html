@@ -11,8 +11,8 @@
     
         <h3>Leave a comment</h3>
         <form method="post" style="margin-top: 1.3em;">
-          {{ comment_form.as_p }}
           {% csrf_token %}
+          {{ comment_form.as_p }}
           <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
         </form>
       </div>
