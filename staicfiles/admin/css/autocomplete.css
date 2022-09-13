@@ -152,7 +152,9 @@ select.admin-autocomplete {
     color: var(--body-fg);
 }
 
-.select2-container--admin-autocomplete[dir="rtl"] .select2-selection--multiple .select2-selection__choice, .select2-container--admin-autocomplete[dir="rtl"] .select2-selection--multiple .select2-selection__placeholder, .select2-container--admin-autocomplete[dir="rtl"] .select2-selection--multiple .select2-search--inline {
+.select2-container--admin-autocomplete[dir="rtl"] .select2-selection--multiple .select2-selection__choice,
+.select2-container--admin-autocomplete[dir="rtl"] .select2-selection--multiple .select2-selection__placeholder,
+.select2-container--admin-autocomplete[dir="rtl"] .select2-selection--multiple .select2-search--inline {
     float: right;
 }
 
@@ -180,12 +182,14 @@ select.admin-autocomplete {
     display: none;
 }
 
-.select2-container--admin-autocomplete.select2-container--open.select2-container--above .select2-selection--single, .select2-container--admin-autocomplete.select2-container--open.select2-container--above .select2-selection--multiple {
+.select2-container--admin-autocomplete.select2-container--open.select2-container--above .select2-selection--single,
+.select2-container--admin-autocomplete.select2-container--open.select2-container--above .select2-selection--multiple {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
 
-.select2-container--admin-autocomplete.select2-container--open.select2-container--below .select2-selection--single, .select2-container--admin-autocomplete.select2-container--open.select2-container--below .select2-selection--multiple {
+.select2-container--admin-autocomplete.select2-container--open.select2-container--below .select2-selection--single,
+.select2-container--admin-autocomplete.select2-container--open.select2-container--below .select2-selection--multiple {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
@@ -210,7 +214,7 @@ select.admin-autocomplete {
     -webkit-appearance: textfield;
 }
 
-.select2-container--admin-autocomplete .select2-results > .select2-results__options {
+.select2-container--admin-autocomplete .select2-results>.select2-results__options {
     max-height: 200px;
     overflow-y: auto;
     color: var(--body-fg);
