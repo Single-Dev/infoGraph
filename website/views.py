@@ -22,18 +22,14 @@ def home(request):
 
 
 
-def post_detail(request, slug, pk):
-    Dashboard.objects.get(id=pk)
-    template_name = 'test.html'
-    post = get_object_or_404(Dashboard, dahboard=slug)
-    comments = post.comments.filter(active=True)
-
-
-    context= {
-        'post': post,
-        'comments': comments,
-        'new_comment': new_comment,}
-    return render(request, template_name, context)
+def post_detail(request):
+    
+    
+    dashboards = Dashboard.objects.all()
+    context={
+        "dashboards":dashboards
+    }
+    return render(request,' test.html', context)
 
 
 
