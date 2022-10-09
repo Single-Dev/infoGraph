@@ -4,5 +4,6 @@ from .views import *
 app_name = "app"
 
 urlpatterns = [
-    path('', LyricsApiView, name="home")
+    path('', home, name="home"),
+    path('lyrics/', LyricsApiView, name="home")
 ]
