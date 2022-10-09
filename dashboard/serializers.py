@@ -1,7 +1,7 @@
-from .models import Krosovka
+from .models import Lyrics
 from rest_framework import serializers
 
 class LyricsAPI(serializers.ModelSerializer):
     class Meta:
-        model = Krosovka
+        model = Lyrics
         fields = '__all__'
