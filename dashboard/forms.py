@@ -9,4 +9,4 @@ class DashboardForm(forms.ModelForm):
 class AddElementForm(forms.ModelForm):
     class Meta:
         model = AddElement
-        fields = "__all__"
+        fields = ("title", "value")

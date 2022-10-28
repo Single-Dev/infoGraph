@@ -7,15 +7,6 @@ from .forms import *
 def home(request):
     return render(request, 'pages/home.html')
 
-def DashboardView(request, slug):
-
-    # dashboard = Dashboard.objects.get(slug=slug)
-    post = get_object_or_404(Dashboard, slug=slug)
-    comments = post.qoshish.filter(active=True)
-    context={
-        "comments":comments
-    }
-    return render(request, "pages/dashboard.html")
 
 def AddElementView(request, slug):
     which_one = Dashboard.objects.get(slug=slug)
@@ -28,7 +19,7 @@ def AddElementView(request, slug):
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.save()
-            return redirect('/#product')
+            return redirect('/')
     else:
         comment_form = AddElementForm()
 
@@ -38,4 +29,5 @@ def AddElementView(request, slug):
         'comment_form': comment_form,
         "which_one":which_one
         }
-   
+    
+    return render(request, "pages/dashboard.html", context)

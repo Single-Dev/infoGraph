@@ -4,20 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    <h1>Helllo</h1>
-    {% for comment in comments %}
-    <div class="comments" style="padding: 10px;">
-      <p class="font-weight-bold">
-        {{ comment.title }}
-        <span class=" text-muted font-weight-normal">
-          {{ comment.value }}
-        </span>
-      </p>
-      {{ comment.active }}
-    </div>
-    {% endfor %}
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form }}
+          <button type="submit" >Submit</button>
+        </form>
+      </div>
 </body>
 </html>
