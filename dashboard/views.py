@@ -9,7 +9,7 @@ def home(request):
 
 
 def AddElementView(request, slug):
-    which_one = Dashboard.objects.get(slug=slug)
+    dashboard = Dashboard.objects.get(slug=slug)
     post = get_object_or_404(Dashboard, slug=slug)
     comments = post.qoshish.filter(active=True)
     new_comment = None
@@ -19,7 +19,7 @@ def AddElementView(request, slug):
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.save()
-            return redirect('/')
+            return redirect()
     else:
         comment_form = AddElementForm()
 
@@ -27,7 +27,7 @@ def AddElementView(request, slug):
         'new_comment': new_comment,
         'comments': comments,
         'comment_form': comment_form,
-        "which_one":which_one
+        "dashboard":dashboard
         }
     
     return render(request, "pages/dashboard.html", context)

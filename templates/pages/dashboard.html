@@ -7,6 +7,14 @@
     <title>Dashboard</title>
 </head>
 <body>
+
+    <h1>{{ dashboard.name }}</h1>
+    <br>
+    {% for comment in comments %}
+    <br>
+    {{ comment.title }}
+    {{ comment.value }}
+    {% endfor %}
     <div class="card-body">
         <form method="post">
             {% csrf_token %}
