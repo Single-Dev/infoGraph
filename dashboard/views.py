@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import *
 
@@ -7,27 +7,35 @@ from .forms import *
 def home(request):
     return render(request, 'pages/home.html')
 
+def DashboardView(request, slug):
+
+    # dashboard = Dashboard.objects.get(slug=slug)
+    post = get_object_or_404(Dashboard, slug=slug)
+    comments = post.qoshish.filter(active=True)
+    context={
+        "comments":comments
+    }
+    return render(request, "pages/dashboard.html")
 
 def AddElementView(request, slug):
-    template_name = 'pages/add.html'
+    which_one = Dashboard.objects.get(slug=slug)
     post = get_object_or_404(Dashboard, slug=slug)
-    comments = post.comments.filter(active=True)
+    comments = post.qoshish.filter(active=True)
     new_comment = None
-    # Comment posted
     if request.method == 'POST':
         comment_form = AddElementForm(data=request.POST)
         if comment_form.is_valid():
-
-            # Create Comment object but don't save to database yet
             new_comment = comment_form.save(commit=False)
-            # Assign the current post to the comment
             new_comment.post = post
-            # Save the comment to the database
             new_comment.save()
+            return redirect('/#product')
     else:
         comment_form = AddElementForm()
 
-    return render(request, template_name, {'post': post,
-                                           'comments': comments,
-                                           'new_comment': new_comment,
-                                           'comment_form': comment_form})
+    context= {
+        'new_comment': new_comment,
+        'comments': comments,
+        'comment_form': comment_form,
+        "which_one":which_one
+        }
+   

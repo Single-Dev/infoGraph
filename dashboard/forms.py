@@ -1,7 +1,7 @@
 from .models import *
 from django import forms
 
-class DAshboardForm(forms.ModelForm):
+class DashboardForm(forms.ModelForm):
     class Meta:
         model = Dashboard
         fields = "__all__"
