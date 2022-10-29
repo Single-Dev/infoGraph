@@ -19,12 +19,12 @@ def AddElementView(request, slug):
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.save()
-            return redirect()
+            return redirect("/")
     else:
         comment_form = AddElementForm()
 
     context= {
-        'new_comment': new_comment,
+        # 'new_comment': new_comment,
         'comments': comments,
         'comment_form': comment_form,
         "dashboard":dashboard
