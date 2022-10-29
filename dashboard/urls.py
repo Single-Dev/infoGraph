@@ -5,5 +5,5 @@ app_name = "app"
 
 urlpatterns = [
     path('', home, name="home"),
-    path("<slug:slug>/", AddElementView, name="add_element")
+    path("stats/<slug:slug>/", AddElementView, name="add_element")
 ]

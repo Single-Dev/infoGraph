@@ -5,7 +5,11 @@ from .forms import *
 
 
 def home(request):
-    return render(request, 'pages/home.html')
+    dashboard = Dashboard.objects.all()
+    context={
+        "dash":dashboard
+    }
+    return render(request, 'pages/home.html', context)
 
 
 def AddElementView(request, slug):
@@ -19,7 +23,7 @@ def AddElementView(request, slug):
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.save()
-            return redirect("/")
+            # return redirect()
     else:
         comment_form = AddElementForm()
 

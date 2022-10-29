@@ -3,4 +3,8 @@
 
 {% block content %}
 <h1>home page</h1>
+{% for dash in dash %}
+<a href="/stats/{{ dash.slug }}">{{ dash.name }}</a>
+<br>
+{% endfor %}
 {% endblock content %}

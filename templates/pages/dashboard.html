@@ -19,7 +19,7 @@
   {% endfor %}
   {% if request.user.username == dashboard.author.username %}
   <div class="card-body">
-    <form method="post">
+    <form onsubmit="submited()" method="post" id="form">
       {% csrf_token %}
       {{ comment_form }}
       <button type="submit">Submit</button>
@@ -28,6 +28,15 @@
   {% else %}
 
   {% endif %}
+
+  <script>
+    let input_title = document.getElementById("id_title")
+    let input_value = document.getElementById("id_value")
+
+    function submited() {
+      document.location.reload()
+    }
+  </script>
 </body>
 
 </html>
