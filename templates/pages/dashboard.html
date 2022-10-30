@@ -5,29 +5,142 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>{{ dashboard.name }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
+  <style>
+    #chartdiv {
+      margin-top: 70px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 500px;
+    }
+  </style>
+  <h1>Welcome To "{{ dashboard.name }}"</h1>
+  <div id="chartdiv"></div>
 
-  <h1>{{ dashboard.name }}</h1>
-  <h1>{{ dashboard.author.username }}</h1>
-  {% for comment in comments %}
-  <br>
-  {{ comment.title }}
-  {{ comment.value }}
-  {% endfor %}
   {% if request.user.username == dashboard.author.username %}
-  <div class="card-body">
-    <form onsubmit="submited()" method="post" id="form">
+  <div class="card-body container">
+    <form method="post" class="d-flex" style="justify-content: center;">
+      {% load widget_tweaks %}
       {% csrf_token %}
-      {{ comment_form }}
-      <button type="submit">Submit</button>
+      {% render_field comment_form.title type="text" class="form-control w-25" placeholder="Title"%}
+      {% render_field comment_form.value type="number" class="form-control w-25" placeholder="Value"%}
+      <button class="btn btn-success" type="submit">Submit</button>
     </form>
   </div>
   {% else %}
 
   {% endif %}
+  <!-- Resources -->
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+  <!-- Chart code -->
+  <script>
+    am5.ready(function () {
+
+      // Create root element
+      // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+      var root = am5.Root.new("chartdiv");
+
+
+      // Set themes
+      // https://www.amcharts.com/docs/v5/concepts/themes/
+      root.setThemes([
+        am5themes_Animated.new(root)
+      ]);
+
+
+      // Create chart
+      // https://www.amcharts.com/docs/v5/charts/xy-chart/
+      var chart = root.container.children.push(am5xy.XYChart.new(root, {
+        panX: true,
+        panY: true,
+        wheelX: "panX",
+        wheelY: "zoomX",
+        pinchZoomX: true
+      }));
+
+      // Add cursor
+      // https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
+      var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
+      cursor.lineY.set("visible", false);
+
+
+      // Create axes
+      // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+      var xRenderer = am5xy.AxisRendererX.new(root, { minGridDistance: 30 });
+      xRenderer.labels.template.setAll({
+        rotation: -90,
+        centerY: am5.p50,
+        centerX: am5.p100,
+        paddingRight: 15
+      });
+
+      var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+        maxDeviation: 0.3,
+        categoryField: "country",
+        renderer: xRenderer,
+        tooltip: am5.Tooltip.new(root, {})
+      }));
+
+      var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+        maxDeviation: 0.3,
+        renderer: am5xy.AxisRendererY.new(root, {})
+      }));
+
+
+      // Create series
+      // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+      var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+        name: "Series 1",
+        xAxis: xAxis,
+        yAxis: yAxis,
+        valueYField: "value",
+        sequencedInterpolation: true,
+        categoryXField: "country",
+        tooltip: am5.Tooltip.new(root, {
+          labelText: "{valueY}"
+        })
+      }));
+
+      series.columns.template.setAll({ cornerRadiusTL: 5, cornerRadiusTR: 5 });
+      series.columns.template.adapters.add("fill", function (fill, target) {
+        return chart.get("colors").getIndex(series.columns.indexOf(target));
+      });
+
+      series.columns.template.adapters.add("stroke", function (stroke, target) {
+        return chart.get("colors").getIndex(series.columns.indexOf(target));
+      });
+
+
+      // Set data
+      var data = [
+        {% for comment in comments %}
+        {
+        country: "{{ comment.title }}",
+        value: {{ comment.value }}
+        },
+      {% endfor %}
+      ];
+
+    xAxis.data.setAll(data);
+    series.data.setAll(data);
+
+
+    // Make stuff animate on load
+    // https://www.amcharts.com/docs/v5/concepts/animations/
+    series.appear(1000);
+    chart.appear(1000, 100);
+
+    }); // end am5.ready()
+  </script>
 
 
 </body>
