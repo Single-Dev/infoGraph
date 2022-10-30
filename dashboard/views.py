@@ -11,6 +11,15 @@ def home(request):
     }
     return render(request, 'pages/home.html', context)
 
+def signup(request):
+    form = Registration()
+    if request.method == "POST":
+        form = Registration(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    
+    return render(request, 'registration/signup.html', {"form":form})
 
 def StatsView(request, slug):
     dashboard = Dashboard.objects.get(slug=slug)
