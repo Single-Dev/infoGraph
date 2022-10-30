@@ -12,7 +12,7 @@ def home(request):
     return render(request, 'pages/home.html', context)
 
 
-def AddElementView(request, slug):
+def StatsView(request, slug):
     dashboard = Dashboard.objects.get(slug=slug)
     post = get_object_or_404(Dashboard, slug=slug)
     comments = post.qoshish.filter(active=True)
@@ -23,7 +23,7 @@ def AddElementView(request, slug):
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.save()
-            # return redirect()
+            return redirect("app:stats", slug) # redirect to this url
     else:
         comment_form = AddElementForm()
 
