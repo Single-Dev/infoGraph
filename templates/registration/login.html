@@ -1,4 +1,7 @@
-<div class="container w-25 mt-5 mb-5">
+{% extends 'layout/base.html' %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+<div class="container w-25" style="margin-top: 180px !important; margin-bottom: 180px;">
     <form method="post" class=" row gy-2 gx-3 align-items-center">
         {% load widget_tweaks %}
         {% csrf_token %}
@@ -19,3 +22,4 @@
     </form>
 
 </div>
+{% endblock content %}
