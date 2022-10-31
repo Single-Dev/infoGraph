@@ -3,11 +3,17 @@
 
 {% block content %}
 
+<!-- User is authenticated -->
 
-# NOT registrations
-{% include 'includes/header.html' %}
+<!-- User is authenticated -->
+
+<!-- User is not authenticated -->
+{% if not request.user.is_authenticated %}
 {% include 'includes/hero.html' %}
 {% include 'includes/about.html' %}
-{% include 'includes/footer.html' %}
+
+{% endif %}
+<!-- User is not authenticated -->
+
 
 {% endblock content %}
