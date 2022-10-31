@@ -118,6 +118,10 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 
+STATICFILES_DIRS =(
+    BASE_DIR / "static",
+)
+
 STATIC_URL = 'static/'
 
 STATIC_ROOT = BASE_DIR / 'staicfiles'

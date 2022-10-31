@@ -14,10 +14,17 @@
   <style>
     #chartdiv {
       margin-top: 70px;
-      max-width: 1200px;
+      width: 1200px;
       margin-left: auto;
       margin-right: auto;
       height: 500px;
+    }
+
+    
+    @media (max-widht:800px) {
+      #chartdev{
+        width: 100% !important;
+      }
     }
   </style>
   <h1>Welcome To "{{ dashboard.name }}"</h1>
