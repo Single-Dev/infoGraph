@@ -6,14 +6,15 @@ from .forms import *
 
 def home(request):
     dashboard = Dashboard.objects.all()
-    initial = {'key': 'value'}
     dashboard_form = DashboardForm()
+    initial = {'key': 'value'}
     if request.method == "POST":
         dashboard_form = DashboardForm(request.POST)
         if dashboard_form.is_valid():
             dashboard_form.save()
-            return redirect('/')
-
+            slug = dashboard_form.cleaned_data.get('slug')
+            dashboard_form.save()
+            return redirect('app:stats', slug)
     context={
         "dash":dashboard,
         "dashboard_form":dashboard_form

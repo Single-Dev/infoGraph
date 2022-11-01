@@ -30,11 +30,10 @@ class MyUser(AbstractUser):
         #     img.save(self.image.path)
 
 class Dashboard(models.Model):
-    author = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(MyUser, on_delete=models.CASCADE,related_name='tanla' )
     name = models.CharField(max_length=150)
     slug = models.SlugField(unique=True)
     descraption = models.TextField(max_length=700)
-    
     def __str__(self):
         return self.name
 

@@ -13,7 +13,7 @@ class Registration(UserCreationForm):
 class DashboardForm(forms.ModelForm):
     class Meta:
         model = Dashboard
-        fields = "__all__"
+        fields = ("name", "slug", "descraption")
 
 class AddElementForm(forms.ModelForm):
     class Meta:
