@@ -1,25 +1,54 @@
 {% extends 'layout/base.html' %}
 {% block title %}Login{% endblock title %}
 {% block content %}
-<div class="container w-25" style="margin-top: 180px !important; margin-bottom: 180px;">
-    <form method="post" class=" row gy-2 gx-3 align-items-center">
-        {% load widget_tweaks %}
-        {% csrf_token %}
-        <div class="row mb-3">
-            <label for="inputEmail3" class="col-sm-2 col-form-label text-capitalize">Usarname</label>
-            <div class="col-sm-10">
-                {% render_field form.username type="text" class="form-control" id="inputEmail3"%}
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="inputPassword3" class="col-sm-2 col-form-label text-capitalize">Password</label>
-            <div class="col-sm-10">
-                {% render_field form.password type="password" class="form-control" id="inputPassword3" %}
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Login</button>
+<main id="main">
 
-    </form>
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container-fluid">
 
-</div>
+            <div class="row justify-content-center">
+                <div class="col-xl-10">
+                    <ol>
+                        <li><a href="{% url 'app:home' %}">Home</a></li>
+                        <li>Login</li>
+                    </ol>
+                    <h2>Login</h2>
+                </div>
+            </div>
+
+        </div>
+    </section><!-- End Breadcrumbs -->
+
+    <section class="inner-page">
+        <div class="container-fluid">
+
+            <div class="row justify-content-center">
+                <div class="col-xl-10">
+                    <div class="container w-25">
+                        <form method="post" class=" row gy-2 gx-3 align-items-center">
+                            {% load widget_tweaks %}
+                            {% csrf_token %}
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class=" col-form-label text-capitalize">Usarname</label>
+
+                                {% render_field form.username type="text" class="form-control" id="inputEmail3"%}
+
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputPassword3" class=" col-form-label text-capitalize">Password</label>
+
+                                {% render_field form.password type="password" class="form-control" id="inputPassword3"%}
+
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+    </section>
+
+</main>
 {% endblock content %}

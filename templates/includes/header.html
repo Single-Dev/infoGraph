@@ -7,30 +7,28 @@
 
         <nav id="navbar" class="navbar">
             <ul>
-                {% if not request.user.is_authenticated %}
-                <li><a class="nav-link scrollto active" href="{% url 'app:signup' %}">Sign Up</a></li>
-                <li><a class="nav-link scrollto" href="{% url 'login' %}">Login</a></li>
-                {% endif %}
                 <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
-                        <li><a href="#">Drop Down 1</a></li>
-                        <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
-                                    class="bi bi-chevron-right"></i></a>
-                            <ul>
-                                <li><a href="#">Deep Drop Down 1</a></li>
-                                <li><a href="#">Deep Drop Down 2</a></li>
-                                <li><a href="#">Deep Drop Down 3</a></li>
-                                <li><a href="#">Deep Drop Down 4</a></li>
-                                <li><a href="#">Deep Drop Down 5</a></li>
+                        <li><a href="#">Deep Drop Down 4</a></li>
+                        <li><a href="#">Deep Drop Down 4</a></li>
+                        <li><a href="#">Deep Drop Down 4</a></li>
+                        <li><a href="#">Drop Down 4</a></li>
+                        <li class="dropdown"><a href="#"><span>Scroll</span> <i class="bi bi-chevron-right"></i></a>
+                            <ul style="width: 160px !important;">
+                                <li><a class="scrollto" href="#about">About</a></li>
+                                <li><a class="scrollto" href="#skills">Skills</a></li>
+                                <li><a class="scrollto" href="#cta">Call To Action</a></li>
+                                <li><a class="scrollto" href="#portfolio">Portfolio</a></li>
+                                <li><a class="scrollto" href="#testimonials">Testimonials</a></li>
+                                <li><a class="scrollto" href="#contact">Contact</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Drop Down 2</a></li>
-                        <li><a href="#">Drop Down 3</a></li>
-                        <li><a href="#">Drop Down 4</a></li>
                     </ul>
                 </li>
-                <li><a class="nav-link  scrollto" href="#portfolio">Portfolio</a></li>
-                <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                {% if not request.user.is_authenticated %}
+                <li><a class="getstarted nav-link scrollto " href="{% url 'app:signup' %}">Sign Up</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'login' %}">Login</a></li>
+                {% endif %}
                 {% if request.user.is_authenticated %}
                 <li><a class="nav-link scrollto" href="{% url 'logout' %}">LogOut</a></li>
                 {% endif %}
