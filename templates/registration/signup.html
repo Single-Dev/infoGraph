@@ -1,6 +1,16 @@
 {% extends 'layout/base.html' %}
 {% block title %}Sign Up{% endblock title %}
 {% block content %}
+
+<style>
+  #username{
+    text-transform: lowercase;
+  }
+  #email{
+    text-transform: lowercase;
+  }
+</style>
+
 <section id="new-arrivals" class="new-arrivals">
   <div class="container mt-4 mb-4">
 
@@ -17,12 +27,12 @@
                     {% load widget_tweaks %}
                     {% csrf_token %}
                     <div class="form-outline mb-4 text-capitalize" >
-                      <label for="email">Username</label>
-                      {% render_field form.username type="text" class="form-control" id="email" placeholder="username" %}
+                      <label for="username">Username</label>
+                      {% render_field form.username type="text" class="form-control" id="username" placeholder="username" %}
                     </div>
                     <div class="form-outline mb-4 text-capitalize">
-                      <label for="first_name">Email</label>
-                      {% render_field form.email type="email" class="form-control" id="first_name" placeholder="Enter your valid email addres" %}
+                      <label for="email">Email</label>
+                      {% render_field form.email type="email" class="form-control" id="email" placeholder="Enter your valid email addres" %}
                     </div>
                 
                     <div class="form-outline mb-4 text-capitalize">

@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user_profile.is_organiser }}</title>
+    <title>@{{ user_profile.username }}</title>
 </head>
 <body>
     <h1>{{ user_profile.first_name }}</h1>
+    {% if request.user.username == user_profile.username %}
+    <button>Edit Profile</button>
+    {% else %}
+    <button>Follow</button>
+    {% endif %}
 </body>
 </html>
