@@ -1,0 +1,27 @@
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+<!-- End Breadcrumbs -->
+
+    <section class="inner-page">
+      <div class="container-fluid">
+
+        <div class="row justify-content-center">
+          <div class="col-xl-10">
+           <form method="post" class="w-50" style="margin-left: auto; margin-right: auto;">
+            {% load widget_tweaks %}
+            {% csrf_token %}
+            {% render_field dashboard_form.author %}
+            {% render_field dashboard_form.name type="text" class="form-control mt-2 mb-2" placeholder="Dashboard name" %}
+            <div class="d-flex" style="align-items: center;">
+              <span style="margin-right: 15px;">127.0..0.0</span>
+              {% render_field dashboard_form.slug type="text" class="form-control mt-2 mb-2" placeholder="Public url" %}
+            </div>
+            {% render_field dashboard_form.descraption type="text" class="form-control mt-2 mb-2" placeholder="Dashboard descraption" %}
+            <button type="submit" class="w-100 btn btn-success">Create Dashboard</button>
+           </form>
+          </div>
+        </div>
+    </section>
+
+  </main>

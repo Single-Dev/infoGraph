@@ -6,8 +6,17 @@ from .forms import *
 
 def home(request):
     dashboard = Dashboard.objects.all()
+    initial = {'key': 'value'}
+    dashboard_form = DashboardForm()
+    if request.method == "POST":
+        dashboard_form = DashboardForm(request.POST)
+        if dashboard_form.is_valid():
+            dashboard_form.save()
+            return redirect('/')
+
     context={
-        "dash":dashboard
+        "dash":dashboard,
+        "dashboard_form":dashboard_form
     }
     return render(request, 'pages/home.html', context)
 

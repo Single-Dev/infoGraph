@@ -13,6 +13,7 @@
                         <li><a href="#">Deep Drop Down 4</a></li>
                         <li><a href="#">Deep Drop Down 4</a></li>
                         <li><a href="#">Drop Down 4</a></li>
+                        {% if not request.user.is_authenticated %}
                         <li class="dropdown"><a href="#"><span>Scroll</span> <i class="bi bi-chevron-right"></i></a>
                             <ul style="width: 160px !important;">
                                 <li><a class="scrollto" href="#about">About</a></li>
@@ -23,6 +24,7 @@
                                 <li><a class="scrollto" href="#contact">Contact</a></li>
                             </ul>
                         </li>
+                        {% endif %}
                     </ul>
                 </li>
                 {% if not request.user.is_authenticated %}
