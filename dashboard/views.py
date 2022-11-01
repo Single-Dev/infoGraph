@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import *
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 
@@ -20,6 +23,13 @@ def home(request):
         "dashboard_form":dashboard_form
     }
     return render(request, 'pages/home.html', context)
+
+def PublicProfileView(request, username):
+    user_profile = User.objects.get(username=username)
+    context = {
+        "user_profile": user_profile
+    }
+    return render(request, 'pages/profile.html', context)
 
 def signup(request):
     form = Registration()

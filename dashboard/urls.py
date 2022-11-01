@@ -7,4 +7,5 @@ urlpatterns = [
     path('', home, name="home"),
     path("signup/", signup, name="signup"),
     path("stats/<slug:slug>/", StatsView, name="stats"),
+    path("profile/<str:username>/", PublicProfileView, name="profile")
 ]
