@@ -8,19 +8,7 @@ User = get_user_model()
 
 
 def home(request):
-    dashboard_form = DashboardForm()
-    
-    if request.method == "POST":
-        dashboard_form = DashboardForm(request.POST)
-        if dashboard_form.is_valid():
-            dashboard_form.save()
-            slug = dashboard_form.cleaned_data.get('slug')
-            dashboard_form.save()
-            return redirect('app:stats', slug)
-    context={
-        "dashboard_form":dashboard_form
-    }
-    return render(request, 'pages/home.html', context)
+    return render(request, 'pages/home.html')
 
 def PublicProfileView(request, username):
     user_p = User.objects.get(username=username)
@@ -85,7 +73,7 @@ def StatsView(request, slug):
 
     context= {
         # 'new_comment': new_comment,
-        # 'comments': comments,
+        'comments': comments,
         'comment_form': comment_form,
         "dashboard":dashboard
         }
