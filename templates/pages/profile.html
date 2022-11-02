@@ -7,11 +7,19 @@
     <title>@{{ user_profile.username }}</title>
 </head>
 <body>
-    <h1>{{ user_profile.first_name }}</h1>
+    <h1>@{{ user_profile.username }}</h1>
     {% if request.user.username == user_profile.username %}
     <button>Edit Profile</button>
     {% else %}
     <button>Follow</button>
     {% endif %}
+    {% for user_dashboards in user_dashboards %}
+    {% if user_profile.username == user_dashboards.author.username %}
+    <div>
+        <h1><a href="{% url 'app:stats' user_dashboards.slug %}">{{ user_dashboards.name }}</a></h1>
+        <p>{{ user_dashboards.descraption }}</p>
+    </div>
+    {% endif %}
+    {% endfor %}
 </body>
 </html>
