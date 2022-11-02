@@ -25,7 +25,11 @@ def home(request):
     return render(request, 'pages/home.html', context)
 
 def PublicProfileView(request, username):
-    user_dashboards = Dashboard.objects.all()
+    tab = request.GET.get('tab')
+    if tab == "charts":
+        user_dashboards = Dashboard.objects.all()
+    else:
+        user_dashboards = ""
     user_profile = User.objects.get(username=username)
     context = {
         "user_profile": user_profile,

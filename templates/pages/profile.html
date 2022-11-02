@@ -13,6 +13,7 @@
     {% else %}
     <button>Follow</button>
     {% endif %}
+    <a href="?tab=charts">charts</a>
     {% for user_dashboards in user_dashboards %}
     {% if user_profile.username == user_dashboards.author.username %}
     <div>
