@@ -26,14 +26,18 @@ def home(request):
 
 def PublicProfileView(request, username):
     tab = request.GET.get('tab')
+    title = None
     if tab == "charts":
-        user_dashboards = Dashboard.objects.all()
+        tab_dashboards = Dashboard.objects.all()
+        title = "Charts"
     else:
-        user_dashboards = ""
-    user_profile = User.objects.get(username=username)
+        tab_dashboards = ""
+        title = f"amCharts - @{request.user.username}"
+    user_p = User.objects.get(username=username)
     context = {
-        "user_profile": user_profile,
-        "user_dashboards":user_dashboards
+        "user_p": user_p,
+        "dashboard":tab_dashboards,
+        "title":title
     }
     return render(request, 'pages/profile.html', context)
 

@@ -4,21 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@{{ user_profile.username }}</title>
+    <title>{{ title }}</title>
 </head>
 <body>
-    <h1>@{{ user_profile.username }}</h1>
-    {% if request.user.username == user_profile.username %}
+    <h1>@{{ user_p.username }}</h1>
+    {% if request.user.username == user_p.username %}
     <button>Edit Profile</button>
     {% else %}
     <button>Follow</button>
     {% endif %}
+    <a href="{% url 'app:profile' user_p.username %}">Oreview</a>
     <a href="?tab=charts">charts</a>
-    {% for user_dashboards in user_dashboards %}
-    {% if user_profile.username == user_dashboards.author.username %}
+    {% for dashboard in dashboard %}
+    {% if user_p.username == dashboard.author.username %}
     <div>
-        <h1><a href="{% url 'app:stats' user_dashboards.slug %}">{{ user_dashboards.name }}</a></h1>
-        <p>{{ user_dashboards.descraption }}</p>
+        <h1><a href="{% url 'app:stats' dashboard.slug %}">{{ dashboard.name }}</a></h1>
+        <p>{{ dashboard.descraption }}</p>
     </div>
     {% endif %}
     {% endfor %}
