@@ -8,9 +8,8 @@ User = get_user_model()
 
 
 def home(request):
-    dashboard = Dashboard.objects.all()
     dashboard_form = DashboardForm()
-    initial = {'key': 'value'}
+    
     if request.method == "POST":
         dashboard_form = DashboardForm(request.POST)
         if dashboard_form.is_valid():
@@ -19,12 +18,13 @@ def home(request):
             dashboard_form.save()
             return redirect('app:stats', slug)
     context={
-        "dash":dashboard,
         "dashboard_form":dashboard_form
     }
     return render(request, 'pages/home.html', context)
 
 def PublicProfileView(request, username):
+    user_p = User.objects.get(username=username)
+    # Tab
     tab = request.GET.get('tab')
     title = None
     if tab == "charts":
@@ -32,12 +32,29 @@ def PublicProfileView(request, username):
         title = "Charts"
     else:
         tab_dashboards = ""
-        title = f"amCharts - @{request.user.username}"
-    user_p = User.objects.get(username=username)
+        title = f"amCharts - @{user_p.username}"
+
+    # Added Dashboard Form
+    initial = {'key': 'value'}
+    user = User.objects.get(username=username)
+    author = get_object_or_404(User, username=username)
+    dash = author.tanla.filter(active=True)
+    new_dash = None
+    if request.method == 'POST':
+        addDashForm = DashboardForm(data=request.POST)
+        if addDashForm.is_valid():
+            new_dash = addDashForm.save(commit=False)
+            slug = addDashForm.cleaned_data.get('slug')
+            new_dash.author = author
+            new_dash.save()
+            return redirect("app:stats", slug) 
+    else:
+        addDashForm = DashboardForm()
     context = {
         "user_p": user_p,
         "dashboard":tab_dashboards,
-        "title":title
+        "title":title,
+        "addDashForm":addDashForm
     }
     return render(request, 'pages/profile.html', context)
 
@@ -68,7 +85,7 @@ def StatsView(request, slug):
 
     context= {
         # 'new_comment': new_comment,
-        'comments': comments,
+        # 'comments': comments,
         'comment_form': comment_form,
         "dashboard":dashboard
         }

@@ -34,6 +34,7 @@ class Dashboard(models.Model):
     name = models.CharField(max_length=150)
     slug = models.SlugField(unique=True)
     descraption = models.TextField(max_length=700)
+    active = models.BooleanField(default=True)
     def __str__(self):
         return self.name
 
