@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 
 <head>
@@ -72,9 +73,22 @@
     <form method="post" class="w-50" style="margin-left: auto; margin-right: auto;">
         {% load widget_tweaks %}
         {% csrf_token %}
+        {% if form.errors %}
+        <div id="msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;" role="alert">
+          <div id="form_errors">
+            {% for key, value in form.errors.items %}
+            <strong>{{ value }}</strong>
+            {% endfor %}
+          </div>
+          <button id="make_msg_none" type="button" class="fa fa-solid-close btn btn-danger" data-dismiss="alert"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        {% endif %}
         {% render_field addDashForm.name type="text" class="form-control mt-2 mb-2" placeholder="Dashboard name" %}
         <div class="d-flex" style="align-items: center;">
-            <span style="margin-right: 15px;">127.0..0.0</span>
+            <span id="doclochref" style="margin-right: 15px;">127.0..0.0</span>
             {% render_field addDashForm.slug type="text" class="form-control mt-2 mb-2" placeholder="Public url" %}
         </div>
         {% render_field addDashForm.descraption type="text" class="form-control mt-2 mb-2" placeholder="Dashboard descraption" %}
@@ -82,6 +96,7 @@
     </form>
     {% endif %}
    
+    <script src="{% static 'assets/js/profile.js' %}"></script>
 </body>
 
 </html>
