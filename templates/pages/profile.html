@@ -36,7 +36,7 @@
                 <div class="p-4 text-black" style="background-color: #f8f9fa;">
                   <div class="d-flex justify-content-end text-center py-1">
                     <div>
-                      <p class="mb-1 h5">253</p>
+                      <p class="mb-1 h5">1</p>
                       <a href="?tab=charts" class="small text-muted mb-0">Charts</a>
                     </div>
                     <div class="px-3">
@@ -73,10 +73,10 @@
     <form method="post" class="w-50" style="margin-left: auto; margin-right: auto;">
         {% load widget_tweaks %}
         {% csrf_token %}
-        {% if form.errors %}
+        {% if addDashForm.errors %}
         <div id="msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;" role="alert">
           <div id="form_errors">
-            {% for key, value in form.errors.items %}
+            {% for key, value in addDashForm.errors.items %}
             <strong>{{ value }}</strong>
             {% endfor %}
           </div>

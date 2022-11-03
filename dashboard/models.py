@@ -29,6 +29,14 @@ class MyUser(AbstractUser):
         #     img.thumbnail(output_size)
         #     img.save(self.image.path)
 
+class Followers(models.Model):
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    another_user = models.ManyToManyField(MyUser, related_name='another_user')
+
+    def __str__(self):
+        return self.user.name
+
+
 class Dashboard(models.Model):
     author = models.ForeignKey(MyUser, on_delete=models.CASCADE,related_name='tanla' )
     name = models.CharField(max_length=150)

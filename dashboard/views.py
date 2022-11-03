@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import get_user_model
+from django.contrib import messages
 from .models import *
 from .forms import *
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
@@ -33,6 +34,7 @@ def PublicProfileView(request, username):
         if addDashForm.is_valid():
             new_dash = addDashForm.save(commit=False)
             slug = addDashForm.cleaned_data.get('slug')
+            messages.success(request, f'{slug}')
             new_dash.author = author
             new_dash.save()
             return redirect("app:stats", slug) 
