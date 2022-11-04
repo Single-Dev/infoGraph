@@ -18,7 +18,7 @@
               <div class="card">
                 <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
                   <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                    <img src="{{ user_p.profile.image.url }}"
                       alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
                       style="width: 150px; z-index: 1">
                         {% if request.user.username == user_p.username %}
@@ -27,10 +27,10 @@
                             <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Follow</button>
                         {% endif %}
                   </div>
-                  <div class="ms-3" style="margin-top: 130px;">
-                    <h5>Andy Horwitz</h5>
-                    <p>  <a class="text-light" href="{% url 'app:profile' user_p.username %}">Overview</a></p>
-                  
+                  <div class="ms-3" style="margin-top: 100px;">
+                    <h5>{{ user_p.first_name }}</h5>
+                    <h6>{{ user_p.last_name }}</h6>
+                    <p>  <a class="text-light" href="{% url 'app:profile' user_p.username %}" style="text-decoration: none;">@{{ user_p.username }}</a></p>
                   </div>
                 </div>
                 <div class="p-4 text-black" style="background-color: #f8f9fa;">
