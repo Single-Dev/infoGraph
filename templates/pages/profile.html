@@ -36,7 +36,7 @@
                 <div class="p-4 text-black" style="background-color: #f8f9fa;">
                   <div class="d-flex justify-content-end text-center py-1">
                     <div>
-                      <p class="mb-1 h5">{{dash_count}}</p>
+                      <p class="mb-1 h5">{{user_chart_count}}</p>
                       <a href="?tab=charts" class="small text-muted mb-0">Charts</a>
                     </div>
                     <div class="px-3">
@@ -50,25 +50,25 @@
                   </div>
                 </div>
                 <div class="card-body p-4 text-black">
-                   {% if dashboard %}
+                   {% if tab_chart %}
                    <div class="mb-5">
                     <p class="lead fw-normal mb-1">Charts</p>
                     <div class="p-4" style="background-color: #f8f9fa;">
-                      {% for dashboard in dashboard %}
+                      {% for chart in tab_chart %}
                       <div>
-                          <a class="text-dark" href="{% url 'app:stats' dashboard.slug %}">{{ dashboard.name }}</a>
-                          <p>{{ dashboard.descraption }}</p>
+                          <a class="text-dark" href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
+                          <p>{{ chart.descraption }}</p>
                       </div>
                       {% endfor %}
                     </div>
                   </div>
                   {% endif %}
-                  {% if title == "Charts" and dash_count == 0 %}
+                  {% if title == "Charts" and user_chart_count == 0 %}
                     <p class="lead fw-normal mb-1">
                       No Charts Yet
                     </p>
                     {% if user_p.username == request.user.username %}
-                    <a class="btn btn-outline-sucsess" href="{% url 'app:new' request.user.username %}">New Chart</a>
+                    <a class="btn btn-sucsess" href="{% url 'app:new' request.user.username %}">New Chart</a>
                     {% endif %}
                  
                   {% endif %}

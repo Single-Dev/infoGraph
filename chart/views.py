@@ -7,7 +7,6 @@ from .forms import *
 User = get_user_model()
 
 
-
 def home(request):
     charts_count = Chart.objects.count()
     user_count = User.objects.count()
@@ -32,12 +31,12 @@ def PublicProfileView(request, username):
         tab_chart = ""
         title = f"amCharts - @{user_p.username}"
 
-    dash_count = author.tanla.count()
+    user_chart_count = author.tanla.count()
     context = {
         "user_p": user_p,
-        "dashboard":tab_chart,
+        "tab_chart":tab_chart,
         "title":title,
-        "dash_count":dash_count
+        "user_chart_count":user_chart_count
     }
     return render(request, 'pages/profile.html', context)
 
@@ -55,7 +54,7 @@ def NewDashboardView(request, username):
             slug = NewChart.cleaned_data.get('slug')
             new_dash.author = author
             new_dash.save()
-            return redirect("app:stats", slug) 
+            return redirect("app:chart", slug) 
     else:
         NewChart = NewChartFrom()
     context={
@@ -85,12 +84,11 @@ def StatsView(request, slug):
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.save()
-            return redirect("app:stats", slug) # redirect to this url
+            return redirect("app:chart", slug) # redirect to this url
     else:
         comment_form = NewElementForm()
 
     context= {
-        # 'new_comment': new_comment,
         'comments': comments,
         'comment_form': comment_form,
         "dashboard":dashboard
