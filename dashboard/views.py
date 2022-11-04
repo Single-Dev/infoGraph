@@ -30,7 +30,19 @@ def PublicProfileView(request, username):
     else:
         tab_dashboards = ""
         title = f"amCharts - @{user_p.username}"
-    # Added Dashboard Form
+        
+    author = get_object_or_404(User, username=username)
+    dash_count = author.tanla.count()
+    context = {
+        "user_p": user_p,
+        "dashboard":tab_dashboards,
+        "title":title,
+        "dash_count":dash_count
+    }
+    return render(request, 'pages/profile.html', context)
+
+def NewDashboardView(request, username):
+    user_p = User.objects.get(username=username)
     initial = {'key': 'value'}
     user = User.objects.get(username=username)
     author = get_object_or_404(User, username=username)
@@ -47,13 +59,11 @@ def PublicProfileView(request, username):
             return redirect("app:stats", slug) 
     else:
         addDashForm = DashboardForm()
-    context = {
+    context={
         "user_p": user_p,
-        "dashboard":tab_dashboards,
-        "title":title,
         "addDashForm":addDashForm,
     }
-    return render(request, 'pages/profile.html', context)
+    return render(request, "pages/new.html", context)
 
 def signup(request):
     form = Registration()
