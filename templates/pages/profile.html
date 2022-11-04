@@ -50,19 +50,28 @@
                   </div>
                 </div>
                 <div class="card-body p-4 text-black">
-                    <div class="mb-5">
-                      <p class="lead fw-normal mb-1">About</p>
-                      <div class="p-4" style="background-color: #f8f9fa;">
-                        {% for dashboard in dashboard %}
-                        {% if user_p.username == dashboard.author.username %}
-                        <div>
-                            <a class="text-dark" href="{% url 'app:stats' dashboard.slug %}">{{ dashboard.name }}</a>
-                            <p>{{ dashboard.descraption }}</p>
-                        </div>
-                        {% endif %}
-                        {% endfor %}
+                   {% if dashboard %}
+                   <div class="mb-5">
+                    <p class="lead fw-normal mb-1">Charts</p>
+                    <div class="p-4" style="background-color: #f8f9fa;">
+                      {% for dashboard in dashboard %}
+                      <div>
+                          <a class="text-dark" href="{% url 'app:stats' dashboard.slug %}">{{ dashboard.name }}</a>
+                          <p>{{ dashboard.descraption }}</p>
                       </div>
+                      {% endfor %}
                     </div>
+                  </div>
+                  {% endif %}
+                  {% if title == "Charts" and dash_count == 0 %}
+                    <p class="lead fw-normal mb-1">
+                      No Charts Yet
+                    </p>
+                    {% if user_p.username == request.user.username %}
+                    <a class="btn btn-outline-sucsess" href="{% url 'app:new' request.user.username %}">New Chart</a>
+                    {% endif %}
+                 
+                  {% endif %}
                   </div>
               </div>
             </div>

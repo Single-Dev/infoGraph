@@ -21,17 +21,17 @@ def home(request):
 
 def PublicProfileView(request, username):
     user_p = User.objects.get(username=username)
+    author = get_object_or_404(User, username=username)
     # Tab
     tab = request.GET.get('tab')
     title = None
     if tab == "charts":
-        tab_dashboards = Dashboard.objects.all()
+        tab_dashboards = author.tanla.all()
         title = "Charts"
     else:
         tab_dashboards = ""
         title = f"amCharts - @{user_p.username}"
-        
-    author = get_object_or_404(User, username=username)
+
     dash_count = author.tanla.count()
     context = {
         "user_p": user_p,
