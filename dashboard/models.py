@@ -13,11 +13,7 @@ class MyUser(AbstractUser):
 #     custom_user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
 #     image = models.ImageField(default="arrivals5.png", upload_to="profile")
 #     bio = models.CharField(max_length=100, default="bio", null=True, blank=True)
-#     card_number = models.IntegerField(default=2500, null=True,blank=True)
-#     address = models.CharField(max_length=200, null=True, blank=True)
-#     mobile_number = models.IntegerField(default=998931742328, null=True, blank=True)
     
-
 
 #     def save(self, *args, **kwargs):
         # super(Profile, self).save(*args, **kwargs)
@@ -29,12 +25,6 @@ class MyUser(AbstractUser):
         #     img.thumbnail(output_size)
         #     img.save(self.image.path)
 
-class Followers(models.Model):
-    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    another_user = models.ManyToManyField(MyUser, related_name='another_user')
-
-    def __str__(self):
-        return self.user.name
 
 
 class Dashboard(models.Model):
@@ -46,7 +36,7 @@ class Dashboard(models.Model):
     def __str__(self):
         return self.name
 
-class AddElement(models.Model):
+class Element(models.Model):
     post = models.ForeignKey(Dashboard,on_delete=models.CASCADE,related_name='qoshish')
     title = models.CharField(max_length=80)
     value = models.IntegerField(default=0)

@@ -9,7 +9,15 @@ User = get_user_model()
 
 
 def home(request):
-    return render(request, 'pages/home.html')
+    dashboards_count = Dashboard.objects.count()
+    user_count = User.objects.count()
+    elem_count = Element.objects.count()
+    context = {
+        "dashboards_count":dashboards_count,
+        "user_count":user_count,
+        "elem_count":elem_count
+    }
+    return render(request, 'pages/home.html', context)
 
 def PublicProfileView(request, username):
     user_p = User.objects.get(username=username)
@@ -22,7 +30,6 @@ def PublicProfileView(request, username):
     else:
         tab_dashboards = ""
         title = f"amCharts - @{user_p.username}"
-
     # Added Dashboard Form
     initial = {'key': 'value'}
     user = User.objects.get(username=username)
@@ -44,7 +51,7 @@ def PublicProfileView(request, username):
         "user_p": user_p,
         "dashboard":tab_dashboards,
         "title":title,
-        "addDashForm":addDashForm
+        "addDashForm":addDashForm,
     }
     return render(request, 'pages/profile.html', context)
 

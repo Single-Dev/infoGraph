@@ -3,9 +3,9 @@ from .models import *
 
 admin.site.register(MyUser)
 admin.site.register(Dashboard)
-admin.site.register(Followers)
-# admin.site.register(Followers)
-@admin.register(AddElement)
+
+
+@admin.register(Element)
 class CommentAdmin(admin.ModelAdmin):
     # list_display = ('name', 'body', 'post', 'created_on', 'active')
     list_filter = ('active',)

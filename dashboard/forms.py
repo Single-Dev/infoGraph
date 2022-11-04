@@ -17,5 +17,5 @@ class DashboardForm(forms.ModelForm):
 
 class AddElementForm(forms.ModelForm):
     class Meta:
-        model = AddElement
+        model = Element
         fields = ("title", "value")
