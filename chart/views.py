@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import get_user_model
-from django.contrib import messages
 from .models import *
 from .forms import *
 
@@ -94,4 +93,4 @@ def StatsView(request, slug):
         "dashboard":dashboard
         }
     
-    return render(request, "pages/dashboard.html", context)
+    return render(request, "pages/chart.html", context)

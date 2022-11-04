@@ -13,7 +13,7 @@ class Registration(UserCreationForm):
 class NewChartFrom(forms.ModelForm):
     class Meta:
         model = Chart
-        fields = ("name", "slug", "descraption")
+        fields = ("name", "slug", "caption")
 
 class NewElementForm(forms.ModelForm):
     class Meta:

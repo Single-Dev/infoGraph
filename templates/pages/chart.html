@@ -29,7 +29,7 @@
   </style>
   <h1>Welcome To "{{ dashboard.name }}"</h1>
   <div id="chartdiv"></div>
-  <blockquote class="container">{{ dashboard.descraption }}</blockquote>
+  <blockquote class="container">{{ dashboard.caption }}</blockquote>
   {% if request.user.username == dashboard.author.username %}
   <div class="card-body container">
     <form method="post" class="d-flex" style="justify-content: center;">
