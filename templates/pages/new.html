@@ -9,15 +9,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    
+    <h1 class="text-center mt-4 mb-4">New Chart</h1>
     {% if request.user.username == user_p.username %}
     <form method="post" class="w-50" style="margin-left: auto; margin-right: auto;">
         {% load widget_tweaks %}
         {% csrf_token %}
-        {% if addDashForm.errors %}
+        {% if NewChart.errors %}
         <div id="msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;" role="alert">
           <div id="form_errors">
-            {% for key, value in addDashForm.errors.items %}
+            {% for key, value in NewChart.errors.items %}
             <strong>{{ value }}</strong>
             {% endfor %}
           </div>
@@ -27,13 +27,13 @@
           </button>
         </div>
         {% endif %}
-        {% render_field addDashForm.name type="text" class="form-control mt-2 mb-2" placeholder="Dashboard name" %}
+        {% render_field NewChart.name type="text" class="form-control mt-2 mb-2" placeholder="Dashboard name" %}
         <div class="d-flex" style="align-items: center;">
             <span id="doclochref" style="margin-right: 15px;">127.0..0.0</span>
-            {% render_field addDashForm.slug type="text" class="form-control mt-2 mb-2" placeholder="Public url" %}
+            {% render_field NewChart.slug type="text" class="form-control mt-2 mb-2" placeholder="Public url" %}
         </div>
-        {% render_field addDashForm.descraption type="text" class="form-control mt-2 mb-2" placeholder="Dashboard descraption" %}
-        <button type="submit" class="w-100 btn btn-priamry">Create Dashboard</button>
+        {% render_field NewChart.descraption type="text" class="form-control mt-2 mb-2" placeholder="Dashboard descraption" %}
+        <button type="submit" class="w-100 btn btn-info">Create Dashboard</button>
     </form>
     {% else %}
     

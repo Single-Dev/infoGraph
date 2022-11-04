@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dashboard',
+    'chart',
     'rest_framework',
 
     'widget_tweaks'
@@ -130,4 +130,4 @@ STATIC_ROOT = BASE_DIR / 'staicfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'dashboard.MyUser'
+AUTH_USER_MODEL = 'chart.MyUser'
