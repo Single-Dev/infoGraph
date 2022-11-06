@@ -68,7 +68,7 @@
                       No Charts Yet
                     </p>
                     {% if user_p.username == request.user.username %}
-                    <a class="btn btn-outline-success" href="{% url 'app:new' request.user.username %}">New Chart</a>
+                    <a class="btn btn-outline-success" href="{% url 'app:new' %}">New Chart</a>
                     {% endif %}
                  
                   {% endif %}
