@@ -31,19 +31,23 @@ def PublicProfileView(request, username):
         tab_chart = ""
         title = f"amCharts - @{user_p.username}"
 
-    if request.method == 'POST':
-        user_form = UpdateUserForm(request.POST, instance=request.user)
-        profile_form = UpdateProfileForm(request.POST,
-                                          request.FILES,
-                                          instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_name = user_form.cleaned_data.get('username')
-            user_form.save()
-            profile_form.save()
-            return redirect("app:profile", user_name)
-    else:
+    if request.user.is_authenticated:
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateProfileForm(instance=request.user.profile)
+        if request.method == 'POST':
+            user_form = UpdateUserForm(request.POST, instance=request.user)
+            profile_form = UpdateProfileForm(request.POST,
+                                            request.FILES,
+                                            instance=request.user.profile)
+            if user_form.is_valid() and profile_form.is_valid():
+                user_name = user_form.cleaned_data.get('username')
+                user_form.save()
+                profile_form.save()
+                return redirect("app:profile", user_name)
+            
+    else:
+        user_form = None
+        profile_form = None
     user_chart_count = author.tanla.count()
     context = {
         "user_p": user_p,
@@ -55,25 +59,27 @@ def PublicProfileView(request, username):
     }
     return render(request, 'pages/profile.html', context)
 
-def NewDashboardView(request, username):
-    user_p = User.objects.get(username=username)
-    initial = {'key': 'value'}
-    user = User.objects.get(username=username)
-    author = get_object_or_404(User, username=username)
-    dash = author.tanla.all()
-    new_dash = None
-    if request.method == 'POST':
-        NewChart = NewChartFrom(data=request.POST)
-        if NewChart.is_valid():
-            new_dash = NewChart.save(commit=False)
-            slug = NewChart.cleaned_data.get('slug')
-            new_dash.author = author
-            new_dash.save()
-            return redirect("app:chart", slug) 
-    else:
+def NewDashboardView(request):
+    if request.user.is_authenticated:
+        user_p = User.objects.get(username=request.user)
+        initial = {'key': 'value'}
+        user = User.objects.get(username=request.user)
+        author = get_object_or_404(User, username=request.user)
+        dash = author.tanla.all()
+        new_dash = None
         NewChart = NewChartFrom()
+        if request.method == 'POST':
+            NewChart = NewChartFrom(data=request.POST)
+            if NewChart.is_valid():
+                new_dash = NewChart.save(commit=False)
+                slug = NewChart.cleaned_data.get('slug')
+                new_dash.author = author
+                new_dash.save()
+                return redirect("app:chart", slug) 
+    else:
+        return redirect("app:signup")
+
     context={
-        "user_p": user_p,
         "NewChart":NewChart,
     }
     return render(request, "pages/new.html", context)

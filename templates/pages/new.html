@@ -11,7 +11,6 @@
 </head>
 <body>
     <h1 class="text-center mt-4 mb-4">New Chart</h1>
-    {% if request.user.username == user_p.username %}
     <form method="post" class="w-50" style="margin-left: auto; margin-right: auto;">
         {% load widget_tweaks %}
         {% csrf_token %}
@@ -36,9 +35,7 @@
         {% render_field NewChart.caption class="form-control mt-2 mb-2" placeholder="Chart Caption"  %}
         <button type="submit" class="w-100 btn btn-outline-info">Create New Chart</button>
     </form>
-    {% else %}
     
-    {% endif %}
     <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

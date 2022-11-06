@@ -78,12 +78,14 @@
           </div>
         </div>
       </section>
-      <form method="post">
+      {% if request.user.username == user_p.username %}
+      <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ user_form }}
         {{ profile_form }}
         <button type="submit">Submit</button>
       </form>
+      {% endif %}
 
 </body>
 
