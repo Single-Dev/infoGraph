@@ -57,7 +57,7 @@
                       {% for chart in tab_chart %}
                       <div>
                           <a class="text-dark" href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
-                          <p>{{ chart.descraption }}</p>
+                          <p>{{ chart.caption }}</p>
                       </div>
                       {% endfor %}
                     </div>
@@ -78,7 +78,12 @@
           </div>
         </div>
       </section>
-
+      <form method="post">
+        {% csrf_token %}
+        {{ user_form }}
+        {{ profile_form }}
+        <button type="submit">Submit</button>
+      </form>
 
 </body>
 

@@ -19,3 +19,13 @@ class NewElementForm(forms.ModelForm):
     class Meta:
         model = Element
         fields = ("title", "value")
+
+class UpdateUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', "username"]
+
+class UpdateProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ["image", "bio"]
