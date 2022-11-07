@@ -1,0 +1,10 @@
+
+spec:
+  name: sample-python
+  services:
+    - name: sample-python
+      git:
+        branch: main
+        repo_clone_url: https://github.com/Bekzodbek2006/amcharts.git
+    databases:
+    - name: db.sqplite3
