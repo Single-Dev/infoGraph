@@ -86,6 +86,7 @@ def NewDashboardView(request):
 
 def signup(request):
     form = Registration()
+    initial = {'key': 'value'}
     if request.method == "POST":
         form = Registration(request.POST)
         if form.is_valid():

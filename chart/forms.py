@@ -9,11 +9,22 @@ class Registration(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "email", "password1", "password2"]
+    def clean_username(self):
+        username = self.cleaned_data.get('username')  # get the username data
+        lowercase_username = username.lower()         # get the lowercase version of it
+
+        return lowercase_username
 
 class NewChartFrom(forms.ModelForm):
     class Meta:
         model = Chart
         fields = ("name", "slug", "caption")
+    
+    def clean_slug(self):
+        slug = self.cleaned_data.get("slug")
+        lowercase_slug = slug.lower()
+
+        return lowercase_slug
 
 class NewElementForm(forms.ModelForm):
     class Meta:

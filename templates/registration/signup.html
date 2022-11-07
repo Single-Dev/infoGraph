@@ -22,7 +22,19 @@
               <div class="card" style="border-radius: 15px;">
                 <div class="card-body p-5">
                   <h2 class="text-uppercase text-center mb-5">Sign Up</h2>
-
+                  {% if form.errors %}
+                  <div id="msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;" role="alert">
+                    <div id="form_errors">
+                      {% for key, value in NewChart.errors.items %}
+                      <strong>{{ value }}</strong>
+                      {% endfor %}
+                    </div>
+                    <button id="make_msg_none" type="button" class="fa fa-solid-close btn btn-danger" data-dismiss="alert"
+                      aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  {% endif %}
                   <form class="w-100" method="post">
                     {% load widget_tweaks %}
                     {% csrf_token %}
