@@ -1,0 +1,6 @@
+{
+    "name": "URL shortner",
+    "description": "Buni hoziroq herokuga joylang.",
+    "repository": "https://github.com/Bekzodbek2006/amCharts",
+    "keywords": ["django", "heroku"]
+  }
