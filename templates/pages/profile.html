@@ -24,7 +24,11 @@
                         {% if request.user.username == user_p.username %}
                             <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Edit profile</button>
                         {% else %}
-                            <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Follow</button>
+                            {% if user_p in request.user.followers.all  %}
+                            <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Unfollow</a>
+                            {% else %}
+                            <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Follow</a>
+                            {% endif %}
                         {% endif %}
                   </div>
                   <div class="ms-3" style="margin-top: 100px;">
@@ -41,14 +45,11 @@
                     </div>
                     <div class="px-3">
                       <p class="mb-1 h5">{{ user_p.following.count }}</p>
-                      <p class="small text-muted mb-0" onclick="clicker">Following</p>
+                      <a href="?tab=following" class="small text-muted mb-0">Following</a>
                     </div>
                     <div>
                       <p class="mb-1 h5">{{ user_p.followers.count }}</p>
-                      <p class="small text-muted mb-0">Followers</p>
-                    </div>
-                    <div>
-                      <a class="btn btn-outline-success" href="{% url 'app:new' %}">New Chart</a>
+                      <a href="?tab=followers" class="small text-muted mb-0">Followers</a>
                     </div>
                   </div>
                 </div>
@@ -75,16 +76,34 @@
                     {% endif %}
                  
                   {% endif %}
+                  {% if user_followers %}
+                  {% for followers in user_followers %}
+                  <div>
+                    <a class="text-dark" href="{% url 'app:profile' followers.username %}">{{ followers.username }}</a>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+                  {% if user_following %}
+                  {% for following in user_following %}
+                  <div>
+                    <a class="text-dark" href="{% url 'app:profile' following.username %}">{{ following.username }}</a>
+                  </div>
+                  {% endfor %}
+                  {% endif %}
                   </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      
-      {% for x in user_followers %}
-      <a href="{% url 'app:profile' x.username %}">{{ x.username }}</a>
-      {% endfor %}
+      {% if request.user.username == user_p.username %}
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form }}
+        {{ profile_form }}
+        <button type="submit">Submit</button>
+      </form>
+      {% endif %}
 </body>
 
 </html>

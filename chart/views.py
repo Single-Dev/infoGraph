@@ -25,11 +25,20 @@ def PublicProfileView(request, username):
     # Tab
     tab = request.GET.get('tab')
     title = None
+    tab_chart = None
+    tab_following = None
+    tab_followers = None
     if tab == "charts":
         tab_chart = author.tanla.all()
         title = "Charts"
+    elif tab == "following":
+        tab_following = user_p.following.all()
+        title = "Following"
+
+    elif tab == "followers":
+        title = "followers"
+        tab_followers = user_p.followers.all()
     else:
-        tab_chart = ""
         title = f"amCharts - @{user_p.username}"
 
     if request.user.is_authenticated:
@@ -49,11 +58,12 @@ def PublicProfileView(request, username):
     else:
         user_form = None
         profile_form = None
+
     user_chart_count = author.tanla.count()
-    user_followers = user_p.followers.all()
     context = {
         "user_p": user_p,
-        "user_followers":user_followers,
+        "user_following":tab_following,
+        "user_followers":tab_followers,
         "user_form":user_form,
         "profile_form":profile_form,
         "tab_chart":tab_chart,
