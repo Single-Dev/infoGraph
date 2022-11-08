@@ -40,12 +40,12 @@
                       <a href="?tab=charts" class="small text-muted mb-0">Charts</a>
                     </div>
                     <div class="px-3">
-                      <p class="mb-1 h5">0</p>
-                      <p class="small text-muted mb-0" onclick="clicker">Followers</p>
+                      <p class="mb-1 h5">{{ user_p.following.count }}</p>
+                      <p class="small text-muted mb-0" onclick="clicker">Following</p>
                     </div>
                     <div>
-                      <p class="mb-1 h5">0</p>
-                      <p class="small text-muted mb-0">Following</p>
+                      <p class="mb-1 h5">{{ user_p.followers.count }}</p>
+                      <p class="small text-muted mb-0">Followers</p>
                     </div>
                     <div>
                       <a class="btn btn-outline-success" href="{% url 'app:new' %}">New Chart</a>
@@ -81,15 +81,10 @@
           </div>
         </div>
       </section>
-      {% if request.user.username == user_p.username %}
-      <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ user_form }}
-        {{ profile_form }}
-        <button type="submit">Submit</button>
-      </form>
-      {% endif %}
-
+      
+      {% for x in user_followers %}
+      <a href="{% url 'app:profile' x.username %}">{{ x.username }}</a>
+      {% endfor %}
 </body>
 
 </html>

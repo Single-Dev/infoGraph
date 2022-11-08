@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import get_user_model
 from django.db.models import Avg
+from django.http import HttpResponseRedirect
 from .models import *
 from .forms import *
-
+from django.urls import reverse
 User = get_user_model()
 
 
@@ -49,8 +50,10 @@ def PublicProfileView(request, username):
         user_form = None
         profile_form = None
     user_chart_count = author.tanla.count()
+    user_followers = user_p.followers.all()
     context = {
         "user_p": user_p,
+        "user_followers":user_followers,
         "user_form":user_form,
         "profile_form":profile_form,
         "tab_chart":tab_chart,
@@ -58,6 +61,20 @@ def PublicProfileView(request, username):
         "user_chart_count":user_chart_count
     }
     return render(request, 'pages/profile.html', context)
+
+
+def followToggle(request, author):
+    authorObj = User.objects.get(username=author)
+    currentUserObj = User.objects.get(username=request.user.username)
+    following = authorObj.following.all()
+
+    if author != currentUserObj.username:
+        if currentUserObj in following:
+            authorObj.following.remove(currentUserObj.id)
+        else:
+            authorObj.following.add(currentUserObj.id)
+
+    return HttpResponseRedirect(reverse("app:profile", args=[authorObj.username]))
 
 def NewDashboardView(request):
     if request.user.is_authenticated:
@@ -121,3 +138,5 @@ def ChartView(request, slug):
         }
     
     return render(request, "pages/chart.html", context)
+
+

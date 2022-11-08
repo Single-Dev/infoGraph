@@ -5,6 +5,9 @@ from PIL import Image
 class MyUser(AbstractUser):
     is_organiser = models.BooleanField(default=False)
     is_agent = models.BooleanField(default=False)
+    following = models.ManyToManyField(
+        "self", blank=True, related_name="followers", symmetrical=False
+    )
 
 class Profile(models.Model):
     class Meta:
