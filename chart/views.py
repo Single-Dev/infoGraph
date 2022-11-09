@@ -77,17 +77,20 @@ def PublicProfileView(request, username):
 
 
 def followToggle(request, author):
-    authorObj = User.objects.get(username=author)
-    currentUserObj = User.objects.get(username=request.user.username)
-    following = authorObj.following.all()
+    if request.user.is_authenticated:
+        authorObj = User.objects.get(username=author)
+        currentUserObj = User.objects.get(username=request.user.username)
+        following = authorObj.following.all()
 
-    if author != currentUserObj.username:
-        if currentUserObj in following:
-            authorObj.following.remove(currentUserObj.id)
-        else:
-            authorObj.following.add(currentUserObj.id)
+        if author != currentUserObj.username:
+            if currentUserObj in following:
+                authorObj.following.remove(currentUserObj.id)
+            else:
+                authorObj.following.add(currentUserObj.id)
 
-    return HttpResponseRedirect(reverse("app:profile", args=[authorObj.username]))
+        return HttpResponseRedirect(reverse("app:profile", args=[authorObj.username]))
+    else:
+        return HttpResponseRedirect(reverse("login"))
 
 def NewDashboardView(request):
     if request.user.is_authenticated:
