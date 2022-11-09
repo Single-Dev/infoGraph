@@ -12,8 +12,10 @@ def home(request):
     charts_count = Chart.objects.count()
     user_count = User.objects.count()
     elem_count = Element.objects.count()
-    user = get_object_or_404(User, username=request.user)
-    users = user.followers.all()[:100]
+    users = None
+    if request.user.is_authenticated:
+        user = get_object_or_404(User, username=request.user)
+        users = user.followers.all()[:100]
     context = {
         "charts_count":charts_count,
         "user_count":user_count,

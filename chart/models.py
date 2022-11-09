@@ -48,4 +48,4 @@ class Element(models.Model):
     #     ordering = ['created_on']
 
     def __str__(self):
-        return f"id: {self.id}, title: {self.title}"
+        return f"title: {self.title}, post: {self.post}"
