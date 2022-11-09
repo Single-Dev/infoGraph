@@ -15,7 +15,7 @@ def home(request):
     context = {
         "charts_count":charts_count,
         "user_count":user_count,
-        "elem_count":elem_count
+        "elem_count":elem_count,
     }
     return render(request, 'pages/home.html', context)
 
@@ -31,13 +31,13 @@ def PublicProfileView(request, username):
     if tab == "charts":
         tab_chart = author.tanla.all()
         title = "Charts"
-    elif tab == "following":
-        tab_following = user_p.following.all()
+    elif tab == "following": # followingda foydalanuvchi uchun followerslar keladi. followersda esa teskarisi
+        tab_followers = user_p.followers.all()
         title = "Following"
 
     elif tab == "followers":
-        title = "followers"
-        tab_followers = user_p.followers.all()
+        title = "Followers"
+        tab_following = user_p.following.all()
     else:
         title = f"amCharts - @{user_p.username}"
 

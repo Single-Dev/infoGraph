@@ -4,8 +4,6 @@
     box-sizing: border-box;
 }
 
-a::selection{
-    color: #fff;
-    background-color: #000;
+#t-none{
+    text-decoration: none;
 }
-

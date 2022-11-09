@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+{% load static %}
 <html lang="en">
 
 <head>
@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 </head>
 
 <body>
@@ -25,7 +26,7 @@
                             <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Edit profile</button>
                         {% else %}
                             {% if user_p in request.user.followers.all  %}
-                            <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Unfollow</a>
+                            <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-danger" data-mdb-ripple-color="dark" style="z-index: 1;">Unfollow</a>
                             {% else %}
                             <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Follow</a>
                             {% endif %}
@@ -45,11 +46,11 @@
                     </div>
                     <div class="px-3">
                       <p class="mb-1 h5">{{ user_p.following.count }}</p>
-                      <a href="?tab=following" class="small text-muted mb-0">Following</a>
+                      <a href="?tab=followers" class="small text-muted mb-0">Followers</a>
                     </div>
                     <div>
                       <p class="mb-1 h5">{{ user_p.followers.count }}</p>
-                      <a href="?tab=followers" class="small text-muted mb-0">Followers</a>
+                      <a href="?tab=following" class="small text-muted mb-0">Following</a>
                     </div>
                   </div>
                 </div>
@@ -77,16 +78,18 @@
                  
                   {% endif %}
                   {% if user_followers %}
+                  <p class="lead fw-normal mb-1">Following</p>
                   {% for followers in user_followers %}
                   <div>
-                    <a class="text-dark" href="{% url 'app:profile' followers.username %}">{{ followers.username }}</a>
+                    <a class="text-dark" id="t-none" href="{% url 'app:profile' followers.username %}">@{{ followers.username }}</a>
                   </div>
                   {% endfor %}
                   {% endif %}
                   {% if user_following %}
+                  <p class="lead fw-normal mb-1">Followers</p>
                   {% for following in user_following %}
                   <div>
-                    <a class="text-dark" href="{% url 'app:profile' following.username %}">{{ following.username }}</a>
+                    <a class="text-dark" id="t-none" href="{% url 'app:profile' following.username %}">@{{ following.username }}</a>
                   </div>
                   {% endfor %}
                   {% endif %}
