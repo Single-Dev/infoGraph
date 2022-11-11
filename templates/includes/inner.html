@@ -4,9 +4,9 @@
 <!-- End Breadcrumbs -->
 
     <section class="inner-page">
-      <div class="container-fluid">
+      <div class="container">
 
-        <div class="row justify-content-center">
+        <div class=" d-flex">
           <div class="col-xl-10">
            
             {% for following in following_actions %}
@@ -15,6 +15,16 @@
             <a style="margin-left: 20px;" href="{% url 'app:chart' element.slug %}">{{ element.name }}</a>
 
             {% endfor %}
+            {% endfor %}
+          </div>
+          <div class="col-xl-10">
+            {% for user in users %}
+            {% if not user in following_actions %}
+            <div class="user_profile_quick_view" style="margin-top: 10px; margin-bottom: 10px;">
+              <img class="user_profile_img" style="border-radius: 50%;"  src="{{ user.profile.image.url }}" alt="@{{ user.username }}" width="30" >
+              <a class="text-dark" id="t-none" href="{% url 'app:profile' user.username %}">@{{ user.username }}</a>
+            </div>
+            {% endif %}
             {% endfor %}
           </div>
         </div>

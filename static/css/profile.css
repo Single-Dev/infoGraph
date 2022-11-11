@@ -7,3 +7,7 @@
 #t-none{
     text-decoration: none;
 }
+
+.following_profile_img{
+    border-radius: 50% ;
+}

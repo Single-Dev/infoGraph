@@ -11,16 +11,18 @@ User = get_user_model()
 def home(request):
     charts_count = Chart.objects.count()
     user_count = User.objects.count()
+    users = User.objects.all().order_by(-10)
     elem_count = Element.objects.count()
-    users = None
+    following_actions = None
     if request.user.is_authenticated:
         user = get_object_or_404(User, username=request.user)
-        users = user.followers.all()[:100]
+        following_actions = user.followers.all()[:100]
     context = {
         "charts_count":charts_count,
         "user_count":user_count,
         "elem_count":elem_count,
-        "following_actions":users,
+        "following_actions":following_actions,
+        "users":users
     }
     return render(request, 'pages/home.html', context)
 
@@ -121,8 +123,8 @@ def NewDashboardView(request):
 
 def signup(request):
     form = Registration()
-    initial = {'key': 'value'}
     if request.method == "POST":
+        initial = {'key': 'value'}
         form = Registration(request.POST)
         if form.is_valid():
             form.save()
