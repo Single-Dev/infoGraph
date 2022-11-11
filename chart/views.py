@@ -11,7 +11,7 @@ User = get_user_model()
 def home(request):
     charts_count = Chart.objects.count()
     user_count = User.objects.count()
-    users = User.objects.all().order_by(-10)
+    users = User.objects.all()
     elem_count = Element.objects.count()
     following_actions = None
     if request.user.is_authenticated:
