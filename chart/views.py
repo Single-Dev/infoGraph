@@ -6,12 +6,14 @@ from .models import *
 from .forms import *
 from django.urls import reverse
 User = get_user_model()
+from django.utils import timezone
 
 
 def home(request):
     charts_count = Chart.objects.count()
     user_count = User.objects.count()
-    users = User.objects.all()
+    date_joined = User.objects.filter(date_joined__date=timezone.now()-timezone.timedelta(0)).count()
+    users = User.objects.all().order_by('-id')[:date_joined]
     elem_count = Element.objects.count()
     following_actions = None
     if request.user.is_authenticated:
@@ -99,7 +101,6 @@ def followToggle(request, author):
 def NewDashboardView(request):
     if request.user.is_authenticated:
         user_p = User.objects.get(username=request.user)
-        initial = {'key': 'value'}
         user = User.objects.get(username=request.user)
         author = get_object_or_404(User, username=request.user)
         dash = author.tanla.all()
@@ -124,7 +125,6 @@ def NewDashboardView(request):
 def signup(request):
     form = Registration()
     if request.method == "POST":
-        initial = {'key': 'value'}
         form = Registration(request.POST)
         if form.is_valid():
             form.save()

@@ -8,7 +8,6 @@
 
         <div class=" d-flex">
           <div class="col-xl-10">
-           
             {% for following in following_actions %}
             {% for element in following.tanla.all %}
             <h4><a style="text-decoration: none;" href="{% url 'app:profile' element.author.username %}">@{{ element.author.username }}</a></h4>
@@ -24,7 +23,7 @@
               <img class="user_profile_img" style="border-radius: 50%;"  src="{{ user.profile.image.url }}" alt="@{{ user.username }}" width="30" >
              <div>
               <a class="text-dark" href="{% url 'app:profile' user.username %}" style="margin-left: 5px;">@{{ user.username }}</a>
-              {% if user_p in request.user.followers.all  %}
+              {% if user in request.user.followers.all  %}
               <a href="{% url 'app:follow' user.username %}">Unollow</a>
               {% else %}
               <a href="{% url 'app:follow' user.username %}">Follow</a>
