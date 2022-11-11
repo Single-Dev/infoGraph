@@ -11,3 +11,10 @@
 .following_profile_img{
     border-radius: 50% ;
 }
+
+.user_bio{
+    position: absolute;
+    z-index: 2;
+    top: 20px;
+    left: 340px;
+}
