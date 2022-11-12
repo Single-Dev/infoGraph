@@ -37,6 +37,7 @@ class Chart(models.Model):
     slug = models.SlugField(unique=True)
     caption = models.TextField(max_length=700)
     created_on = models.DateTimeField(("date joined"), default=timezone.now)
+    view_count = models.IntegerField(default=0)
     def __str__(self):
         return self.name
 

@@ -18,9 +18,8 @@ def home(request):
     following_actions = None
     if request.user.is_authenticated:
         user = get_object_or_404(User, username=request.user)
-        user_following = user.followers.all()
-        # for user_f in user_following:
-        created_on_count = user.followers.tanla.filter(created_on__date=timezone.now()).count()
+        for user_f in user.followers.all():
+            created_on_count = user.tanla.filter(created_on__date=timezone.now()).count()
         following_actions = user.followers.all().order_by('-id')[:5]
     context = {
         "charts_count":charts_count,
@@ -148,6 +147,9 @@ def ChartView(request, slug):
     elements_count = post.qoshish.count()
     number_avg = post.qoshish.aggregate(Avg("value"))
     new_element= None
+    chart_view = Chart.objects.get(slug=slug)
+    chart_view.views = chart_view.view_count + 1
+    chart_view.save()
     if request.method == 'POST':
         comment_form = NewElementForm(data=request.POST)
         if comment_form.is_valid():
@@ -163,7 +165,7 @@ def ChartView(request, slug):
         'comment_form': comment_form,
         "chart":chart,
         "elements_count":elements_count,
-        "number_avg":number_avg
+        "number_avg":number_avg,
         }
     
     return render(request, "pages/chart.html", context)
