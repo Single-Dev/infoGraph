@@ -12,75 +12,84 @@ from django.utils import timezone
 def home(request):
     charts_count = Chart.objects.count()
     user_count = User.objects.count()
-    date_joined = User.objects.filter(date_joined__date=timezone.now()-timezone.timedelta(0)).count()
-    users = User.objects.all().order_by('-id')[:date_joined]
+    date_joined_count = User.objects.filter(date_joined__date=timezone.now()-timezone.timedelta(0)).count()
+    users = User.objects.all().order_by('-id')[:date_joined_count]
     elem_count = Element.objects.count()
     following_actions = None
     if request.user.is_authenticated:
         user = get_object_or_404(User, username=request.user)
-        following_actions = user.followers.all()[:100]
+        user_following = user.followers.all()
+        # for user_f in user_following:
+        created_on_count = user.followers.tanla.filter(created_on__date=timezone.now()).count()
+        following_actions = user.followers.all().order_by('-id')[:5]
     context = {
         "charts_count":charts_count,
         "user_count":user_count,
         "elem_count":elem_count,
         "following_actions":following_actions,
-        "users":users
+        "users":users,
+        "created_on_count":created_on_count
     }
     return render(request, 'pages/home.html', context)
 
 def PublicProfileView(request, username):
-    user_p = User.objects.get(username=username)
-    author = get_object_or_404(User, username=username)
-    # Tab
-    tab = request.GET.get('tab')
-    title = None
-    tab_chart = None
-    tab_following = None
-    tab_followers = None
-    if tab == "charts":
-        tab_chart = author.tanla.all()
-        title = "Charts"
-    elif tab == "following": # followingda foydalanuvchi uchun followerslar keladi. followersda esa teskarisi
-        tab_followers = user_p.followers.all()
-        title = "Following"
+        try:
+            user_p = User.objects.get(username=username)
+            author = get_object_or_404(User, username=username)
+            # Tab
+            tab = request.GET.get('tab')
+            title = None
+            tab_chart = None
+            tab_following = None
+            tab_followers = None
+            if tab == "charts":
+                tab_chart = author.tanla.all()
+                title = "Charts"
+            elif tab == "following": # followingda foydalanuvchi uchun followerslar keladi. followersda esa teskarisi
+                tab_followers = user_p.followers.all()
+                title = "Following"
 
-    elif tab == "followers":
-        title = "Followers"
-        tab_following = user_p.following.all()
-    else:
-        title = f"amCharts - @{user_p.username}"
+            elif tab == "followers":
+                title = "Followers"
+                tab_following = user_p.following.all()
+            else:
+                title = f"amCharts - @{user_p.username}"
 
-    if request.user.is_authenticated:
-        user_form = UpdateUserForm(instance=request.user)
-        profile_form = UpdateProfileForm(instance=request.user.profile)
-        if request.method == 'POST':
-            user_form = UpdateUserForm(request.POST, instance=request.user)
-            profile_form = UpdateProfileForm(request.POST,
-                                            request.FILES,
-                                            instance=request.user.profile)
-            if user_form.is_valid() and profile_form.is_valid():
-                user_name = user_form.cleaned_data.get('username')
-                user_form.save()
-                profile_form.save()
-                return redirect("app:profile", user_name)
-            
-    else:
-        user_form = None
-        profile_form = None
+            if request.user.is_authenticated:
+                user_form = UpdateUserForm(instance=request.user)
+                profile_form = UpdateProfileForm(instance=request.user.profile)
+                if request.method == 'POST':
+                    user_form = UpdateUserForm(request.POST, instance=request.user)
+                    profile_form = UpdateProfileForm(request.POST,
+                                                    request.FILES,
+                                                    instance=request.user.profile)
+                    if user_form.is_valid() and profile_form.is_valid():
+                        user_name = user_form.cleaned_data.get('username')
+                        user_form.save()
+                        profile_form.save()
+                        return redirect("app:profile", user_name)
+                    
+            else:
+                user_form = None
+                profile_form = None
 
-    user_chart_count = author.tanla.count()
-    context = {
-        "user_p": user_p,
-        "user_following":tab_following,
-        "user_followers":tab_followers,
-        "user_form":user_form,
-        "profile_form":profile_form,
-        "tab_chart":tab_chart,
-        "title":title,
-        "user_chart_count":user_chart_count
-    }
-    return render(request, 'pages/profile.html', context)
-
+            user_chart_count = author.tanla.count()
+            context = {
+                "user_p": user_p,
+                "user_following":tab_following,
+                "user_followers":tab_followers,
+                "user_form":user_form,
+                "profile_form":profile_form,
+                "tab_chart":tab_chart,
+                "title":title,
+                "user_chart_count":user_chart_count
+            }
+            return render(request, 'pages/profile.html', context)
+        except:
+            context={
+                "username_z":request
+            }
+            return render(request, "pages/404.html", context)
 
 def followToggle(request, author):
     if request.user.is_authenticated:
