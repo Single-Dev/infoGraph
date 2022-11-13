@@ -330,25 +330,25 @@
 
                         <div class="col-lg-6">
                             <form method="post" role="form" class="form">
+                                {% load widget_tweaks %}
+                                {% csrf_token %}
                                 <div class="row">
                                     <div class="col-md-6 form-group">
                                         <label for="name">Your Name</label>
-                                        <input type="text" name="name" class="form-control" id="name" required>
+                                        {% render_field contact.name type="text" class="form-control" id="name" placeholder="Your name" %}
                                     </div>
                                     <div class="col-md-6 form-group mt-3 mt-md-0">
                                         <label for="email">Your Email</label>
-                                        <input type="email" class="form-control" name="email" id="email"
-                                            required>
+                                        {% render_field contact.email class="form-control" id="email" placeholder="Your email" %}
                                     </div>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="subject">Subject</label>
-                                    <input type="text" class="form-control" id="subject"
-                                        required>
+                                    {% render_field contact.subject class="form-control" id="subject" %}
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="message">Message</label>
-                                    <textarea class="form-control" name="message" rows="8" required></textarea>
+                                    {% render_field contact.message class="form-control" id="message" row="8" placeholder="Your Message" %}
                                 </div>
 
                                 <div class="text-center"><button type="submit" class="btn btn-info">Send Message</button></div>

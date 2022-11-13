@@ -16,18 +16,27 @@ def home(request):
     users = User.objects.all().order_by('-id')[:date_joined_count]
     elem_count = Element.objects.count()
     following_actions = None
+    created_on_count = None
     if request.user.is_authenticated:
         user = get_object_or_404(User, username=request.user)
-        for user_f in user.followers.all():
-            created_on_count = user.tanla.filter(created_on__date=timezone.now()).count()
+        # for user_f in user.followers.all():
+        created_on_count = user.tanla.filter(created_on__date=timezone.now()).count()
         following_actions = user.followers.all().order_by('-id')[:5]
+
+    contact = ContactUsForm()
+    if request.method == "POST":
+        contact = ContactUsForm(request.POST)
+        if contact.is_valid():
+            contact.save()
+            return redirect('app:home')
     context = {
         "charts_count":charts_count,
         "user_count":user_count,
         "elem_count":elem_count,
         "following_actions":following_actions,
         "users":users,
-        "created_on_count":created_on_count
+        "created_on_count":created_on_count,
+        "contact":contact
     }
     return render(request, 'pages/home.html', context)
 
@@ -147,9 +156,12 @@ def ChartView(request, slug):
     elements_count = post.qoshish.count()
     number_avg = post.qoshish.aggregate(Avg("value"))
     new_element= None
-    chart_view = Chart.objects.get(slug=slug)
-    chart_view.views = chart_view.view_count + 1
-    chart_view.save()
+    # chart_view = Chart.objects.get(slug=slug)
+    if request.user.is_authenticated:
+        chart.view_count = chart.view_count + 1
+    else:
+        chart.view_count = chart.view_count + 1
+    chart.save()
     if request.method == 'POST':
         comment_form = NewElementForm(data=request.POST)
         if comment_form.is_valid():
