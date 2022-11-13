@@ -19,8 +19,8 @@ def home(request):
     created_on_count = None
     if request.user.is_authenticated:
         user = get_object_or_404(User, username=request.user)
-        # for user_f in user.followers.all():
-        created_on_count = user.tanla.filter(created_on__date=timezone.now()).count()
+        for user_f in user.followers.all():
+            created_on_count = user_f.chart.filter(created_on__date=timezone.now()-timezone.timedelta(0)).count()
         following_actions = user.followers.all().order_by('-id')[:5]
 
     contact = ContactUsForm()
@@ -51,7 +51,7 @@ def PublicProfileView(request, username):
             tab_following = None
             tab_followers = None
             if tab == "charts":
-                tab_chart = author.tanla.all()
+                tab_chart = author.chart.all()
                 title = "Charts"
             elif tab == "following": # followingda foydalanuvchi uchun followerslar keladi. followersda esa teskarisi
                 tab_followers = user_p.followers.all()
@@ -81,7 +81,7 @@ def PublicProfileView(request, username):
                 user_form = None
                 profile_form = None
 
-            user_chart_count = author.tanla.count()
+            user_chart_count = author.chart.count()
             context = {
                 "user_p": user_p,
                 "user_following":tab_following,
@@ -120,7 +120,7 @@ def NewDashboardView(request):
         user_p = User.objects.get(username=request.user)
         user = User.objects.get(username=request.user)
         author = get_object_or_404(User, username=request.user)
-        dash = author.tanla.all()
+        dash = author.chart.all()
         new_dash = None
         NewChart = NewChartFrom()
         if request.method == 'POST':
@@ -152,9 +152,9 @@ def signup(request):
 def ChartView(request, slug):
     chart = Chart.objects.get(slug=slug)
     post = get_object_or_404(Chart, slug=slug)
-    elements = post.qoshish.all()
-    elements_count = post.qoshish.count()
-    number_avg = post.qoshish.aggregate(Avg("value"))
+    elements = post.element.all()
+    elements_count = post.element.count()
+    number_avg = post.element.aggregate(Avg("value"))
     new_element= None
     # chart_view = Chart.objects.get(slug=slug)
     if request.user.is_authenticated:

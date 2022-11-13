@@ -32,7 +32,7 @@ class Profile(models.Model):
             img.save(self.image.path)
 
 class Chart(models.Model):
-    author = models.ForeignKey(MyUser, on_delete=models.CASCADE,related_name='tanla' )
+    author = models.ForeignKey(MyUser, on_delete=models.CASCADE,related_name='chart' )
     name = models.CharField(max_length=150)
     slug = models.SlugField(unique=True)
     caption = models.TextField(max_length=700)
@@ -42,7 +42,7 @@ class Chart(models.Model):
         return self.name
 
 class Element(models.Model):
-    post = models.ForeignKey(Chart,on_delete=models.CASCADE,related_name='qoshish')
+    post = models.ForeignKey(Chart,on_delete=models.CASCADE,related_name='element')
     title = models.CharField(max_length=80)
     value = models.IntegerField(default=0)
 
