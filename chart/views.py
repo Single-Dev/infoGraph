@@ -16,12 +16,12 @@ def home(request):
     users = User.objects.all().order_by('-id')[:date_joined_count]
     elem_count = Element.objects.count()
     following_actions = None
-    created_on_count = None
+    # created_on_count = None
     if request.user.is_authenticated:
         user = get_object_or_404(User, username=request.user)
-        for user_f in user.followers.all():
-            created_on_count = user_f.chart.filter(created_on__date=timezone.now()-timezone.timedelta(0)).count()
-        following_actions = user.followers.all().order_by('-id')[:5]
+        # for user_f in user.followers.all():
+        #     created_on_count = user_f.chart.filter(created_on__date=timezone.now()).count()
+        following_actions = user.followers.all().order_by('-id')[:15]
 
     contact = ContactUsForm()
     if request.method == "POST":
@@ -35,7 +35,6 @@ def home(request):
         "elem_count":elem_count,
         "following_actions":following_actions,
         "users":users,
-        "created_on_count":created_on_count,
         "contact":contact
     }
     return render(request, 'pages/home.html', context)

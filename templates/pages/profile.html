@@ -3,111 +3,133 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 </head>
 
 <body>
-    <section class="h-100 gradient-custom-2">
-        <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-9 col-xl-7">
-              <div class="card">
-                <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
-                  <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-                    <img src="{{ user_p.profile.image.url }}" alt="@{{ user_p.username }}" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
-                        {% if request.user.username == user_p.username %}
-                            <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Edit profile</button>
-                        {% else %}
-                            {% if user_p in request.user.followers.all  %}
-                            <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-danger" data-mdb-ripple-color="dark" style="z-index: 1;">Unfollow</a>
-                            {% else %}
-                            <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Follow</a>
-                            {% endif %}
-                        {% endif %}
-                  </div>
-                  <div class="ms-3" style="margin-top: 100px;">
-                    <h5>{{ user_p.first_name }}</h5>
-                    <h6>{{ user_p.last_name }}</h6>
-                    <p>  <a class="text-light" href="{% url 'app:profile' user_p.username %}" style="text-decoration: none;">@{{ user_p.username }}</a></p>
-                  </div>
-                  <p class="user_bio">{{ user_p.profile.bio }}</p>
-                </div>
-                <div class="p-4 text-black" style="background-color: #f8f9fa;">
-                  <div class="d-flex justify-content-end text-center py-1">
-                    <div>
-                      <p class="mb-1 h5">{{user_chart_count}}</p>
-                      <a href="?tab=charts" class="small text-muted mb-0">Charts</a>
-                    </div>
-                    <div class="px-3">
-                      <p class="mb-1 h5">{{ user_p.following.count }}</p>
-                      <a href="?tab=followers" class="small text-muted mb-0">Followers</a>
-                    </div>
-                    <div>
-                      <p class="mb-1 h5">{{ user_p.followers.count }}</p>
-                      <a href="?tab=following" class="small text-muted mb-0">Following</a>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body p-4 text-black">
-                   {% if tab_chart %}
-                   <div class="mb-5">
-                    <p class="lead fw-normal mb-1">Charts</p>
-                    <div class="p-4" style="background-color: #f8f9fa;">
-                      {% for chart in tab_chart %}
-                      <div>
-                          <a class="text-dark" href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
-                          <p>{{ chart.caption }}</p>
-                      </div>
-                      {% endfor %}
-                    </div>
-                  </div>
-                  {% endif %}
-                  {% if title == "Charts" and user_chart_count == 0 %}
-                    <p class="lead fw-normal mb-1">
-                      No Charts Yet
-                    </p>
-                    {% if user_p.username == request.user.username %}
-                    <a class="btn btn-outline-success" href="{% url 'app:new' %}">New Chart</a>
-                    {% endif %}
-                 
-                  {% endif %}
-                  {% if user_followers %}
-                  <p class="lead fw-normal mb-1">Following</p>
-                  {% for followers in user_followers %}
-                  <div class="user_profile_quick_view" style="margin-top: 10px; margin-bottom: 10px;">
-                    <img class="following_profile_img" style="border-radius: 50%;"  src="{{ followers.profile.image.url }}" alt="@{{ following.username }}" width="30" >
-                    <a class="text-dark" id="t-none" href="{% url 'app:profile' followers.username %}">@{{ followers.username }}</a>
-                  </div>
-                  {% endfor %}
-                  {% endif %}
-                  {% if user_following %}
-                  <p class="lead fw-normal mb-1">Followers</p>
-                  {% for following in user_following %}
-                  <div class="user_profile_quick_view" style="margin-top: 10px; margin-bottom: 10px;">
-                    <img class="followers_profile_img" style="border-radius: 50%;"  src="{{ following.profile.image.url }}" alt="@{{ following.username }}" width="30" >
-                    <a class="text-dark" id="t-none" href="{% url 'app:profile' following.username %}">@{{ following.username }}</a>
-                  </div>
-                  {% endfor %}
-                  {% endif %}
-                  </div>
+  <section class="h-100 gradient-custom-2">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-9 col-xl-7">
+          <div class="card">
+            <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
+              <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+                <img src="{{ user_p.profile.image.url }}" alt="@{{ user_p.username }}"
+                  class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
+                {% if request.user.username == user_p.username %}
+                <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Edit
+                  profile</button>
+                {% else %}
+                {% if user_p in request.user.followers.all %}
+                <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-danger"
+                  data-mdb-ripple-color="dark" style="z-index: 1;">Unfollow</a>
+                {% else %}
+                <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-dark"
+                  data-mdb-ripple-color="dark" style="z-index: 1;">Follow</a>
+                {% endif %}
+                {% endif %}
               </div>
+              <div class="ms-3" style="margin-top: 100px;">
+                <h5>{{ user_p.first_name }}</h5>
+                <h6>{{ user_p.last_name }}</h6>
+                <p> <a class="text-light" href="{% url 'app:profile' user_p.username %}"
+                    style="text-decoration: none;">@{{ user_p.username }}</a></p>
+              </div>
+              <p class="user_bio">
+                {% if user_p.profile.bio %}
+                {{ user_p.profile.bio }}
+                {% endif %}
+              </p>
+            </div>
+            <div class="p-4 text-black" style="background-color: #f8f9fa;">
+              <div class="d-flex justify-content-end text-center py-1">
+                <div>
+                  <p class="mb-1 h5">{{user_chart_count}}</p>
+                  <a href="?tab=charts" class="small text-muted mb-0">Charts</a>
+                </div>
+                <div class="px-3">
+                  <p class="mb-1 h5">{{ user_p.following.count }}</p>
+                  <a href="?tab=followers" class="small text-muted mb-0">Followers</a>
+                </div>
+                <div>
+                  <p class="mb-1 h5">{{ user_p.followers.count }}</p>
+                  <a href="?tab=following" class="small text-muted mb-0">Following</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-4 text-black">
+              {% if tab_chart %}
+              <div class="mb-5">
+                <p class="lead fw-normal mb-1">Charts</p>
+                <div class="p-4" style="background-color: #f8f9fa;">
+                  {% for chart in tab_chart %}
+                  <div>
+                    <a class="text-dark" href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
+                    <p>{{ chart.caption }}</p>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+              {% if title == "Charts" and user_chart_count == 0 %}
+              <p class="lead fw-normal mb-1">
+                No Charts Yet
+              </p>
+              {% if user_p.username == request.user.username %}
+              <a class="btn btn-outline-success" href="{% url 'app:new' %}">New Chart</a>
+              {% endif %}
+
+              {% endif %}
+              {% if user_followers %}
+              <p class="lead fw-normal mb-1">Following</p>
+              {% for followers in user_followers %}
+              <div class="user_profile_quick_view" style="margin-top: 10px; margin-bottom: 10px;">
+                <img class="following_profile_img" style="border-radius: 50%;" src="{{ followers.profile.image.url }}"
+                  alt="@{{ following.username }}" width="30">
+                <a class="text-dark" id="t-none" href="{% url 'app:profile' followers.username %}">@{{followers.username }}</a>
+              </div>
+              {% endfor %}
+              {% endif %}
+              {% if user_following %}
+              <p class="lead fw-normal mb-1">Followers</p>
+              {% for following in user_following %}
+              <div class="user_profile_quick_view" style="margin-top: 10px; margin-bottom: 10px;">
+                <img class="followers_profile_img" style="border-radius: 50%;" src="{{ following.profile.image.url }}"
+                  alt="@{{ following.username }}" width="30">
+                <a class="text-dark" id="t-none" href="{% url 'app:profile' following.username %}">@{{following.username }}</a>
+              </div>
+              {% endfor %}
+              {% endif %}
             </div>
           </div>
         </div>
-      </section>
-      {% if request.user.username == user_p.username %}
-      <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ user_form }}
-        {{ profile_form }}
-        <button type="submit">Submit</button>
-      </form>
-      {% endif %}
+      </div>
+    </div>
+  </section>
+  <div class="edit_profile_div">
+    {% if request.user.username == user_p.username %}
+    <form method="post" enctype="multipart/form-data" class="w-25">
+      {% csrf_token %}
+      {% load widget_tweaks %}
+      {% render_field user_form.first_name class="form-control mt-2 mb-2" id="first_name" placeholder="First Name" %}
+      {% render_field user_form.last_name class="form-control mt-2 mb-2" id="last_name" placeholder="Last Name" %}
+      {% render_field user_form.email class="form-control mt-2 mb-2" id="email" placeholder="email" %}
+      <div class="d-flex" style="align-items: center;">
+        <span style="font-size: 35px;">@</span>
+        {% render_field user_form.username class="form-control mt-2 mb-2" id="username" placeholder="username" %}
+      </div>
+      {% render_field profile_form.image class="form-control mt-2 mb-2" id="profile_image" %}
+      {% render_field profile_form.bio class="form-control mt-2 mb-2" id="bio" placeholder="Bio" %}
+      <button type="submit" class="btn btn-success w-100">Update Profile</button>
+    </form>
+    {% endif %}
+  </div>
 </body>
 
 </html>

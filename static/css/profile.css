@@ -18,3 +18,13 @@
     top: 20px;
     left: 340px;
 }
+
+.edit_profile_div{
+    position: relative;
+    color: red !important;
+}
+
+.edit_profile_div form{
+    position: absolute;
+    top: -500px;
+}

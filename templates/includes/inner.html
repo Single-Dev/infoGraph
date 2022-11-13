@@ -8,7 +8,6 @@
 
         <div class=" d-flex">
           <div class="col-xl-10">
-            {{ created_on_count }}
             {% for following in following_actions %}
             {% for element in following.chart.all %}
             <h4><a style="text-decoration: none;" href="{% url 'app:profile' element.author.username %}">@{{ element.author.username }}</a></h4>
