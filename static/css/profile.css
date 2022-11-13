@@ -20,11 +20,15 @@
 }
 
 .edit_profile_div{
-    position: relative;
-    color: red !important;
+    display: none;
 }
 
 .edit_profile_div form{
+    background-color: #fff !important;
     position: absolute;
-    top: -500px;
+    padding: 30px 20px;
+    border-radius: 10px;
+    top: 170px;
+    left: 500px;
+    z-index: 5;
 }

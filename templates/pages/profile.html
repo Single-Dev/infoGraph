@@ -7,8 +7,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title }}</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 </head>
 
@@ -23,7 +28,7 @@
                 <img src="{{ user_p.profile.image.url }}" alt="@{{ user_p.username }}"
                   class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
                 {% if request.user.username == user_p.username %}
-                <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Edit
+                <button type="button" id="edit_btn" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Edit
                   profile</button>
                 {% else %}
                 {% if user_p in request.user.followers.all %}
@@ -117,19 +122,20 @@
     <form method="post" enctype="multipart/form-data" class="w-25">
       {% csrf_token %}
       {% load widget_tweaks %}
+      {% render_field profile_form.image class="form-control mt-2 mb-2" id="profile_image" %}
       {% render_field user_form.first_name class="form-control mt-2 mb-2" id="first_name" placeholder="First Name" %}
       {% render_field user_form.last_name class="form-control mt-2 mb-2" id="last_name" placeholder="Last Name" %}
-      {% render_field user_form.email class="form-control mt-2 mb-2" id="email" placeholder="email" %}
       <div class="d-flex" style="align-items: center;">
         <span style="font-size: 35px;">@</span>
         {% render_field user_form.username class="form-control mt-2 mb-2" id="username" placeholder="username" %}
       </div>
-      {% render_field profile_form.image class="form-control mt-2 mb-2" id="profile_image" %}
       {% render_field profile_form.bio class="form-control mt-2 mb-2" id="bio" placeholder="Bio" %}
-      <button type="submit" class="btn btn-success w-100">Update Profile</button>
+      <button type="submit" id="update_btn" class="btn btn-success w-100">Update Profile</button>
     </form>
     {% endif %}
   </div>
+
+  <script src="{% static 'js/profile.js' %}"></script>
 </body>
 
 </html>
