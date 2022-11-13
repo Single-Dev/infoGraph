@@ -53,12 +53,12 @@ def PublicProfileView(request, username):
                 tab_chart = author.chart.all()
                 title = "Charts"
             elif tab == "following": # followingda foydalanuvchi uchun followerslar keladi. followersda esa teskarisi
-                tab_followers = user_p.followers.all()
+                tab_followers = user_p.followers.all().order_by('-id')
                 title = "Following"
 
             elif tab == "followers":
                 title = "Followers"
-                tab_following = user_p.following.all()
+                tab_following = user_p.following.all().order_by('-id')
             else:
                 title = f"amCharts - @{user_p.username}"
 
