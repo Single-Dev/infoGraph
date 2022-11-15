@@ -62,6 +62,7 @@ def PublicProfileView(request, username):
             else:
                 title = f"amCharts - @{user_p.username}"
 
+            # Epdate Profile
             if request.user.is_authenticated:
                 user_form = UpdateUserForm(instance=request.user)
                 profile_form = UpdateProfileForm(instance=request.user.profile)
@@ -114,16 +115,16 @@ def followToggle(request, author):
     else:
         return HttpResponseRedirect(reverse("login"))
 
-def NewDashboardView(request):
+def NewChartView(request):
     if request.user.is_authenticated:
         user_p = User.objects.get(username=request.user)
         user = User.objects.get(username=request.user)
         author = get_object_or_404(User, username=request.user)
         dash = author.chart.all()
         new_dash = None
-        NewChart = NewChartFrom()
+        NewChart = ChartFrom()
         if request.method == 'POST':
-            NewChart = NewChartFrom(data=request.POST)
+            NewChart = ChartFrom(data=request.POST)
             if NewChart.is_valid():
                 new_dash = NewChart.save(commit=False)
                 slug = NewChart.cleaned_data.get('slug')
@@ -162,23 +163,30 @@ def ChartView(request, slug):
         chart.view_count = chart.view_count + 1
     chart.save()
     if request.method == 'POST':
-        comment_form = NewElementForm(data=request.POST)
+        comment_form = ElementForm(data=request.POST)
         if comment_form.is_valid():
             new_element = comment_form.save(commit=False)
             new_element.post = post
             new_element.save()
             return redirect("app:chart", slug) # redirect to this url
     else:
-        comment_form = NewElementForm()
-
+        comment_form = ElementForm()
+    update_chart_form = ChartFrom(instance=chart)
+    if request.method == 'POST':
+        update_chart_form = ChartFrom(request.POST, instance=chart)
+        if update_chart_form.is_valid():
+            update_chart_form.save()
+            slug = update_chart_form.cleaned_data.get('slug')
+            return redirect("app:chart", slug)
     context= {
         'elements': elements,
         'comment_form': comment_form,
         "chart":chart,
         "elements_count":elements_count,
         "number_avg":number_avg,
+        "update_chart_form":update_chart_form
         }
     
     return render(request, "pages/chart.html", context)
 
-
+# def UpdateChartView(request, slug)

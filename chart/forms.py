@@ -15,7 +15,7 @@ class Registration(UserCreationForm):
 
         return lowercase_username
 
-class NewChartFrom(forms.ModelForm):
+class ChartFrom(forms.ModelForm):
     class Meta:
         model = Chart
         fields = ("name", "chart_type","slug", "caption")
@@ -26,7 +26,7 @@ class NewChartFrom(forms.ModelForm):
 
         return lowercase_slug
 
-class NewElementForm(forms.ModelForm):
+class ElementForm(forms.ModelForm):
     class Meta:
         model = Element
         fields = ("title", "value")

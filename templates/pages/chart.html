@@ -27,6 +27,11 @@
       }
     }
   </style>
+  <form method="post">
+    {% csrf_token %}
+    {{ update_chart_form }}
+    <button type="submit">Update</button>
+  </form>
   <h2>{{ chart.view_count }}</h2>
   <p>{{ elements_count }} tadan iborat, o'rtacha: {{number_avg.value__avg }}</p>
   <div id="chartdiv"></div>

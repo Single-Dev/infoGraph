@@ -7,6 +7,6 @@ urlpatterns = [
     path("signup/", signup, name="signup"),
     path("stats/<slug:slug>/", ChartView, name="chart"),
     path("<str:username>", PublicProfileView, name="profile"),
-    path("new/", NewDashboardView, name="new"),
+    path("new/", NewChartView, name="new"),
     path("f/<str:author>/",followToggle, name="follow")
 ]
