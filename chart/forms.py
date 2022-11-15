@@ -18,7 +18,7 @@ class Registration(UserCreationForm):
 class NewChartFrom(forms.ModelForm):
     class Meta:
         model = Chart
-        fields = ("name", "slug", "caption")
+        fields = ("name", "chart_type","slug", "caption")
     
     def clean_slug(self):
         slug = self.cleaned_data.get("slug")
