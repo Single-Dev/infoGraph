@@ -162,6 +162,8 @@ def ChartView(request, slug):
     else:
         chart.view_count = chart.view_count + 1
     chart.save()
+
+    # add element form
     if request.method == 'POST':
         comment_form = ElementForm(data=request.POST)
         if comment_form.is_valid():
@@ -171,6 +173,7 @@ def ChartView(request, slug):
             return redirect("app:chart", slug) # redirect to this url
     else:
         comment_form = ElementForm()
+    # update chart form    
     update_chart_form = ChartFrom(instance=chart)
     if request.method == 'POST':
         update_chart_form = ChartFrom(request.POST, instance=chart)
@@ -189,4 +192,12 @@ def ChartView(request, slug):
     
     return render(request, "pages/chart.html", context)
 
-# def UpdateChartView(request, slug)
+
+def deleteChartView(request, slug):
+    chart = Chart.objects.get(slug=slug)
+    if request.user.username == chart.author.username: 
+        chart.delete()
+        return redirect("app:profile", request.user)
+    else:
+        slug = chart.slug
+        return redirect("app:chart", slug)

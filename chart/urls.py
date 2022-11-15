@@ -8,5 +8,6 @@ urlpatterns = [
     path("stats/<slug:slug>/", ChartView, name="chart"),
     path("<str:username>", PublicProfileView, name="profile"),
     path("new/", NewChartView, name="new"),
+    path("delete/<str:slug>/", deleteChartView, name="delete_chart"),
     path("f/<str:author>/",followToggle, name="follow")
 ]
