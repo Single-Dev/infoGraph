@@ -26,10 +26,22 @@
         width: 100% !important;
       }
     }
+    #chart_about{
+      display: flex;
+      justify-content: space-around;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
   </style>
 
-  <h2>{{ chart.view_count }}</h2>
-  <p>{{ elements_count }} tadan iborat, o'rtacha: {{number_avg.value__avg }}</p>
+  <div id="chart_about">
+    <h2>{{ chart.view_count }}</h2>
+    <p>{{ elements_count }} tadan iborat, o'rtacha: {{number_avg.value__avg }}</p>
+    {% if request.user.username == chart.author.username %}
+    <a class="btn btn-danger" href="{% url 'app:delete_chart' chart.slug %}">Delete</a>
+    {% endif %}
+  </div>
+
   <div id="chartdiv"></div>
   <blockquote class="container">{{ chart.caption }}</blockquote>
   {% if request.user.username == chart.author.username %}

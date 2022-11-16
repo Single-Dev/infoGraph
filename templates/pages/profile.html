@@ -77,7 +77,6 @@
                   <div>
                     <a class="text-dark" href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
                     <p>{{ chart.caption }}</p>
-                    <a class="btn btn-danger" href="{% url 'app:delete_chart' chart.slug %}">Delete</a>
                   </div>
                   {% endfor %}
                 </div>

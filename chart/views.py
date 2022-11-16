@@ -197,7 +197,7 @@ def deleteChartView(request, slug):
     chart = Chart.objects.get(slug=slug)
     if request.user.username == chart.author.username: 
         chart.delete()
-        return redirect("app:profile", request.user)
+        return redirect("app:profile", chart.author) # yoki request.user
     else:
         slug = chart.slug
         return redirect("app:chart", slug)
