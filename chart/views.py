@@ -173,7 +173,20 @@ def ChartView(request, slug):
             return redirect("app:chart", slug) # redirect to this url
     else:
         comment_form = ElementForm()
-    # update chart form    
+    context= {
+        'elements': elements,
+        'comment_form': comment_form,
+        "chart":chart,
+        "elements_count":elements_count,
+        "number_avg":number_avg,
+        }
+    
+    return render(request, "pages/chart.html", context)
+
+def UpdateChartView(request, slug):
+    chart = Chart.objects.get(slug=slug)
+    post = get_object_or_404(Chart, slug=slug)
+    elements = post.element.all()
     update_chart_form = ChartFrom(instance=chart)
     if request.method == 'POST':
         update_chart_form = ChartFrom(request.POST, instance=chart)
@@ -181,17 +194,12 @@ def ChartView(request, slug):
             update_chart_form.save()
             slug = update_chart_form.cleaned_data.get('slug')
             return redirect("app:chart", slug)
-    context= {
-        'elements': elements,
-        'comment_form': comment_form,
+    context={
+        "update_chart_form":update_chart_form,
         "chart":chart,
-        "elements_count":elements_count,
-        "number_avg":number_avg,
-        "update_chart_form":update_chart_form
-        }
-    
-    return render(request, "pages/chart.html", context)
-
+        "elements":elements
+    }
+    return render(request, "pages/update_chart.html", context)
 
 def deleteChartView(request, slug):
     chart = Chart.objects.get(slug=slug)
@@ -202,17 +210,8 @@ def deleteChartView(request, slug):
         slug = chart.slug
         return redirect("app:chart", slug)
 
-def ElementView(request, slug):
-    chart = Chart.objects.get(slug=slug)
-    post = get_object_or_404(Chart, slug=slug)
-    elements = post.element.all()
-    context={
-        "elements":elements,
-        "chart":chart
-    }
-    return render(request, "pages/chart_elements.html", context)
 
-def editElementView(request, slug, pk):
+def UpdateElementView(request, slug, pk):
     chart = Chart.objects.get(slug=slug)
     post = get_object_or_404(Chart, slug=slug)
     element = post.element.get(id=pk)
@@ -222,11 +221,22 @@ def editElementView(request, slug, pk):
             UpdateElementForm = ElementForm(request.POST, instance=element)
             if UpdateElementForm.is_valid():
                 UpdateElementForm.save()
-                return redirect("app:element_view", chart.slug)
+                return redirect("app:update_chart", chart.slug)
     else:
         return redirect("app:chart", chart.slug)
     context={
         "UpdateElementForm":UpdateElementForm,
+        "element":element,
         "chart":chart
     }
     return render(request, "pages/edit_element.html", context)
+
+def deleteElementView(request, slug, pk):
+    chart = Chart.objects.get(slug=slug)
+    post = get_object_or_404(Chart, slug=slug)
+    element = post.element.get(id=pk)
+    if request.user.username == chart.author.username: 
+        element.delete()
+        return redirect("app:update_chart", chart.slug)
+    else:
+        return render("app:chart", chart.slug)

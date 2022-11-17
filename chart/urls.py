@@ -5,11 +5,12 @@ app_name = "app"
 urlpatterns = [
     path('', home, name="home"),
     path("signup/", signup, name="signup"),
-    path("stats/<slug:slug>/", ChartView, name="chart"),
     path("<str:username>", PublicProfileView, name="profile"),
-    path("new/", NewChartView, name="new"),
-    path("delete/<str:slug>/", deleteChartView, name="delete_chart"),
     path("f/<str:author>/",followToggle, name="follow"),
-    path("elements/<str:slug>/", ElementView, name="element_view"),
-    path("edit/<str:slug>/<int:pk>", editElementView, name="edit_element")
+    path("new/", NewChartView, name="new"),
+    path("stats/<slug:slug>/", ChartView, name="chart"),
+    path("edit/<str:slug>/", UpdateChartView, name="update_chart"),
+    path("delete/<str:slug>/", deleteChartView, name="delete_chart"),
+    path("edit/<str:slug>/<int:pk>", UpdateElementView, name="edit_element"),
+    path("delete/<str:slug>/<int:pk>", deleteElementView, name="delete_element"),
 ]

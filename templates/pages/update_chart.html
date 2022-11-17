@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit - {{chart.name}}</title>
+    <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+</head>
+<body>
+    {% if chart.author.username == request.user.username %}
+    <form method="post">
+        {% csrf_token %}
+        {{ update_chart_form }}
+        <button type="submit">Update</button>
+    </form>
+    {% endif %}
+    <a class="btn btn-danger" href="{% url 'app:delete_chart' chart.slug %}">Delete</a>
+   <div>
+    {% for element in elements %}
+    <a href="{% url 'app:edit_element' chart.slug  element.id %}">{{ element.title }}</a>
+    <p>{{ element.value }}</p>
+    {% endfor %}
+   </div>
+</body>
+</html>

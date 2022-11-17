@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit - {{ element.title }}</title>
 </head>
 <body>
     <form method="post">
@@ -12,5 +12,6 @@
         {{ UpdateElementForm }}
         <button type="submit">Update</button>
     </form>
+    <a href="{% url 'app:delete_element' chart.slug element.id  %}">Delete</a>
 </body>
 </html>

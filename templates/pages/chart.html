@@ -38,7 +38,7 @@
     <h2>{{ chart.view_count }}</h2>
     <p>{{ elements_count }} tadan iborat, o'rtacha: {{number_avg.value__avg }}</p>
     {% if request.user.username == chart.author.username %}
-    <a class="btn btn-danger" href="{% url 'app:delete_chart' chart.slug %}">Delete</a>
+    <a class="btn btn-info" href="{% url 'app:update_chart' chart.slug %}">Edit Chart</a>
     {% endif %}
   </div>
 
@@ -52,11 +52,6 @@
       {% render_field comment_form.title type="text" class="form-control w-25" placeholder="Title"%}
       {% render_field comment_form.value type="number" class="form-control w-25" placeholder="Value"%}
       <button class="btn btn-success" type="submit">Submit</button>
-    </form>
-    <form method="post">
-      {% csrf_token %}
-      {{ update_chart_form }}
-      <button type="submit">Update</button>
     </form>
   </div>
   {% else %}
