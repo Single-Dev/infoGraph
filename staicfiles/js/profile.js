@@ -6,3 +6,7 @@ let update_btn = document.getElementById("update_btn")
 edit_btn.addEventListener('click', function () {
     edit_profile_div.style.display = "block"
 })
+
+// form.addEventListener("submit", e => {
+//     e.preventDefault()
+// })
