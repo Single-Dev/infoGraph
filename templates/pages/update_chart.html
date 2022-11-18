@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,21 +14,54 @@
     <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
     <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/edit.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
     {% if chart.author.username == request.user.username %}
-    <form method="post">
+    <form method="post" class="w-50">
+        <a href="{% url 'app:delete_chart' chart.slug %}" class="btn btn-outline-danger w-100 mb-1 mt-1">Delete</a>
+        <a href="{% url 'app:chart' chart.slug %}" class="btn btn-outline-dark w-100 mt-1 mb-1">View Chart</a>
         {% csrf_token %}
-        {{ update_chart_form }}
-        <button type="submit">Update</button>
+        {% load widget_tweaks %}
+        {% render_field update_chart_form.name class="form-control mt-2 mb-1" %}
+        {% render_field update_chart_form.chart_type class="form-control mt-2 mb-1" %}
+        {% render_field update_chart_form.slug class="form-control mt-2 mb-1" %}
+        {% render_field update_chart_form.caption class="form-control mt-2 mb-1" %}
+        <button class="btn btn-outline-dark w-100 mb-1 mt-1" type="submit">Update</button>
+        <button class="btn btn-outline-dark w-100 mt-1 mb-1" type="button" id="open_modal">Elements <i class="fas fa-pencil-alt"></i></button>
     </form>
     {% endif %}
-    <a class="btn btn-danger" href="{% url 'app:delete_chart' chart.slug %}">Delete</a>
-   <div>
-    {% for element in elements %}
-    <a href="{% url 'app:edit_element' chart.slug  element.id %}">{{ element.title }}</a>
-    <p>{{ element.value }}</p>
-    {% endfor %}
-   </div>
+
+
+    <div class="container my-5 py-5" id="modal">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                <div class="card text-dark">
+                    <hr class="my-0" />
+                    <i class="fas fa-close icon"></i>
+                    {% for element in elements %}
+                    <div class="card-body p-4">
+                        <div class="d-flex flex-start">
+                            <div>
+                                <h6 class="fw-bold mb-1">{{ element.title }}</h6>
+                                <div class="d-flex align-items-center mb-3">
+                                    <p class="mb-0">{{ element.value }}</p>
+                                    <a href="{% url 'app:edit_element' chart.slug  element.id %}" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/edit.js' %}"></script>
 </body>
+
 </html>

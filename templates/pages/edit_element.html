@@ -1,17 +1,28 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit - {{ element.title }}</title>
+    <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/edit.css' %}">
 </head>
 <body>
-    <form method="post">
+    <form method="post" class="w-50">
+        <a class="btn btn-outline-danger w-100" href="{% url 'app:delete_element' chart.slug element.id  %}">Delete</a>
         {% csrf_token %}
-        {{ UpdateElementForm }}
-        <button type="submit">Update</button>
+        {% load widget_tweaks %}
+        {% render_field UpdateElementForm.title class="form-control mt-2 mb-2" %}
+        {% render_field UpdateElementForm.value class="form-control mt-2 mb-2" %}
+        <button class="btn btn-outline-dark w-100" type="submit">Update</button>
     </form>
-    <a href="{% url 'app:delete_element' chart.slug element.id  %}">Delete</a>
 </body>
 </html>

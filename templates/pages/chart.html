@@ -29,6 +29,7 @@
     #chart_about{
       display: flex;
       justify-content: space-around;
+      align-items: center;
       margin-top: 15px;
       margin-bottom: 15px;
     }
@@ -38,7 +39,7 @@
     <h2>{{ chart.view_count }}</h2>
     <p>{{ elements_count }} tadan iborat, o'rtacha: {{number_avg.value__avg }}</p>
     {% if request.user.username == chart.author.username %}
-    <a class="btn btn-info" href="{% url 'app:update_chart' chart.slug %}">Edit Chart</a>
+    <a class="btn btn-outline-success" href="{% url 'app:update_chart' chart.slug %}">Edit Chart</a>
     {% endif %}
   </div>
 
@@ -51,7 +52,7 @@
       {% csrf_token %}
       {% render_field comment_form.title type="text" class="form-control w-25" placeholder="Title"%}
       {% render_field comment_form.value type="number" class="form-control w-25" placeholder="Value"%}
-      <button class="btn btn-success" type="submit">Submit</button>
+      <button class="btn btn-outline-success" type="submit">Submit</button>
     </form>
   </div>
   {% else %}
