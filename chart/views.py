@@ -59,7 +59,7 @@ def ProfileView(request, username):
             title = "Followers"
             tab_following = user_p.following.all().order_by('-id')
         else:
-            title = f"amCharts - @{user_p.username}"
+            title = f"Charts - @{user_p.username}"
 
         # Epdate Profile
         if request.user.is_authenticated:
@@ -234,8 +234,8 @@ def deleteElementView(request, slug, pk):
     else:
         return render("app:chart", chart.slug)
 
-def NotFound404(request, exception):
-    return render(request, "pages/404.html")
+def handler404(request, exception):
+    return render(request, "pages/helpers/404.html")
 
 def handler500(request, *args, **argv):
-    return render(request, 'pages/404.html', status=500)
+    return render(request, 'pages/helpers/404.html', status=500)
