@@ -39,65 +39,59 @@ def home(request):
     }
     return render(request, 'pages/home.html', context)
 
-def PublicProfileView(request, username):
-        try:
-            user_p = User.objects.get(username=username)
-            author = get_object_or_404(User, username=username)
-            # Tab
-            tab = request.GET.get('tab')
-            title = None
-            tab_chart = None
-            tab_following = None
-            tab_followers = None
-            if tab == "charts":
-                tab_chart = author.chart.all()
-                title = "Charts"
-            elif tab == "following": # followingda foydalanuvchi uchun followerslar keladi. followersda esa teskarisi
-                tab_followers = user_p.followers.all().order_by('-id')
-                title = "Following"
+def ProfileView(request, username):
+        user_p = User.objects.get(username=username)
+        author = get_object_or_404(User, username=username)
+        # Tab
+        tab = request.GET.get('tab')
+        title = None
+        tab_chart = None
+        tab_following = None
+        tab_followers = None
+        if tab == "charts":
+            tab_chart = author.chart.all()
+            title = "Charts"
+        elif tab == "following": # followingda foydalanuvchi uchun followerslar keladi. followersda esa teskarisi
+            tab_followers = user_p.followers.all().order_by('-id')
+            title = "Following"
 
-            elif tab == "followers":
-                title = "Followers"
-                tab_following = user_p.following.all().order_by('-id')
-            else:
-                title = f"amCharts - @{user_p.username}"
+        elif tab == "followers":
+            title = "Followers"
+            tab_following = user_p.following.all().order_by('-id')
+        else:
+            title = f"amCharts - @{user_p.username}"
 
-            # Epdate Profile
-            if request.user.is_authenticated:
-                user_form = UpdateUserForm(instance=request.user)
-                profile_form = UpdateProfileForm(instance=request.user.profile)
-                if request.method == 'POST':
-                    user_form = UpdateUserForm(request.POST, instance=request.user)
-                    profile_form = UpdateProfileForm(request.POST,
-                                                    request.FILES,
-                                                    instance=request.user.profile)
-                    if user_form.is_valid() and profile_form.is_valid():
-                        user_name = user_form.cleaned_data.get('username')
-                        user_form.save()
-                        profile_form.save()
-                        return redirect("app:profile", user_name)
-                    
-            else:
-                user_form = None
-                profile_form = None
+        # Epdate Profile
+        if request.user.is_authenticated:
+            user_form = UpdateUserForm(instance=request.user)
+            profile_form = UpdateProfileForm(instance=request.user.profile)
+            if request.method == 'POST':
+                user_form = UpdateUserForm(request.POST, instance=request.user)
+                profile_form = UpdateProfileForm(request.POST,
+                                                request.FILES,
+                                                instance=request.user.profile)
+                if user_form.is_valid() and profile_form.is_valid():
+                    user_name = user_form.cleaned_data.get('username')
+                    user_form.save()
+                    profile_form.save()
+                    return redirect("app:profile", user_name)
+                
+        else:
+            user_form = None
+            profile_form = None
 
-            user_chart_count = author.chart.count()
-            context = {
-                "user_p": user_p,
-                "user_following":tab_following,
-                "user_followers":tab_followers,
-                "user_form":user_form,
-                "profile_form":profile_form,
-                "tab_chart":tab_chart,
-                "title":title,
-                "user_chart_count":user_chart_count
-            }
-            return render(request, 'pages/profile.html', context)
-        except:
-            context={
-                "username_z":request
-            }
-            return render(request, "pages/404.html", context)
+        user_chart_count = author.chart.count()
+        context = {
+            "user_p": user_p,
+            "user_following":tab_following,
+            "user_followers":tab_followers,
+            "user_form":user_form,
+            "profile_form":profile_form,
+            "tab_chart":tab_chart,
+            "title":title,
+            "user_chart_count":user_chart_count
+        }
+        return render(request, 'pages/profile.html', context)
 
 def followToggle(request, author):
     if request.user.is_authenticated:
@@ -156,7 +150,6 @@ def ChartView(request, slug):
     elements_count = post.element.count()
     number_avg = post.element.aggregate(Avg("value"))
     new_element= None
-    # chart_view = Chart.objects.get(slug=slug)
     if request.user.is_authenticated:
         chart.view_count = chart.view_count + 1
     else:
@@ -240,3 +233,6 @@ def deleteElementView(request, slug, pk):
         return redirect("app:update_chart", chart.slug)
     else:
         return render("app:chart", chart.slug)
+
+def NotFound404(request, exception):
+    return render(request, "pages/404.html")
