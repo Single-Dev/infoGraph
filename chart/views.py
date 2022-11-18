@@ -236,3 +236,6 @@ def deleteElementView(request, slug, pk):
 
 def NotFound404(request, exception):
     return render(request, "pages/404.html")
+
+def handler500(request, *args, **argv):
+    return render(request, 'pages/404.html', status=500)
