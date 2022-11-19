@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import get_user_model
-from django.db.models import Avg
 from django.http import HttpResponseRedirect
+from django.utils import timezone
+from django.db.models import Avg
+from django.urls import reverse
+from django.db.models import Q
 from .models import *
 from .forms import *
-from django.urls import reverse
 User = get_user_model()
-from django.utils import timezone
 
 
 def home(request):
@@ -203,7 +204,6 @@ def deleteChartView(request, slug):
         slug = chart.slug
         return redirect("app:chart", slug)
 
-
 def UpdateElementView(request, slug, pk):
     chart = Chart.objects.get(slug=slug)
     post = get_object_or_404(Chart, slug=slug)
@@ -239,3 +239,27 @@ def handler404(request, exception):
 
 def handler500(request, *args, **argv):
     return render(request, 'pages/helpers/404.html', status=500)
+
+
+def results(request):
+    search = ""
+    users = None
+    charts = None
+    user_count = 0
+    chart_count = 0
+    if 'q' in request.GET:
+        search = request.GET['q']
+        user_search = Q(Q(username__icontains=search))
+        chart_search = Q(Q(slug__icontains=search))
+        users = User.objects.filter(user_search)
+        charts = Chart.objects.filter(chart_search)
+        user_count = users.count()
+        chart_count = charts.count()
+    context={
+        "users":users,
+        "charts":charts,
+        "user_count":user_count,
+        "chart_count":chart_count,
+        "search":search
+    }
+    return render(request, "pages/result.html", context)

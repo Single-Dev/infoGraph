@@ -1,12 +1,16 @@
 <header id="header" class="fixed-top header-inner-pages">
     <div class="container d-flex align-items-center justify-content-between">
 
-        <h1 class="logo"><a href="#">Charts</a></h1>
+        <h1 class="logo"><a href="{% url 'app:home' %}">Charts</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
         <nav id="navbar" class="navbar">
             <ul>
+                <form action="{% url 'app:results' %}" class="d-flex">
+                    <input type="text" name="q" class="form-control" placeholder="Search" value="{{ search }}">
+                    <button class="btn btn-outline-primary bi bi-search" type="submit"></button>
+                </form>
                 <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         {% if request.user.is_authenticated %}

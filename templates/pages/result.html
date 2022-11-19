@@ -1,0 +1,28 @@
+{% extends 'layout/base.html' %}
+{% block title %}Search{% endblock title %}
+{% block content %}
+<main id="main">
+    <section class="inner-page">
+        <div class="container">
+            <div class=" d-flex">
+                <div class="col-xl-10">
+                    {% if users %}
+                    <h1>{{ user_count }}</h1>
+                    {% for user in users %}
+                    {{ user.username }}
+                    {% endfor %}
+                    {% else %}
+                    <h1>Topilmadi</h1>
+                    {% endif %}
+                    {% if charts %}
+                    {{ chart_count }}
+                    {% for chart in charts %}
+                    {{ chart.name }}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}
