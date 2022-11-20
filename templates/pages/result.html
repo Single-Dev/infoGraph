@@ -5,20 +5,39 @@
     <section class="inner-page">
         <div class="container">
             <div class=" d-flex">
-                <div class="col-xl-10">
+                <div class="col-xl-5 card">
+                    <div class="d-flex">
+                        <div class="activate_1" id="users_count_div">users: <span>{{ user_count }}</span></div>
+                        <div id="charts_count_div">charts: <span>{{ chart_count }}</span></div>
+                    </div>
                     {% if users %}
-                    <h1>{{ user_count }}</h1>
-                    {% for user in users %}
-                    {{ user.username }}
-                    {% endfor %}
+                    <div class="users_div">
+                        {% for user in users %}
+                        <div id="quick_view">
+                            <img src="{{ user.profile.image.url }}" alt="@{{ user.username }}" width="50"
+                                style="border-radius: 50%;">
+                            <div id="name">
+                                {% if user.first_name %}
+                                <h4 id="first_name">{{ user.first_name }}</h4>
+                                {% endif %}
+                                <a href="{% url 'app:profile' user.username %}">@{{ user.username }}</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                     {% else %}
                     <h1>Topilmadi</h1>
                     {% endif %}
+
                     {% if charts %}
-                    {{ chart_count }}
-                    {% for chart in charts %}
-                    {{ chart.name }}
-                    {% endfor %}
+                    <div class="chart_div">
+                        {% for chart in charts %}
+                        <div>
+                            <a href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
+                            <p>{{ chart.caption }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
                     {% endif %}
                 </div>
             </div>
