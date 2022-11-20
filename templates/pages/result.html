@@ -7,11 +7,11 @@
             <div class=" d-flex">
                 <div class="col-xl-5 card">
                     <div class="d-flex">
-                        <div class="activate_1" id="users_count_div">users: <span>{{ user_count }}</span></div>
-                        <div id="charts_count_div">charts: <span>{{ chart_count }}</span></div>
+                        <div class="activate_1" id="users_count_div">users <span>{{ user_count }}</span></div>
+                        <div id="charts_count_div">charts <span>{{ chart_count }}</span></div>
                     </div>
-                    {% if users %}
                     <div class="users_div">
+                    {% if users %}
                         {% for user in users %}
                         <div id="quick_view">
                             <img src="{{ user.profile.image.url }}" alt="@{{ user.username }}" width="50"
@@ -24,21 +24,23 @@
                             </div>
                         </div>
                         {% endfor %}
+                        {% else %}
+                        <h1>Topilmadi</h1>
+                        {% endif %}
                     </div>
-                    {% else %}
-                    <h1>Topilmadi</h1>
-                    {% endif %}
 
-                    {% if charts %}
                     <div class="chart_div">
+                    {% if charts %}
                         {% for chart in charts %}
                         <div>
                             <a href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
                             <p>{{ chart.caption }}</p>
                         </div>
                         {% endfor %}
+                        {% else %}
+                        <h1>Topilmadi</h1>
+                        {% endif %}
                     </div>
-                    {% endif %}
                 </div>
             </div>
         </div>

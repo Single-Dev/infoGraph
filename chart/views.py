@@ -216,7 +216,7 @@ def UpdateElementView(request, slug, pk):
                 UpdateElementForm.save()
                 return redirect("app:update_chart", chart.slug)
     else:
-        return redirect("app:chart", chart.slug)
+        return render(request, "pages/helpers/404.html")
     context={
         "UpdateElementForm":UpdateElementForm,
         "element":element,
@@ -242,7 +242,7 @@ def handler500(request, *args, **argv):
 
 
 def results(request):
-    search = ""
+    search = None
     users = None
     charts = None
     user_count = 0
@@ -255,6 +255,8 @@ def results(request):
         charts = Chart.objects.filter(chart_search)
         user_count = users.count()
         chart_count = charts.count()
+    if search == "":
+        return redirect('app:home')
     context={
         "users":users,
         "charts":charts,

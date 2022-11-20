@@ -15,8 +15,9 @@
 
 .card span{
     padding: 0px 5px;
-    background-color: gray;
+    background-color: rgba(23, 26, 29, 0.8);
     border-radius: 15px;
+    color: #fff;
 }
 
 #users_count_div{

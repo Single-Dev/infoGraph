@@ -8,7 +8,7 @@
         <nav id="navbar" class="navbar">
             <ul>
                 <form action="{% url 'app:results' %}" class="d-flex">
-                    <input type="text" name="q" class="form-control" placeholder="Search" value="{{ search }}">
+                    <input type="text" name="q" class="form-control" placeholder="Search" value="{{ search }}" minlength="3" maxlength="32">
                     <button class="btn btn-outline-primary bi bi-search" type="submit"></button>
                 </form>
                 <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
