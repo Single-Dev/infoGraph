@@ -13,5 +13,6 @@ urlpatterns = [
     path("delete/<str:slug>/", deleteChartView, name="delete_chart"),
     path("edit/<str:slug>/<int:pk>", UpdateElementView, name="edit_element"),
     path("delete/<str:slug>/<int:pk>", deleteElementView, name="delete_element"),
-    path("result/", results, name="results")
+    path("result/", results, name="results"),
+    path("password_change/", password_change, name="password_change")
 ]

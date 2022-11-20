@@ -1,4 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.utils import timezone
@@ -94,41 +97,39 @@ def ProfileView(request, username):
         }
         return render(request, 'pages/profile.html', context)
 
+@login_required(login_url='/login/')
 def followToggle(request, author):
-    if request.user.is_authenticated:
-        authorObj = User.objects.get(username=author)
-        currentUserObj = User.objects.get(username=request.user.username)
-        following = authorObj.following.all()
+    authorObj = User.objects.get(username=author)
+    currentUserObj = User.objects.get(username=request.user.username)
+    following = authorObj.following.all()
 
-        if author != currentUserObj.username:
-            if currentUserObj in following:
-                authorObj.following.remove(currentUserObj.id)
-            else:
-                authorObj.following.add(currentUserObj.id)
+    if author != currentUserObj.username:
+        if currentUserObj in following:
+            authorObj.following.remove(currentUserObj.id)
+        else:
+            authorObj.following.add(currentUserObj.id)
 
-        return HttpResponseRedirect(reverse("app:profile", args=[authorObj.username]))
-    else:
-        return HttpResponseRedirect(reverse("login"))
+    return HttpResponseRedirect(reverse("app:profile", args=[authorObj.username]))
 
+
+
+@login_required(login_url='/login/')
 def NewChartView(request):
-    if request.user.is_authenticated:
-        user_p = User.objects.get(username=request.user)
-        user = User.objects.get(username=request.user)
-        author = get_object_or_404(User, username=request.user)
-        dash = author.chart.all()
-        new_dash = None
-        NewChart = ChartFrom()
-        if request.method == 'POST':
-            NewChart = ChartFrom(data=request.POST)
-            if NewChart.is_valid():
-                new_dash = NewChart.save(commit=False)
-                slug = NewChart.cleaned_data.get('slug')
-                new_dash.author = author
-                new_dash.save()
-                return redirect("app:chart", slug) 
-    else:
-        return redirect("app:signup")
-
+    user_p = User.objects.get(username=request.user)
+    user = User.objects.get(username=request.user)
+    author = get_object_or_404(User, username=request.user)
+    dash = author.chart.all()
+    new_dash = None
+    NewChart = ChartFrom()
+    if request.method == 'POST':
+        NewChart = ChartFrom(data=request.POST)
+        if NewChart.is_valid():
+            new_dash = NewChart.save(commit=False)
+            slug = NewChart.cleaned_data.get('slug')
+            new_dash.author = author
+            new_dash.save()
+            return redirect("app:chart", slug) 
+   
     context={
         "NewChart":NewChart,
     }
@@ -240,7 +241,6 @@ def handler404(request, exception):
 def handler500(request, *args, **argv):
     return render(request, 'pages/helpers/404.html', status=500)
 
-
 def results(request):
     search = None
     users = None
@@ -265,3 +265,20 @@ def results(request):
         "search":search
     }
     return render(request, "pages/result.html", context)
+
+
+def password_change(request):
+    if request.user.is_authenticated:
+        form  = PasswordChangeForm(user=request.user, data=request.POST)
+        if request.method == 'POST':
+            form = PasswordChangeForm(user=request.user, data=request.POST)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, form.user)
+                return redirect("app:profile", request.user.username)
+        context={
+            "form":form,
+        }
+        return render(request, "registration/change_password.html", context)
+    else:
+        return redirect('/login/?next=%s' % request.path)
