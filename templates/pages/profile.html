@@ -131,6 +131,7 @@
       </div>
       {% render_field profile_form.bio class="form-control mt-2 mb-2" id="bio" placeholder="Bio" %}
       <button type="submit" id="update_btn" class="btn btn-outline-success w-100">Update Profile</button>
+      <a href="{% url 'app:password_change' %}">Change Password</a>
     </form>
     {% endif %}
   </div>
