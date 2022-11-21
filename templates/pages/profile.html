@@ -25,8 +25,9 @@
           <div class="card">
             <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:200px;">
               <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-                <img src="{{ user_p.profile.image.url }}" alt="@{{ user_p.username }}"
-                  class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
+                <a href="{% url 'app:settings' %}" style="width: 150px; z-index: 1">
+                  <img src="{{ user_p.profile.image.url }}" alt="@{{ user_p.username }}" class="img-fluid img-thumbnail mt-4 mb-2" >
+                </a>
                 {% if request.user.username == user_p.username %}
                 <button type="button" id="edit_btn" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Edit
                   profile</button>
