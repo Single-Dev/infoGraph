@@ -43,6 +43,13 @@ INSTALLED_APPS = [
     'widget_tweaks'
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TSL = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "bekzodbek06062006@gmail.com"
+EMAIL_HOST_PASSWORD = "Password2006"
+EMAIL_PORT = 587
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',

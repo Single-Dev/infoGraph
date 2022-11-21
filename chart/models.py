@@ -1,14 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from PIL import Image
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
+from PIL import Image
 
 class MyUser(AbstractUser):
     is_organiser = models.BooleanField(default=False)
     is_agent = models.BooleanField(default=False)
-    following = models.ManyToManyField(
-        "self", blank=True, related_name="followers", symmetrical=False
-    )
+    following = models.ManyToManyField("self", blank=True, related_name="followers", symmetrical=False)
+    email_confirmed = models.BooleanField(default=False)
 
 class Profile(models.Model):
     class Meta:
@@ -30,6 +31,12 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+@receiver(post_save, sender=MyUser)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+        instance.profile.save()
 
 class Chart(models.Model):
     PIE = "Pie"
