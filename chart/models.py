@@ -32,12 +32,6 @@ class Profile(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
-@receiver(post_save, sender=MyUser)
-def update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-        instance.profile.save()
-
 class Chart(models.Model):
     PIE = "Pie"
     COLUMN = "Column"

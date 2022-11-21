@@ -8,13 +8,6 @@ from django.utils import timezone
 from django.db.models import Avg
 from django.urls import reverse
 from django.db.models import Q
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-from django.template.loader import render_to_string
-from chart.tokens import account_activation_token
-from django.contrib import messages
-from django.views.generic import View, UpdateView
 from .models import *
 from .forms import *
 User = get_user_model()
@@ -159,17 +152,17 @@ def NewChartView(request):
     }
     return render(request, "pages/new.html", context)
 
-# def signup(request):
-#     form = Registration()
-#     if request.method == "POST":
-#         form = Registration(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('login')
+def signup(request):
+    form = Registration()
+    if request.method == "POST":
+        form = Registration(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
     
-#     return render(request, 'registration/signup.html', {"form":form})
+    return render(request, 'registration/signup.html', {"form":form})
 
-class SignUpView(View):
+
     form_class = Registration()
     template_name = 'registration/signup.html'
 
