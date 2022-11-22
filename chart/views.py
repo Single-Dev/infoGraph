@@ -43,6 +43,22 @@ def home(request):
     }
     return render(request, 'pages/home.html', context)
 
+def signup(request):
+    form = Registration()
+    if request.method == "POST":
+        form = Registration(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    
+    return render(request, 'registration/signup.html', {"form":form})
+
+@login_required(login_url='/login/')
+def deleteUser(request):
+    user = User.objects.get(username=request.user)
+    user.delete()
+    return redirect("/")
+
 def ProfileView(request, username):
         user_p = User.objects.get(username=username)
         author = get_object_or_404(User, username=username)
@@ -128,6 +144,7 @@ def password_change(request):
 
 def settings(request):
     
+    
     return render(request, "pages/settings/settings.html")
 
 @login_required(login_url='/login/')
@@ -151,48 +168,6 @@ def NewChartView(request):
         "NewChart":NewChart,
     }
     return render(request, "pages/new.html", context)
-
-def signup(request):
-    form = Registration()
-    if request.method == "POST":
-        form = Registration(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('login')
-    
-    return render(request, 'registration/signup.html', {"form":form})
-
-
-    form_class = Registration()
-    template_name = 'registration/signup.html'
-
-    def get(self, request, *args, **kwargs):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-
-            user = form.save(commit=False)
-            user.is_active = False # Deactivate account till it is confirmed
-            user.save()
-
-            current_site = get_current_site(request)
-            subject = 'Activate Your MySite Account'
-            message = render_to_string('emails/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            user.email_user(subject, message)
-
-            messages.success(request, ('Please Confirm your email to complete registration.'))
-
-            return redirect('login')
-
-        return render(request, self.template_name, {'form': form})
 
 def ChartView(request, slug):
     chart = Chart.objects.get(slug=slug)
