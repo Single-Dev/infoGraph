@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.db.models import Avg
-from django.urls import reverse
+from django.urls import reverse 
 from django.db.models import Q
 from .models import *
 from .forms import *
