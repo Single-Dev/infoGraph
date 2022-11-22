@@ -33,11 +33,15 @@
                   profile</button>
                 {% else %}
                 {% if user_p in request.user.followers.all %}
-                <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-danger"
-                  data-mdb-ripple-color="dark" style="z-index: 1;">Unfollow</a>
+                  <form class="w-100" action="{% url 'app:follow' user_p.username %}" method="post" style="z-index: 1;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger w-100" data-mdb-ripple-color="dark"  >Unfollow</button>
+                  </form>
                 {% else %}
-                <a href="{% url 'app:follow' user_p.username %}" class="btn btn-outline-dark"
-                  data-mdb-ripple-color="dark" style="z-index: 1;">Follow</a>
+                <form action="{% url 'app:follow' user_p.username %}" method="post" style="z-index: 1;">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-dark w-100" data-mdb-ripple-color="dark" >Follow</button>
+                </form>
                 {% endif %}
                 {% endif %}
               </div>
