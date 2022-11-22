@@ -142,9 +142,8 @@ def password_change(request):
     }
     return render(request, "pages/settings/password_change.html", context )
 
+@login_required(login_url='/login/')
 def settings(request):
-    
-    
     return render(request, "pages/settings/settings.html")
 
 @login_required(login_url='/login/')
