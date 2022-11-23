@@ -35,10 +35,10 @@
                 </li>
                 {% if not request.user.is_authenticated %}
                 <li><a class="getstarted nav-link scrollto " href="{% url 'app:signup' %}">Sign Up</a></li>
-                <li><a class="nav-link scrollto" href="{% url 'login' %}">Login</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'app:login' %}">Login</a></li>
                 {% endif %}
                 {% if request.user.is_authenticated %}
-                <li><a class="nav-link scrollto" href="{% url 'logout' %}">LogOut</a></li>
+                <li><a class="nav-link scrollto" href="{% url 'app:logout' %}">LogOut</a></li>
                 {% endif %}
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>

@@ -2,8 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.utils import timezone
 from django.db.models import Avg
 from django.urls import reverse 
@@ -52,6 +55,32 @@ def signup(request):
             return redirect('login')
     
     return render(request, 'registration/signup.html', {"form":form})
+
+def loginView(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect("app:home")
+            else:
+                messages.error(request,"Invalid username or password.")
+    else:
+        # messages.error(request,"Invalid username or password.")
+        form = AuthenticationForm()
+
+    context={
+        "form":form
+    }
+    return render(request, "registration/login.html", context)
+
+def logoutView(request):
+    logout(request)
+    return redirect("app:home")
 
 @login_required(login_url='/login/')
 def deleteUser(request):
