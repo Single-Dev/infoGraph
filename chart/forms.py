@@ -36,11 +36,11 @@ class UpdateUserForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', "username", "email"]
 
-        def clean_username(self):
-            username = self.cleaned_data.get('username')  # get the username data
-            lowercase_username = username.lower()         # get the lowercase version of it
+    def clean_username(self):
+        username = self.cleaned_data.get('username')  # get the username data
+        lowercase_username = username.lower()         # get the lowercase version of it
 
-            return lowercase_username
+        return lowercase_username
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:

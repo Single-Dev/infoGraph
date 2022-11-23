@@ -127,20 +127,23 @@ def followToggle(request, author):
 
         return HttpResponseRedirect(reverse("app:profile", args=[authorObj.username]))
     else:
-        return redirect('/signup/?next=%s' % request.path)
+        return redirect("/")
 
 def password_change(request):
-    form  = PasswordChangeForm(user=request.user, data=request.POST)
-    if request.method == 'POST':
-        form = PasswordChangeForm(user=request.user, data=request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            return redirect("app:profile", request.user.username)
-    context={
-        "form":form,
-    }
-    return render(request, "pages/settings/password_change.html", context )
+    if request.user.is_authenticated:
+        form  = PasswordChangeForm(user=request.user, data=request.POST)
+        if request.method == 'POST':
+            form = PasswordChangeForm(user=request.user, data=request.POST)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, form.user)
+                return redirect("app:profile", request.user.username)
+        context={
+            "form":form,
+        }
+        return render(request, "pages/settings/password_change.html", context )
+    else:
+        return redirect(f'/')
 
 @login_required(login_url='/login/')
 def settings(request):
