@@ -1,7 +1,4 @@
-from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.auth.models import AbstractUser
-from hitcount.models import HitCountMixin, HitCount
-from django.utils.text import slugify
 from django.utils import timezone
 from django.db import models
 from PIL import Image
@@ -45,16 +42,9 @@ class Chart(models.Model):
     slug = models.SlugField(unique=True)
     caption = models.TextField(max_length=700)
     created_on = models.DateTimeField(("date joined"), default=timezone.now)
-    hit_count_generic = GenericRelation(HitCount, object_id_field='object_p', related_query_name='hit_count_generic_relation')
     chart_type = models.CharField(max_length=15,choices=CHART_CHOICES, default=PIE)
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        super(Chart, self).save(*args, **kwargs)
-        value = self.title
-        self.slug = slugify(value, allow_unicode=True)
-        super().save(*args, **kwargs)
 
 class Element(models.Model):
     post = models.ForeignKey(Chart,on_delete=models.CASCADE,related_name='element')

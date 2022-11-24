@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chart',
     'rest_framework',
-    'hitcount',
 
     'widget_tweaks'
 ]

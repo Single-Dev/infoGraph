@@ -207,6 +207,8 @@ def ChartView(request, slug):
     elements_count = post.element.count()
     number_avg = post.element.aggregate(Avg("value"))
     new_element= None
+    chart.save()
+
     # add element form
     if request.method == 'POST':
         comment_form = ElementForm(data=request.POST)
