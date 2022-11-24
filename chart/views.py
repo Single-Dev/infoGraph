@@ -156,7 +156,7 @@ def followToggle(request, author):
 
         return HttpResponseRedirect(reverse("app:profile", args=[authorObj.username]))
     else:
-        return redirect("/")
+        return redirect("app:login")
 
 def password_change(request):
     if request.user.is_authenticated:
@@ -172,7 +172,7 @@ def password_change(request):
         }
         return render(request, "pages/settings/password_change.html", context )
     else:
-        return redirect(f'/')
+        return redirect(f'app:login')
 
 @login_required(login_url='/login/')
 def settings(request):
@@ -207,12 +207,6 @@ def ChartView(request, slug):
     elements_count = post.element.count()
     number_avg = post.element.aggregate(Avg("value"))
     new_element= None
-    if request.user.is_authenticated:
-        chart.view_count = chart.view_count + 1
-    else:
-        chart.view_count = chart.view_count + 1
-    chart.save()
-
     # add element form
     if request.method == 'POST':
         comment_form = ElementForm(data=request.POST)

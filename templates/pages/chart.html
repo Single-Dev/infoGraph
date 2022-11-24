@@ -36,7 +36,7 @@
   </style>
 
   <div id="chart_about">
-    <h2>{{ chart.view_count }}</h2>
+    
     <p>{{ elements_count }} tadan iborat, o'rtacha: {{number_avg.value__avg }}</p>
     {% if request.user.username == chart.author.username %}
     <a class="btn btn-outline-success" href="{% url 'app:update_chart' chart.slug %}">Edit Chart</a>
