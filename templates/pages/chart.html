@@ -1,6 +1,6 @@
 <!DOCTYPE html>
+{% load hitcount_tags %}
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,6 +39,7 @@
     
     <p>{{ elements_count }} tadan iborat, o'rtacha: {{number_avg.value__avg }}</p>
     {% if request.user.username == chart.author.username %}
+    <p>views: {% get_hit_count for chart%}</p>
     <a class="btn btn-outline-success" href="{% url 'app:update_chart' chart.slug %}">Edit Chart</a>
     {% endif %}
   </div>
