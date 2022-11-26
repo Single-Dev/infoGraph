@@ -52,7 +52,7 @@ def signup(request):
         form = Registration(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect('app:login')
     
     return render(request, 'registration/signup.html', {"form":form})
 
@@ -154,7 +154,7 @@ def followToggle(request, author):
             else:
                 authorObj.following.add(currentUserObj.id)
 
-        return HttpResponseRedirect(reverse("app:profile", args=[authorObj.username]))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         return redirect("app:login")
 

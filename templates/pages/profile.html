@@ -99,11 +99,12 @@
               {% if user_followers %}
               <p class="lead fw-normal mb-1">Following</p>
               {% for followers in user_followers %}
+
               <div class="user_profile_quick_view" style="margin-top: 10px; margin-bottom: 10px;">
-                <img class="following_profile_img" style="border-radius: 50%;" src="{{ followers.profile.image.url }}"
-                  alt="@{{ following.username }}" width="30">
+                <img class="following_profile_img" style="border-radius: 50%;" src="{{ followers.profile.image.url }}" alt="@{{ following.username }}" width="30">
                 <a class="text-dark" id="t-none" href="{% url 'app:profile' followers.username %}">@{{followers.username }}</a>
               </div>
+              
               {% endfor %}
               {% endif %}
               {% if user_following %}

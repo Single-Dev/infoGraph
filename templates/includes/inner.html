@@ -12,21 +12,21 @@
             {% for element in following.chart.all %}
             <h4><a style="text-decoration: none;" href="{% url 'app:profile' element.author.username %}">@{{ element.author.username }}</a></h4>
             <a style="margin-left: 20px;" href="{% url 'app:chart' element.slug %}">{{ element.name }}</a>
-
             {% endfor %}
             {% endfor %}
           </div>
           <div class="col-xl-10">
             {% for user in users %}
-            {% if not user in following_actions %}
+            {% if user.username == request.user.username %}
+            {% else %}
             <div class="user_profile_quick_view" style="display: flex; margin-top: 10px; margin-bottom: 10px;">
               <img class="user_profile_img" style="border-radius: 50%;"  src="{{ user.profile.image.url }}" alt="@{{ user.username }}" width="30" >
              <div>
               <a class="text-dark" href="{% url 'app:profile' user.username %}" style="margin-left: 5px;">@{{ user.username }}</a>
               {% if user in request.user.followers.all  %}
-              <a href="{% url 'app:follow' user.username %}">Unollow</a>
+              <a class="text-danger" href="{% url 'app:follow' user.username %}">Unfollow</a>
               {% else %}
-              <a href="{% url 'app:follow' user.username %}">Follow</a>
+              <a class="text-info" href="{% url 'app:follow' user.username %}">Follow</a>
               {% endif %}
              </div>
             </div>
