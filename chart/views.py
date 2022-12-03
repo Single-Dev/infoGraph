@@ -304,7 +304,7 @@ def results(request):
         charts = Chart.objects.filter(chart_search)
         user_count = users.count()
         chart_count = charts.count()
-    if search == "" and len(search) < 3:
+    if search == "" or len(search) < 3: # bitta so'z bilan qidirmaslig uchun
         return redirect('app:home')
     context={
         "users":users,
