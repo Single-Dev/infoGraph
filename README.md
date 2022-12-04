@@ -12,6 +12,10 @@
 #### Verified Accounts
 ![verified accounts](static/images/verified_accounts.png)
 
+#### Follow & Unfollow
+
+![follow&unfollow](static/images/follow.png)
+
 #### Search User and Charts
 ##### Search Chart
 ![search charts](static/images/search_chart.png)
