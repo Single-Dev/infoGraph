@@ -6,6 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator
 from django.contrib import messages
 from django.utils import timezone
 from django.db.models import Avg
@@ -130,6 +131,14 @@ def ProfileView(request, username):
             profile_form = None
 
         user_chart_count = author.chart.count()
+
+        # Pagination
+        chart_list = Chart.objects.all()
+        paginator = Paginator(chart_list, 1) # Show 1 contacts per page.
+        page_number = request.GET.get('tab=chart')
+        page_obj = paginator.get_page(page_number)
+        # Pagination
+
         context = {
             "user_p": user_p,
             "user_following":tab_following,
@@ -138,7 +147,8 @@ def ProfileView(request, username):
             "profile_form":profile_form,
             "tab_chart":tab_chart,
             "title":title,
-            "user_chart_count":user_chart_count
+            "user_chart_count":user_chart_count,
+            "page_obj":page_obj
         }
         return render(request, 'pages/profile.html', context)
 

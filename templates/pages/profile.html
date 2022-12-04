@@ -141,7 +141,29 @@
     </form>
     {% endif %}
   </div>
+  {% for contact in page_obj %}
+    {# Each "contact" is a Contact model object. #}
+    {{ contact.full_name|upper }}<br>
+    ...
+{% endfor %}
 
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?tab=chart=1">&laquo; first</a>
+            <a href="?tab=chart={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?tab=chart{{ page_obj.next_page_number }}">next</a>
+            <a href="?tab=chart{{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
   <script src="{% static 'js/profile.js' %}"></script>
 </body>
 
