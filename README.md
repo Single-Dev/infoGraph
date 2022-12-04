@@ -10,18 +10,18 @@
 ### front end and backend
 
 #### verified accounts
-[! verified accounts](static/images/verified_accounts.png)
+![verified accounts](static/images/verified_accounts.png)
 
 #### Search User and Charts
 ##### Search Chart
-[! search charts](static/images/search_chart.png)
+![search charts](static/images/search_chart.png)
 ##### Search User
-[! search user](static/images/search.png)
+![search user](static/images/search.png)
 
 #### Chart
 ##### Column Chart
-[! chart column](static/images/chart_column.png)
+![chart column](static/images/chart_column.png)
 ##### Pie Chart
-[! charts ](static/images/charts.png.png)
+![charts](static/images/charts.png.png)
 ##### Update Chart
-[! update chart](static/images/update_charts.png)
+![update chart](static/images/update_charts.png)
