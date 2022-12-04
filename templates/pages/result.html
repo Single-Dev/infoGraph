@@ -20,7 +20,12 @@
                                 {% if user.first_name %}
                                 <h4 id="first_name">{{ user.first_name }}</h4>
                                 {% endif %}
-                                <a href="{% url 'app:profile' user.username %}">@{{ user.username }}</a>
+                                <div>
+                                    <a class="text-dark" href="{% url 'app:profile' user.username %}">@{{ user.username }}</a>
+                                    {% if user.profile.is_verify %}
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                         {% endfor %}

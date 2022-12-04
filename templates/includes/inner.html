@@ -22,7 +22,12 @@
             <div class="user_profile_quick_view" style="display: flex; margin-top: 10px; margin-bottom: 10px;">
               <img class="user_profile_img" style="border-radius: 50%;"  src="{{ user.profile.image.url }}" alt="@{{ user.username }}" width="30" >
              <div>
-              <a class="text-dark" href="{% url 'app:profile' user.username %}" style="margin-left: 5px;">@{{ user.username }}</a>
+              <span>
+                <a class="text-dark" href="{% url 'app:profile' user.username %}" style="margin-left: 5px;">@{{ user.username }}</a>
+                {% if user.profile.is_verify %}
+                <i class="bi bi-check-circle-fill"></i>
+                {% endif %}
+              </span>
               {% if user in request.user.followers.all  %}
               <a class="text-danger" href="{% url 'app:follow' user.username %}">Unfollow</a>
               {% else %}

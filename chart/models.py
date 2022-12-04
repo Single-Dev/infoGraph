@@ -17,6 +17,7 @@ class Profile(models.Model):
     image = models.ImageField(default="profile/profile.jpg", upload_to="profile")
     bio = models.CharField(max_length=100, null=True, blank=True, default="")
     is_online = models.BooleanField(default=False)
+    is_verify = models.BooleanField(default=False)
     def __str__(self):
         return f"id: {self.id}, {self.custom_user}"
 

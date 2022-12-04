@@ -48,8 +48,12 @@
               <div class="ms-3" style="margin-top: 100px;">
                 <h5>{{ user_p.first_name }}</h5>
                 <h6>{{ user_p.last_name }}</h6>
-                <p> <a class="text-light" href="{% url 'app:profile' user_p.username %}"
-                    style="text-decoration: none;">@{{ user_p.username }}</a></p>
+                <p> 
+                  <a class="text-light" href="{% url 'app:profile' user_p.username %}" style="text-decoration: none;">@{{ user_p.username }}</a>
+                    {% if user_p.profile.is_verify %}
+                    <i class="bi bi-check-circle-fill"></i>
+                    {% endif %}
+                </p>
               </div>
               <p class="user_bio">
                 {% if user_p.profile.bio %}
@@ -102,7 +106,12 @@
 
               <div class="user_profile_quick_view" style="margin-top: 10px; margin-bottom: 10px;">
                 <img class="following_profile_img" style="border-radius: 50%;" src="{{ followers.profile.image.url }}" alt="@{{ following.username }}" width="30">
-                <a class="text-dark" id="t-none" href="{% url 'app:profile' followers.username %}">@{{followers.username }}</a>
+                <span>
+                  <a class="text-dark" id="t-none" href="{% url 'app:profile' followers.username %}">@{{followers.username }}</a>
+                  {% if followers.profile.is_verify %}
+                  <i class="bi bi-check-circle-fill"></i>
+                  {% endif %}
+                </span>
               </div>
               
               {% endfor %}
@@ -113,7 +122,12 @@
               <div class="user_profile_quick_view" style="margin-top: 10px; margin-bottom: 10px;">
                 <img class="followers_profile_img" style="border-radius: 50%;" src="{{ following.profile.image.url }}"
                   alt="@{{ following.username }}" width="30">
-                <a class="text-dark" id="t-none" href="{% url 'app:profile' following.username %}">@{{following.username }}</a>
+                <span>
+                  <a class="text-dark" id="t-none" href="{% url 'app:profile' following.username %}">@{{following.username }}</a>
+                  {% if following.profile.is_verify %}
+                  <i class="bi bi-check-circle-fill"></i>
+                  {% endif %}
+                </span>
               </div>
               {% endfor %}
               {% endif %}
