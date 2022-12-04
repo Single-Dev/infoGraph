@@ -7,9 +7,9 @@
 ### Deploy To [Digitalocean](https://digitalocean.com)
 [![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/Bekzodbek2006/amCharts/tree/main)
 
-### front end and backend
+### Front-end and Backend
 
-#### verified accounts
+#### Verified Accounts
 ![verified accounts](static/images/verified_accounts.png)
 
 #### Search User and Charts
@@ -22,6 +22,6 @@
 ##### Column Chart
 ![chart column](static/images/chart_column.png)
 ##### Pie Chart
-![charts](static/images/charts.png.png)
+![charts](static/images/charts.png)
 ##### Update Chart
 ![update chart](static/images/update_charts.png)
