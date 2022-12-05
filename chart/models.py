@@ -33,12 +33,13 @@ class Profile(models.Model):
 
 class accountVerify(models.Model):
     username = models.OneToOneField(MyUser, on_delete=models.CASCADE)
-    email = models.EmailField()
-    verfy_account1 = models.URLField()
+    email = models.EmailField(unique=True)
+    verfy_account1 = models.URLField(unique=True)
     message = models.TextField(max_length=700)
 
     def __str__(self):
-        f"{self.id}"
+        return self.email
+
 class Chart(models.Model):
     PIE = "Pie"
     COLUMN = "Column"
