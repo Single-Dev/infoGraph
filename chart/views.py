@@ -298,7 +298,7 @@ def handler404(request, exception):
     return render(request, "pages/helpers/404.html")
 
 def handler500(request, *args, **argv):
-    return render(request, 'pages/helpers/404.html', status=500)
+    return render(request, 'pages/helpers/404.html')
 
 def results(request):
     search = None
