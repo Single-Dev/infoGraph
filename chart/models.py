@@ -31,6 +31,13 @@ class Profile(models.Model):
     #         img.thumbnail(output_size)
     #         img.save(self.image.path)
 
+class accountVerify(models.Model):
+    username = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    email = models.EmailField(unique=True)
+    verfy_account1 = models.URLField(unique=True)
+    verfy_account2 = models.URLField(unique=True)
+    message = models.TextField(max_length=700)
+
 class Chart(models.Model):
     PIE = "Pie"
     COLUMN = "Column"
