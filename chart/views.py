@@ -102,12 +102,12 @@ def ProfileView(request, username):
             tab_chart = author.chart.all()
             title = "Charts"
         elif tab == "following": # followingda foydalanuvchi uchun followerslar keladi. followersda esa teskarisi
-            tab_followers = user_p.followers.all().order_by('-id')
+            tab_followers = user_p.followers.all()
             title = "Following"
 
         elif tab == "followers":
             title = "Followers"
-            tab_following = user_p.following.all().order_by('-id')
+            tab_following = user_p.following.all()
         else:
             title = f"Charts - @{user_p.username}"
 
@@ -314,7 +314,7 @@ def results(request):
         charts = Chart.objects.filter(chart_search)
         user_count = users.count()
         chart_count = charts.count()
-    if search == "" or len(search) < 3: # bitta so'z bilan qidirmaslig uchun
+    if len(search) < 3: # bitta harf bilan qidirmaslig uchun
         return redirect('app:home')
     context={
         "users":users,
