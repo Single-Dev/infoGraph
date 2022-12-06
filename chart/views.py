@@ -333,4 +333,8 @@ def VerifyRequestView(request):
         if form.is_valid():
             form.save()
             return redirect('app:profile', request.user.username)
-    return render(request, "pages/settings/verify_request.html")
+    
+    context={
+        "form":form
+    }
+    return render(request, "pages/settings/verify_request.html", context)
