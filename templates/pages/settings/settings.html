@@ -19,8 +19,9 @@
 
 <body>
     <div>
-        <a class="btn btn-outline-primary" href="{% url 'app:password_change' %}">Change Password</a>
-        <a class="btn btn-outline-danger" href="{% url 'app:delete_user' %}">Delete My Account</a>
+        <a class="btn btn-outline-primary" href="{% url 'app:password_change' %}">Change Password <i class="bi bi-pencil-square"></i></a>
+        <a class="btn btn-outline-info" href="{% url 'app:verify_request_view' %}">verify My Account <i class="bi bi-check-circle-fill"></i></a>
+        <a class="btn btn-outline-danger" href="{% url 'app:delete_user' %}">Delete My Account <i class=" bi bi-person-x"></i></a>
     </div>
 </body>
 
