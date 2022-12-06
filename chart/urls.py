@@ -8,10 +8,10 @@ urlpatterns = [
     path("signup/", signup, name="signup"),
     path("login/", loginView, name="login"),
     path("logout/", logoutView, name="logout"),
-    path("delete/user/", deleteUser, name="delete_user"),
+    path("settings/delete/user/", deleteUser, name="delete_user"),
     path("<str:username>", ProfileView, name="profile"),
     path("follow/<str:author>/",followToggle, name="follow"),
-    path("password_change/", password_change, name="password_change"),
+    path("settings/password_change/", password_change, name="password_change"),
     path("settings/", settings, name="settings"),
     path("new/", NewChartView, name="new"),
     path("stats/<slug:slug>/", ChartView, name="chart"),
@@ -23,4 +23,5 @@ urlpatterns = [
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='pages/settings/password_resest_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="pages/settings/password_reset_confirm.html"), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='pages/settings/password_reset_complete.html'), name='password_reset_complete'),      
+    path("settings/verify-request/", VerifyRequestView, name="verify_request_view")
 ]
