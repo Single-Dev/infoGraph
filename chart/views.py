@@ -325,6 +325,12 @@ def results(request):
     }
     return render(request, "pages/result.html", context)
 
+@login_required(login_url='login')
 def VerifyRequestView(request):
-    
+    form = AccountVerifyForm()
+    if request.method == "POST":
+        form = AccountVerifyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('app:profile', request.user.username)
     return render(request, "pages/settings/verify_request.html")
