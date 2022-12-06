@@ -325,3 +325,6 @@ def results(request):
     }
     return render(request, "pages/result.html", context)
 
+def VerifyRequestView(request):
+    
+    return render(request, "pages/settings/verify_request.html")
