@@ -83,7 +83,7 @@ def logoutView(request):
     logout(request)
     return redirect("app:home")
 
-@login_required(login_url='/login/')
+@login_required(login_url='app:login')
 def deleteUser(request):
     user = User.objects.get(username=request.user)
     user.delete()
@@ -184,11 +184,11 @@ def password_change(request):
     else:
         return redirect(f'app:login')
 
-@login_required(login_url='/login/')
+@login_required(login_url='app:login')
 def settings(request):
     return render(request, "pages/settings/settings.html")
 
-@login_required(login_url='/login/')
+@login_required(login_url='app:login')
 def NewChartView(request):
     user_p = User.objects.get(username=request.user)
     user = User.objects.get(username=request.user)
@@ -325,13 +325,14 @@ def results(request):
     }
     return render(request, "pages/result.html", context)
 
-@login_required(login_url='login')
+@login_required(login_url='app:login')
 def VerifyRequestView(request):
-    username = get_object_or_404(User, username=request.user)
+    username1 = get_object_or_404(User, username=request.user)
     form = AccountVerifyForm()
     if request.method == "POST":
         form = AccountVerifyForm(request.POST)
         if form.is_valid():
+            form.username = username1
             form.save()
             return redirect('app:profile', request.user.username)
     
