@@ -86,4 +86,4 @@ class ContactUsForm(forms.ModelForm):
 class AccountVerifyForm(forms.ModelForm):
     class Meta:
         model = accountVerify
-        fields = "__all__"
+        fields = ['email', 'verfy_account1','message']

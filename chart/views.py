@@ -329,11 +329,13 @@ def results(request):
 def VerifyRequestView(request):
     username1 = get_object_or_404(User, username=request.user)
     form = AccountVerifyForm()
+    form_username = None
     if request.method == "POST":
         form = AccountVerifyForm(request.POST)
         if form.is_valid():
+            form_username = form.save(commit=False)
             form.username = username1
-            form.save()
+            form_username.save()
             return redirect('app:profile', request.user.username)
     
     context={
