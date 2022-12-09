@@ -331,7 +331,7 @@ def VerifyRequestView(request):
     form = AccountVerifyForm()
     form_username = None
     if request.method == "POST":
-        form = AccountVerifyForm(request.POST)
+        form = AccountVerifyForm(data=request.POST)
         if form.is_valid():
             form_username = form.save(commit=False)
             form.username = username1
