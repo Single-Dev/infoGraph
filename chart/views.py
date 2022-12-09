@@ -327,6 +327,7 @@ def results(request):
 
 @login_required(login_url='login')
 def VerifyRequestView(request):
+    username = get_object_or_404(User, username=request.user)
     form = AccountVerifyForm()
     if request.method == "POST":
         form = AccountVerifyForm(request.POST)
