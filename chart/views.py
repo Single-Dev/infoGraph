@@ -201,9 +201,9 @@ def NewChartView(request):
         NewChart = ChartFrom(data=request.POST)
         if NewChart.is_valid():
             new_dash = NewChart.save(commit=False)
-            slug = NewChart.cleaned_data.get('slug')
             new_dash.author = author
             new_dash.save()
+            slug = NewChart.cleaned_data.get('slug')
             return redirect("app:chart", slug) 
    
     context={
@@ -333,8 +333,9 @@ def VerifyRequestView(request):
     if request.method == "POST":
         form = AccountVerifyForm(data=request.POST)
         if form.is_valid():
-            form.username = request.user
-            form.save()
+            form_user_req = form.save(commit=False)
+            form_user_req.req_user = request.user
+            form_user_req.save()
             return redirect('app:success_view')
     
     context={
