@@ -32,7 +32,7 @@ class Profile(models.Model):
     #         img.save(self.image.path)
 
 class accountVerify(models.Model):
-    username = models.OneToOneField(MyUser, on_delete=models.CASCADE)
+    request_username = models.OneToOneField(MyUser, on_delete=models.CASCADE)
     created_on = models.DateTimeField(("date joined"), default=timezone.now)
     email = models.EmailField(unique=True)
     verfy_account1 = models.URLField(unique=True)

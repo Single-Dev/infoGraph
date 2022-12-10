@@ -328,12 +328,12 @@ def results(request):
 
 @login_required(login_url='app:login')
 def VerifyRequestView(request):
-    username1 = User.objects.get(username=request.user)
+    # form_user = User.objects.get(username=request.user)
     form = AccountVerifyForm()
     if request.method == "POST":
         form = AccountVerifyForm(data=request.POST)
         if form.is_valid():
-            form.username = username1
+            form.username = request.user
             form.save()
             return redirect('app:success_view')
     
