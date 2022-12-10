@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.utils import timezone
 from django.db.models import Avg
+from django.views import generic
 from django.urls import reverse 
 from django.db.models import Q
 from .models import *
@@ -327,18 +328,19 @@ def results(request):
 
 @login_required(login_url='app:login')
 def VerifyRequestView(request):
-    username1 = get_object_or_404(User, username=request.user)
+    username1 = User.objects.get(username=request.user)
     form = AccountVerifyForm()
-    form_username = None
     if request.method == "POST":
         form = AccountVerifyForm(data=request.POST)
         if form.is_valid():
-            form_username = form.save(commit=False)
             form.username = username1
-            form_username.save()
-            return redirect('app:profile', request.user.username)
+            form.save()
+            return redirect('app:success_view')
     
     context={
         "form":form
     }
     return render(request, "pages/settings/verify_request.html", context)
+
+class SuccessView(generic.TemplateView):
+    template_name = "pages/helpers/success.html"
