@@ -10,6 +10,8 @@ edit_btn.addEventListener('click', function () {
 
 update_btn.addEventListener('click', function(){
     if (alert_msg){
+        localStorage.setItem("form_display", 'block')
+    }else{
         localStorage.setItem("form_display", 'none')
     }
 })
