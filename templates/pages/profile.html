@@ -149,7 +149,7 @@
     {% if request.user.username == user_p.username %}
     <form method="post" enctype="multipart/form-data" class="w-25">
       {% if profile_form.errors %}
-      <div id="msg alert-msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;"
+      <div id="msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;"
         role="alert">
         <div id="form_errors">
           {% for key, value in profile_form.errors.items %}
