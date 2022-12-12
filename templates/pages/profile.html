@@ -19,24 +19,6 @@
 
 <body>
   <section class="h-100 gradient-custom-2">
-    {% if profile_form.errors %}
-    <div id="msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;" role="alert">
-      <div id="form_errors">
-        {% for key, value in profile_form.errors.items %}
-        <strong>{{ value }}</strong>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-    {% if user_form.errors %}
-    <div id="msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;" role="alert">
-      <div id="form_errors">
-        {% for key, value in user_form.errors.items %}
-        <strong>{{ value }}, {{ key }}</strong>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col col-lg-9 col-xl-7">
@@ -166,6 +148,26 @@
   <div class="edit_profile_div">
     {% if request.user.username == user_p.username %}
     <form method="post" enctype="multipart/form-data" class="w-25">
+      {% if profile_form.errors %}
+      <div id="msg alert-msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;"
+        role="alert">
+        <div id="form_errors">
+          {% for key, value in profile_form.errors.items %}
+          <strong>{{ value }} {{ key }}</strong>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% if user_form.errors %}
+      <div id="msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;"
+        role="alert">
+        <div id="form_errors">
+          {% for key, value in user_form.errors.items %}
+          <strong>{{ value }}</strong>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
       {% csrf_token %}
       {% load widget_tweaks %}
       {% render_field profile_form.image class="form-control mt-2 mb-2" id="profile_image" %}
