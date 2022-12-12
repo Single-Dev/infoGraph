@@ -133,13 +133,6 @@ def ProfileView(request, username):
 
         user_chart_count = author.chart.count()
 
-        # Pagination
-        chart_list = Chart.objects.all()
-        paginator = Paginator(chart_list, 1) # Show 1 contacts per page.
-        page_number = request.GET.get('tab=chart')
-        page_obj = paginator.get_page(page_number)
-        # Pagination
-
         context = {
             "user_p": user_p,
             "user_following":tab_following,
@@ -149,7 +142,6 @@ def ProfileView(request, username):
             "tab_chart":tab_chart,
             "title":title,
             "user_chart_count":user_chart_count,
-            "page_obj":page_obj
         }
         return render(request, 'pages/profile.html', context)
 

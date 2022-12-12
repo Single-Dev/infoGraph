@@ -19,6 +19,24 @@
 
 <body>
   <section class="h-100 gradient-custom-2">
+    {% if profile_form.errors %}
+    <div id="msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;" role="alert">
+      <div id="form_errors">
+        {% for key, value in profile_form.errors.items %}
+        <strong>{{ value }}</strong>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% if user_form.errors %}
+    <div id="msg" class="alert alert-danger alert-dismissible d-flex" style="justify-content: space-around;" role="alert">
+      <div id="form_errors">
+        {% for key, value in user_form.errors.items %}
+        <strong>{{ value }}, {{ key }}</strong>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col col-lg-9 col-xl-7">
@@ -27,32 +45,37 @@
               <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
                 {% if request.user.username == user_p.username %}
                 <a href="{% url 'app:settings' %}" style="width: 150px; z-index: 1">
-                  <img src="{{ user_p.profile.image.url }}" alt="@{{ user_p.username }}" class="img-fluid img-thumbnail mt-4 mb-2" >
+                  <img src="{{ user_p.profile.image.url }}" alt="@{{ user_p.username }}"
+                    class="img-fluid img-thumbnail mt-4 mb-2">
                 </a>
                 {% else %}
-                <img src="{{ user_p.profile.image.url }}" alt="@{{ user_p.username }}" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
+                <img src="{{ user_p.profile.image.url }}" alt="@{{ user_p.username }}"
+                  class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
                 {% endif %}
-              {% if request.user.username == user_p.username %}
-                    <button type="button" id="edit_btn" class="btn btn-outline-dark" data-mdb-ripple-color="dark" style="z-index: 1;">Edit profile</button>
-              {% else %}
+                {% if request.user.username == user_p.username %}
+                <button type="button" id="edit_btn" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                  style="z-index: 1;">Edit profile</button>
+                {% else %}
                 <form class="w-100" action="{% url 'app:follow' user_p.username %}" method="post" style="z-index: 1;">
                   {% csrf_token %}
-                    {% if user_p in request.user.followers.all %}
-                        <button type="submit" class="btn btn-outline-danger w-100" data-mdb-ripple-color="dark" >Unfollow</button>
-                    {% else %}
-                        <button type="submit" class="btn btn-outline-dark w-100" data-mdb-ripple-color="dark" >Follow</button>
-                    {% endif %}
+                  {% if user_p in request.user.followers.all %}
+                  <button type="submit" class="btn btn-outline-danger w-100"
+                    data-mdb-ripple-color="dark">Unfollow</button>
+                  {% else %}
+                  <button type="submit" class="btn btn-outline-dark w-100" data-mdb-ripple-color="dark">Follow</button>
+                  {% endif %}
                 </form>
-              {% endif %}
+                {% endif %}
               </div>
               <div class="ms-3" style="margin-top: 100px;">
                 <h5>{{ user_p.first_name }}</h5>
                 <h6>{{ user_p.last_name }}</h6>
-                <p> 
-                  <a class="text-light" href="{% url 'app:profile' user_p.username %}" style="text-decoration: none;">@{{ user_p.username }}</a>
-                    {% if user_p.profile.is_verify %}
-                    <i class="bi bi-check-circle-fill"></i>
-                    {% endif %}
+                <p>
+                  <a class="text-light" href="{% url 'app:profile' user_p.username %}"
+                    style="text-decoration: none;">@{{ user_p.username }}</a>
+                  {% if user_p.profile.is_verify %}
+                  <i class="bi bi-check-circle-fill"></i>
+                  {% endif %}
                 </p>
               </div>
               <p class="user_bio">
@@ -105,15 +128,17 @@
               {% for followers in user_followers %}
 
               <div class="user_profile_quick_view" style="margin-top: 10px; margin-bottom: 10px;">
-                <img class="following_profile_img" style="border-radius: 50%;" src="{{ followers.profile.image.url }}" alt="@{{ following.username }}" width="30">
+                <img class="following_profile_img" style="border-radius: 50%;" src="{{ followers.profile.image.url }}"
+                  alt="@{{ following.username }}" width="30">
                 <span>
-                  <a class="text-dark" id="t-none" href="{% url 'app:profile' followers.username %}">@{{followers.username }}</a>
+                  <a class="text-dark" id="t-none"
+                    href="{% url 'app:profile' followers.username %}">@{{followers.username }}</a>
                   {% if followers.profile.is_verify %}
                   <i class="bi bi-check-circle-fill"></i>
                   {% endif %}
                 </span>
               </div>
-              
+
               {% endfor %}
               {% endif %}
               {% if user_following %}
@@ -123,7 +148,8 @@
                 <img class="followers_profile_img" style="border-radius: 50%;" src="{{ following.profile.image.url }}"
                   alt="@{{ following.username }}" width="30">
                 <span>
-                  <a class="text-dark" id="t-none" href="{% url 'app:profile' following.username %}">@{{following.username }}</a>
+                  <a class="text-dark" id="t-none"
+                    href="{% url 'app:profile' following.username %}">@{{following.username }}</a>
                   {% if following.profile.is_verify %}
                   <i class="bi bi-check-circle-fill"></i>
                   {% endif %}
@@ -155,29 +181,7 @@
     </form>
     {% endif %}
   </div>
-  {% for contact in page_obj %}
-    {# Each "contact" is a Contact model object. #}
-    {{ contact.full_name|upper }}<br>
-    ...
-{% endfor %}
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?tab=chart=1">&laquo; first</a>
-            <a href="?tab=chart={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?tab=chart{{ page_obj.next_page_number }}">next</a>
-            <a href="?tab=chart{{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
   <script src="{% static 'js/profile.js' %}"></script>
 </body>
 
