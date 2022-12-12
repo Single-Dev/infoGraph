@@ -19,7 +19,3 @@ update_btn.addEventListener('click', function(){
 setInterval(() => {
     edit_profile_div.style.display = localStorage.form_display
 }, 1);
-
-// form.addEventListener("submit", e => {
-//     e.preventDefault()
-// })
