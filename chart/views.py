@@ -68,7 +68,8 @@ def loginView(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return redirect("app:home")
+                if request.GET['next']==None:
+                    return redirect("app:home")
             else:
                 messages.error(request,"Invalid username or password.")
     else:
@@ -159,7 +160,7 @@ def followToggle(request, author):
 
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
-        return redirect("app:login")
+        return redirect('app:login')
 
 def password_change(request):
     if request.user.is_authenticated:
@@ -307,7 +308,7 @@ def results(request):
         charts = Chart.objects.filter(chart_search)
         user_count = users.count()
         chart_count = charts.count()
-    if len(search) < 3: # bitta harf bilan qidirmaslig uchun
+    if search==None or len(search) < 3: # bitta harf bilan qidirmaslig uchun
         return redirect('app:home')
     context={
         "users":users,

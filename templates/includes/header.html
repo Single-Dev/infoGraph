@@ -16,8 +16,7 @@
                         {% if request.user.is_authenticated %}
                         <li><a href="{% url 'app:profile' request.user.username %}">Profile</a></li>
                         {% endif %}
-                        <li><a href="#">Deep Drop Down 4</a></li>
-                        <li><a href="#">Deep Drop Down 4</a></li>
+                        <li><a href="{% url 'app:new' %}">New</a></li>
                         <li><a href="#">Drop Down 4</a></li>
                         {% if not request.user.is_authenticated %}
                         <li class="dropdown"><a href="#"><span>Scroll</span> <i class="bi bi-chevron-right"></i></a>
