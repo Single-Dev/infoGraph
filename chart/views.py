@@ -67,11 +67,11 @@ def loginView(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
-                if request.GET['next']==None:
-                    return redirect("app:home")
+                messages.info(request, f"Siz {username} orqali ro'yhatdan o'tdingiz.")
+                
+                return redirect("app:home")
             else:
-                messages.error(request,"Invalid username or password.")
+                messages.error(request,"Foydalanuvchi nomi yoki parol xato")
     else:
         # messages.error(request,"Invalid username or password.")
         form = AuthenticationForm()
