@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
@@ -68,8 +68,11 @@ def loginView(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"Siz {username} orqali ro'yhatdan o'tdingiz.")
-                
-                return redirect("app:home")
+                def SuccsesRedirect(self):
+                    if self.next_page:
+                        return resolve_url(self.next_page)
+                    else:
+                        return redirect('app:login')
             else:
                 messages.error(request,"Foydalanuvchi nomi yoki parol xato")
     else:
