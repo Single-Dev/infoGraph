@@ -1,1 +1,9 @@
-SUccsess
+{
+    "is_ok":true,
+    "request_method": "{{ request.method }}",
+    "request_path": "{{ request.path_info }}",
+    "is_authenticated":"{{ request.user.is_authenticated }}"
+    {% if request.user.is_authenticated %},
+    "username": "/{{ request.user.username }}"
+    {% endif %}
+}
