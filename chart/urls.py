@@ -1,5 +1,5 @@
 from django.contrib.auth import views as auth_views
-# from django.contrib.auth.views import LoginView 
+from django.contrib.auth.views import LoginView 
 from django.urls import path
 from .views import *
 app_name = "app"
@@ -7,7 +7,7 @@ app_name = "app"
 urlpatterns = [
     path('', home, name="home"),
     path("signup/", signup, name="signup"),
-    path("login/", loginView.as_view(), name="login"),
+    path("login/", LoginView.as_view(), name="login"),
     path("logout/", logoutView, name="logout"),
     path("settings/delete/user/", deleteUser, name="delete_user"),
     path("<str:username>", ProfileView, name="profile"),

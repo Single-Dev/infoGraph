@@ -58,7 +58,7 @@ def signup(request):
     
     return render(request, 'registration/signup.html', {"form":form})
 
-def loginView(request):
+def loginView(request, self):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -68,11 +68,10 @@ def loginView(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"Siz {username} orqali ro'yhatdan o'tdingiz.")
-                def SuccsesRedirect(self):
-                    if self.next_page:
-                        return resolve_url(self.next_page)
-                    else:
-                        return redirect('app:login')
+                if self.next_page:
+                    return resolve_url(self.next_page)
+                else:
+                    return redirect('app:login')
             else:
                 messages.error(request,"Foydalanuvchi nomi yoki parol xato")
     else:
