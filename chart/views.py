@@ -186,8 +186,8 @@ def settings(request):
 
 @login_required(login_url='app:login')
 def NewChartView(request):
-    user_p = User.objects.get(username=request.user)
-    user = User.objects.get(username=request.user)
+    # user_p = User.objects.get(username=request.user)
+    # user = User.objects.get(username=request.user)
     author = get_object_or_404(User, username=request.user)
     dash = author.chart.all()
     new_dash = None
@@ -200,7 +200,7 @@ def NewChartView(request):
             new_dash.save()
             slug = NewChart.cleaned_data.get('slug')
             return redirect("app:chart", slug) 
-   
+
     context={
         "NewChart":NewChart,
     }
