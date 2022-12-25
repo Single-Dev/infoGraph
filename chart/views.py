@@ -11,7 +11,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.db.models import Avg
 from django.views import generic
-from django.urls import reverse 
+from django.urls import reverse
 from django.db.models import Q
 from .models import *
 from .forms import *
@@ -102,6 +102,7 @@ def ProfileView(request, username):
         tab_chart = None
         tab_following = None
         tab_followers = None
+        pined_charts = None
         if tab == "charts":
             tab_chart = author.chart.all()
             title = "Charts"
@@ -113,6 +114,7 @@ def ProfileView(request, username):
             title = "Followers"
             tab_following = user_p.following.all()
         else:
+            pined_charts = user_p.chart.filter(pin=True)
             title = f"Charts - @{user_p.username}"
 
         # Epdate Profile
@@ -145,6 +147,7 @@ def ProfileView(request, username):
             "tab_chart":tab_chart,
             "title":title,
             "user_chart_count":user_chart_count,
+            "pined_charts":pined_charts
         }
         return render(request, 'pages/profile.html', context)
 

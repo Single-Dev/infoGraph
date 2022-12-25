@@ -27,6 +27,7 @@
         <a href="{% url 'app:chart' chart.slug %}" class="btn btn-outline-dark w-100 mt-1 mb-1">View Chart</a>
         {% csrf_token %}
         {% load widget_tweaks %}
+        <span>Pin: {% render_field update_chart_form.pin %}</span>
         {% render_field update_chart_form.name class="form-control mt-2 mb-1" %}
         {% render_field update_chart_form.chart_type class="form-control mt-2 mb-1" %}
         {% render_field update_chart_form.slug class="form-control mt-2 mb-1" %}

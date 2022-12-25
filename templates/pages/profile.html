@@ -139,6 +139,19 @@
               </div>
               {% endfor %}
               {% endif %}
+              {% if pined_charts %}
+              <div class="mb-5">
+                <p class="lead fw-normal mb-1">Pinned</p>
+                <div class="p-4" style="background-color: #f8f9fa;">
+                  {% for pin_chart in pined_charts %}
+                  <div>
+                    <a class="text-dark" href="{% url 'app:chart' pin_chart.slug %}">{{ pin_chart.name }}</a>
+                    <p>{{ pin_chart.caption }}</p>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
             </div>
           </div>
         </div>

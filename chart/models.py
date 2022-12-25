@@ -37,6 +37,7 @@ class Chart(models.Model):
         (PIE, "Pie Chart"),
         (COLUMN, "Column Chart")
     ]
+    pin = models.BooleanField(default=False)
     author = models.ForeignKey(MyUser, on_delete=models.CASCADE,related_name='chart' )
     name = models.CharField(max_length=150)
     slug = models.SlugField(unique=True)

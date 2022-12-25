@@ -19,7 +19,7 @@ class Registration(UserCreationForm):
 class ChartFrom(forms.ModelForm):
     class Meta:
         model = Chart
-        fields = ("name", "chart_type","slug", "caption")
+        fields = ("name", "chart_type","slug", "caption", "pin")
     
     def clean_slug(self):
         slug = self.cleaned_data.get("slug")
@@ -82,6 +82,11 @@ class ContactUsForm(forms.ModelForm):
     class Meta:
         model = ContactUs
         fields = ["name", "email", "subject", "message"]
+
+class ChartPinForm(forms.ModelForm):
+    class Meta:
+        model = Chart
+        fields = ['pin', ]
 
 class AccountVerifyForm(forms.ModelForm):
     class Meta:
