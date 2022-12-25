@@ -249,6 +249,18 @@ def ChartPinUnpinView(request, slug):
         chart.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+def LikeToggle(request, slug):
+    chart = Chart.objects.get(slug=slug)
+    if request.user.is_authenticated:
+        currentUser = User.objects.get(username=request.user.username)
+        following = chart.like.all()
+        if currentUser.id in following:
+            chart.like.remove(currentUser.id)
+        else:
+            chart.like.add(currentUser.id)
+    else:
+        return redirect('app:login')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def UpdateChartView(request, slug):
     chart = Chart.objects.get(slug=slug)

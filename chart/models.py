@@ -38,6 +38,7 @@ class Chart(models.Model):
         (COLUMN, "Column Chart")
     ]
     pin = models.BooleanField(default=False)
+    like = models.ManyToManyField(MyUser, related_name="likee", symmetrical=False)
     author = models.ForeignKey(MyUser, on_delete=models.CASCADE,related_name='chart' )
     name = models.CharField(max_length=150)
     slug = models.SlugField(unique=True)
