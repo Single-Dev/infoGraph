@@ -16,6 +16,7 @@ urlpatterns = [
     path("settings/", settings, name="settings"),
     path("new/", NewChartView, name="new"),
     path("stats/<slug:slug>/", ChartView, name="chart"),
+    path("pin/<str:slug>/", ChartPinUnpinView, name="chart_pin_unpin"),
     path("edit/<str:slug>/", UpdateChartView, name="update_chart"),
     path("delete/<str:slug>/", deleteChartView, name="delete_chart"),
     path("edit/<str:slug>/<int:pk>", UpdateElementView, name="edit_element"),

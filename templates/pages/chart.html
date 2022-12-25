@@ -35,11 +35,22 @@
   </style>
 
   <div id="chart_about">
-    
     <p>{{ elements_count }} tadan iborat, o'rtacha: {{number_avg.value__avg }}</p>
     {% if request.user.username == chart.author.username %}
     <a class="btn btn-outline-success" href="{% url 'app:update_chart' chart.slug %}">Edit Chart</a>
     {% endif %}
+   {% if chart.author == request.user %}
+   <form action="{% url 'app:chart_pin_unpin' chart.slug %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-primary">
+      {% if chart.pin == True %}
+      unpin
+      {% else %}
+      pin
+      {% endif %}
+    </button>
+  </form>
+   {% endif %}
   </div>
 
   <div id="chartdiv"></div>

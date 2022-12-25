@@ -137,7 +137,7 @@ def ProfileView(request, username):
             profile_form = None
 
         user_chart_count = author.chart.count()
-
+        pined_charts_count = user_p.chart.filter(pin=True).count()
         context = {
             "user_p": user_p,
             "user_following":tab_following,
@@ -147,7 +147,8 @@ def ProfileView(request, username):
             "tab_chart":tab_chart,
             "title":title,
             "user_chart_count":user_chart_count,
-            "pined_charts":pined_charts
+            "pined_charts":pined_charts,
+            "pined_charts_count":pined_charts_count
         }
         return render(request, 'pages/profile.html', context)
 
@@ -211,12 +212,12 @@ def NewChartView(request):
 
 def ChartView(request, slug):
     chart = Chart.objects.get(slug=slug)
+    # ------- add element form ------------ #
     post = get_object_or_404(Chart, slug=slug)
     elements = post.element.all()
     elements_count = post.element.count()
     number_avg = post.element.aggregate(Avg("value"))
     new_element= None
-    # add element form
     if request.method == 'POST':
         comment_form = ElementForm(data=request.POST)
         if comment_form.is_valid():
@@ -226,6 +227,7 @@ def ChartView(request, slug):
             return redirect("app:chart", slug) # redirect to this url
     else:
         comment_form = ElementForm()
+    # ------- add element form ------------ #
     context= {
         'elements': elements,
         'comment_form': comment_form,
@@ -235,6 +237,18 @@ def ChartView(request, slug):
         }
     
     return render(request, "pages/chart.html", context)
+
+@login_required(login_url='app:login')
+def ChartPinUnpinView(request, slug):
+    chart = Chart.objects.get(slug=slug)
+    if chart.author.username == request.user.username:
+        if chart.pin == True:
+            chart.pin = False
+        else:
+            chart.pin = True
+        chart.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 def UpdateChartView(request, slug):
     chart = Chart.objects.get(slug=slug)

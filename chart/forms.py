@@ -83,10 +83,6 @@ class ContactUsForm(forms.ModelForm):
         model = ContactUs
         fields = ["name", "email", "subject", "message"]
 
-class ChartPinForm(forms.ModelForm):
-    class Meta:
-        model = Chart
-        fields = ['pin', ]
 
 class AccountVerifyForm(forms.ModelForm):
     class Meta:
