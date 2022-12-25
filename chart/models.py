@@ -6,6 +6,7 @@ class MyUser(AbstractUser):
     is_organiser = models.BooleanField(default=False)
     is_agent = models.BooleanField(default=False)
     following = models.ManyToManyField("self", blank=True, related_name="followers", symmetrical=False)
+    like = models.ManyToManyField("Chart", related_name="likee", symmetrical=False)
     email_confirmed = models.BooleanField(default=False)
 
 class Profile(models.Model):
@@ -38,7 +39,6 @@ class Chart(models.Model):
         (COLUMN, "Column Chart")
     ]
     pin = models.BooleanField(default=False)
-    like = models.ManyToManyField(MyUser, related_name="likee", symmetrical=False)
     author = models.ForeignKey(MyUser, on_delete=models.CASCADE,related_name='chart' )
     name = models.CharField(max_length=150)
     slug = models.SlugField(unique=True)
