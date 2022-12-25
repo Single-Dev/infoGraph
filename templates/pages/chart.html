@@ -51,6 +51,17 @@
     </button>
   </form>
    {% endif %}
+   <form action="{% url 'app:like' chart.slug %}">
+    ({{ chart.likee.count }})
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-danger">
+      {% if chart in request.user.like.all %}
+      unlike
+      {% else %}
+      like
+      {% endif %}
+    </button>
+  </form>
   </div>
 
   <div id="chartdiv"></div>

@@ -80,6 +80,10 @@
                   <p class="mb-1 h5">{{ user_p.followers.count }}</p>
                   <a href="?tab=following" class="small text-muted mb-0">Following</a>
                 </div>
+                <div class="px-3">
+                  <p class="mb-1 h5">{{ user_p.like.count }}</p>
+                  <a href="?tab=liked" class="small text-muted mb-0">Liked</a>
+                </div>
               </div>
             </div>
             <div class="card-body p-4 text-black">
@@ -88,9 +92,24 @@
                 <p class="lead fw-normal mb-1">Charts</p>
                 <div class="p-4" style="background-color: #f8f9fa;">
                   {% for chart in tab_chart %}
-                  <div>
-                    <a class="text-dark" href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
-                    <p>{{ chart.caption }}</p>
+                  <div class="d-flex">
+                    <div>
+                      <a class="text-dark" href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
+                      <p>{{ chart.caption }}</p>
+                    </div>
+                    <div>
+                      <form action="{% url 'app:like' chart.slug %}">
+                        ({{ chart.likee.count }})
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">
+                          {% if chart in request.user.like.all %}
+                          unlike
+                          {% else %}
+                          like
+                          {% endif %}
+                        </button>
+                      </form>
+                    </div>
                   </div>
                   {% endfor %}
                 </div>
@@ -144,9 +163,48 @@
                 <p class="lead fw-normal mb-1">Pinned ({{ pined_charts_count}})</p>
                 <div class="p-4" style="background-color: #f8f9fa;">
                   {% for pin_chart in pined_charts %}
-                  <div>
-                    <a class="text-dark" href="{% url 'app:chart' pin_chart.slug %}">{{ pin_chart.name }}</a>
-                    <p>{{ pin_chart.caption }}</p>
+                  <div class="d-flex">
+                    <div>
+                      <a class="text-dark" href="{% url 'app:chart' pin_chart.slug %}">{{ pin_chart.name }}</a>
+                      <p>{{ pin_chart.caption }}</p>
+                    </div>
+                    <form action="{% url 'app:like' pin_chart.slug %}">
+                      ({{ pin_chart.likee.count }})
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-outline-danger">
+                        {% if pin_chart in request.user.like.all %}
+                        unlike
+                        {% else %}
+                        like
+                        {% endif %}
+                      </button>
+                    </form>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+              {% if tab_obj %}
+              <div class="mb-5">
+                <p class="lead fw-normal mb-1">Liked</p>
+                <div class="p-4" style="background-color: #f8f9fa;">
+                  {% for liked in tab_obj %}
+                  <div class="d-flex">
+                    <div>
+                      <a class="text-dark" href="{% url 'app:chart' liked.slug %}">{{ liked.name }}</a>
+                      <p>{{ liked.caption }}</p>
+                    </div>
+                    <form action="{% url 'app:like' liked.slug %}">
+                      ({{ liked.likee.count }})
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-outline-danger">
+                        {% if liked in request.user.like.all %}
+                        unlike
+                        {% else %}
+                        like
+                        {% endif %}
+                      </button>
+                    </form>
                   </div>
                   {% endfor %}
                 </div>

@@ -45,7 +45,6 @@ def home(request):
         "following_actions":following_actions,
         "users":users,
         "contact":contact,
-        "test":request.user.like.all()
     }
     return render(request, 'pages/home.html', context)
 
@@ -104,16 +103,20 @@ def ProfileView(request, username):
         tab_following = None
         tab_followers = None
         pined_charts = None
+        tab_obj = None
         if tab == "charts":
             tab_chart = author.chart.all()
             title = "Charts"
         elif tab == "following": # followingda foydalanuvchi uchun followerslar keladi. followersda esa teskarisi
-            tab_followers = user_p.followers.all()
+            tab_followers = user_p.followers.all().order_by('-id')
             title = "Following"
 
         elif tab == "followers":
             title = "Followers"
-            tab_following = user_p.following.all()
+            tab_following = user_p.following.all().order_by('-id')
+        elif tab == "liked":
+            title = "Liked"
+            tab_obj = user_p.like.all().order_by('-id')
         else:
             pined_charts = user_p.chart.filter(pin=True)
             title = f"Charts - @{user_p.username}"
@@ -147,6 +150,7 @@ def ProfileView(request, username):
             "profile_form":profile_form,
             "tab_chart":tab_chart,
             "title":title,
+            "tab_obj":tab_obj,
             "user_chart_count":user_chart_count,
             "pined_charts":pined_charts,
             "pined_charts_count":pined_charts_count
@@ -259,8 +263,7 @@ def LikeToggle(request, slug):
             currentUser.like.add(chart.id)
         else:
             currentUser.like.remove(chart.id)
-        # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-        return redirect("/")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:
         return redirect('app:login')
 
