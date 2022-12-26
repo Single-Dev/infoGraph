@@ -29,3 +29,6 @@
 ![charts](static/images/charts.png)
 ##### `Update` Chart
 ![update chart](static/images/update_charts.png)
+
+##### and others
+###### Also, through this site, creators can pin their diagrams to their profile, users can like or dislike diagrams.

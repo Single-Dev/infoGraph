@@ -4,7 +4,9 @@
     box-sizing: border-box;
 }
 
-
+body{
+    caret-color: transparent;
+}
 
 .card{
     width: 600px;
