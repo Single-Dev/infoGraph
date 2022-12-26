@@ -99,7 +99,6 @@
                     </div>
                     <div>
                       <form action="{% url 'app:like' chart.slug %}">
-                        ({{ chart.likee.count }})
                         {% csrf_token %}
                         <button type="submit" class="btn btn">
                           {% if chart in request.user.like.all %}
@@ -169,7 +168,6 @@
                       <p>{{ pin_chart.caption }}</p>
                     </div>
                     <form action="{% url 'app:like' pin_chart.slug %}">
-                      ({{ pin_chart.likee.count }})
                       {% csrf_token %}
                       <button type="submit" class="btn">
                         {% if pin_chart in request.user.like.all %}
@@ -195,7 +193,6 @@
                       <p>{{ liked.caption }}</p>
                     </div>
                     <form action="{% url 'app:like' liked.slug %}">
-                      ({{ liked.likee.count }})
                       {% csrf_token %}
                       <button type="submit" class="btn">
                         {% if liked in request.user.like.all %}

@@ -13,21 +13,36 @@
                     <div class="users_div">
                     {% if users %}
                         {% for user in users %}
-                        <div id="quick_view">
-                            <img src="{{ user.profile.image.url }}" alt="@{{ user.username }}" width="50"
-                                style="border-radius: 50%;">
-                            <div id="name">
-                                {% if user.first_name %}
-                                <h4 id="first_name">{{ user.first_name }}</h4>
-                                {% endif %}
-                                <div>
-                                    <a class="text-dark" href="{% url 'app:profile' user.username %}">@{{ user.username }}</a>
-                                    {% if user.profile.is_verify %}
-                                    <i class="bi bi-check-circle-fill"></i>
+                        {% if request.user != user %}
+                        <div class="d-flex">
+                            <div id="quick_view">
+                                <img src="{{ user.profile.image.url }}" alt="@{{ user.username }}" width="50"
+                                    style="border-radius: 50%;">
+                                <div id="name">
+                                    {% if user.first_name %}
+                                    <h4 id="first_name">{{ user.first_name }}</h4>
                                     {% endif %}
+                                    <div>
+                                        <a class="text-dark" href="{% url 'app:profile' user.username %}">@{{ user.username }}</a>
+                                        {% if user.profile.is_verify %}
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
+                           
+                            <div>
+                                <form class="w-100" action="{% url 'app:follow' user.username %}" method="post" style="z-index: 1;">
+                                    {% csrf_token %}
+                                    {% if user in request.user.followers.all %}
+                                    <button type="submit" class="btn text-danger">Unfollow</button>
+                                    {% else %}
+                                    <button type="submit" class="btn text-info">Follow</button>
+                                    {% endif %}
+                                  </form>
+                            </div>
                         </div>
+                        {% endif  %}
                         {% endfor %}
                         {% else %}
                         <h1>Topilmadi</h1>
@@ -37,9 +52,22 @@
                     <div class="chart_div">
                     {% if charts %}
                         {% for chart in charts %}
-                        <div>
-                            <a href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
-                            <p>{{ chart.caption }}</p>
+                        <div class="d-flex" >
+                            <div>
+                                <a href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
+                                <p>{{ chart.caption }}</p>
+                            </div>
+                            <form action="{% url 'app:like' chart.slug %}">
+                                ({{ chart.likee.count }})
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn">
+                                  {% if chart in request.user.like.all %}
+                                  <i class="bi bi-star text-danger"></i>
+                                  {% else %}
+                                  <i class="bi bi-star"></i>
+                                  {% endif %}
+                                </button>
+                              </form>
                         </div>
                         {% endfor %}
                         {% else %}
