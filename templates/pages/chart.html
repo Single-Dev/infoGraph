@@ -1,12 +1,18 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ chart.name }}</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -44,9 +50,9 @@
     {% csrf_token %}
     <button type="submit" class="btn btn-outline-primary">
       {% if chart.pin == True %}
-      unpin
+      <i class="bi bi-pin-fill"></i>
       {% else %}
-      pin
+      <i class="bi bi-pin-angle"></i>
       {% endif %}
     </button>
   </form>
@@ -54,11 +60,11 @@
    <form action="{% url 'app:like' chart.slug %}">
     ({{ chart.likee.count }})
     {% csrf_token %}
-    <button type="submit" class="btn btn-outline-danger">
+    <button type="submit" class="btn">
       {% if chart in request.user.like.all %}
-      unlike
+      <i class="bi bi-star text-danger"></i>
       {% else %}
-      like
+      <i class="bi bi-star"></i>
       {% endif %}
     </button>
   </form>
@@ -73,7 +79,7 @@
       {% csrf_token %}
       {% render_field comment_form.title type="text" class="form-control w-25" placeholder="Title"%}
       {% render_field comment_form.value type="number" class="form-control w-25" placeholder="Value"%}
-      <button class="btn btn-outline-success" type="submit">Submit</button>
+      <button class="btn btn-outline-success" type="submit">Add</button>
     </form>
   </div>
   {% else %}
@@ -87,7 +93,6 @@
 
   <!-- Chart code -->
   {% if chart.chart_type == "Pie" %}
-
   <script>
     am5.ready(function() {
 

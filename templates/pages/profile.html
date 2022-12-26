@@ -101,11 +101,11 @@
                       <form action="{% url 'app:like' chart.slug %}">
                         ({{ chart.likee.count }})
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-danger">
+                        <button type="submit" class="btn btn">
                           {% if chart in request.user.like.all %}
-                          unlike
+                          <i class="bi bi-star text-danger"></i>
                           {% else %}
-                          like
+                          <i class="bi bi-star"></i>
                           {% endif %}
                         </button>
                       </form>
@@ -171,11 +171,11 @@
                     <form action="{% url 'app:like' pin_chart.slug %}">
                       ({{ pin_chart.likee.count }})
                       {% csrf_token %}
-                      <button type="submit" class="btn btn-outline-danger">
+                      <button type="submit" class="btn">
                         {% if pin_chart in request.user.like.all %}
-                        unlike
+                        <i class="bi bi-star text-danger"></i>
                         {% else %}
-                        like
+                        <i class="bi bi-star"></i>
                         {% endif %}
                       </button>
                     </form>
@@ -197,11 +197,11 @@
                     <form action="{% url 'app:like' liked.slug %}">
                       ({{ liked.likee.count }})
                       {% csrf_token %}
-                      <button type="submit" class="btn btn-outline-danger">
+                      <button type="submit" class="btn">
                         {% if liked in request.user.like.all %}
-                        unlike
+                        <i class="bi bi-star text-danger"></i>
                         {% else %}
-                        like
+                        <i class="bi bi-star"></i>
                         {% endif %}
                       </button>
                     </form>
