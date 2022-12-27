@@ -8,9 +8,24 @@
         <div class=" d-flex">
           <div class="col-xl-10">
             {% for following in following_actions %}
-            {% for element in following.chart.all %}
-            <h4><a style="text-decoration: none;" href="{% url 'app:profile' element.author.username %}">@{{ element.author.username }}</a></h4>
-            <a style="margin-left: 20px;" href="{% url 'app:chart' element.slug %}">{{ element.name }}</a>
+            {% for chart in following.chart.all %}
+            <div class="d-flex">
+              <div>
+                <h4><a style="text-decoration: none;" href="{% url 'app:profile' chart.author.username %}">@{{ chart.author.username }}</a></h4>
+            <a style="margin-left: 20px;" href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
+              </div>
+            <form action="{% url 'app:like' chart.slug %}">
+              ({{ chart.likee.count }})
+              {% csrf_token %}
+              <button type="submit" class="btn btn">
+                  {% if chart in request.user.like.all %}
+                  <i class="bi bi-star text-danger"></i>
+                  {% else %}
+                  <i class="bi bi-star"></i>
+                  {% endif %}
+              </button>
+          </form>
+            </div>
             {% endfor %}
             {% endfor %}
           </div>

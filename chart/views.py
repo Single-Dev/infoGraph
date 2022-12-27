@@ -330,7 +330,7 @@ def handler404(request, exception):
 def handler500(request, *args, **argv):
     return render(request, 'pages/helpers/404.html')
 
-def results(request):
+def SearchView(request):
     search = None
     users = None
     charts = None
@@ -339,7 +339,7 @@ def results(request):
     if 'q' in request.GET:
         search = request.GET['q']
         user_search = Q(Q(username__icontains=search))
-        chart_search = Q(Q(slug__icontains=search))
+        chart_search = Q(Q(slug__icontains=search)) | Q(Q(name__icontains=search))
         users = User.objects.filter(user_search)
         charts = Chart.objects.filter(chart_search)
         user_count = users.count()
@@ -351,7 +351,8 @@ def results(request):
         "charts":charts,
         "user_count":user_count,
         "chart_count":chart_count,
-        "search":search
+        "all_result_count": user_count + chart_count,
+        "search":search,
     }
     return render(request, "pages/result.html", context)
 
