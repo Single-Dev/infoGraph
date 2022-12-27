@@ -1,82 +1,90 @@
 {% extends 'layout/base.html' %}
-{% block title %}Search{% endblock title %}
+{% block title %}Search {{ search }}{% endblock title %}
 {% block content %}
-<main id="main">
-    <section class="inner-page">
-        <div class="container">
-            <div class=" d-flex">
-                <div class="col-xl-5 card">
-                    <div class="d-flex">
-                        <div class="activate_1" id="users_count_div">users <span>{{ user_count }}</span></div>
-                        <div id="charts_count_div">charts <span>{{ chart_count }}</span></div>
-                    </div>
-                    <div class="users_div">
-                    {% if users %}
-                        {% for user in users %}
-                        {% if request.user != user %}
-                        <div class="d-flex">
-                            <div id="quick_view">
-                                <img src="{{ user.profile.image.url }}" alt="@{{ user.username }}" width="50"
-                                    style="border-radius: 50%;">
-                                <div id="name">
-                                    {% if user.first_name %}
-                                    <h4 id="first_name">{{ user.first_name }}</h4>
-                                    {% endif %}
-                                    <div>
-                                        <a class="text-dark" href="{% url 'app:profile' user.username %}">@{{ user.username }}</a>
-                                        {% if user.profile.is_verify %}
-                                        <i class="bi bi-check-circle-fill"></i>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                           
+
+<section class="inner-page">
+    <div class="container" data-aos="fade-up">
+
+        <ul id="portfolio-flters" class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter=".filter-user" id="tugma">Users {{ user_count }}</li>
+            <li data-filter=".filter-chart" id="tugma">Charts {{ chart_count }}</li>
+        </ul>
+
+        <div class="portfolio-container"  data-aos="fade-up" data-aos-delay="200">
+            <div id="results_div">
+                
+            <div class="col-lg-4 col-md-6 portfolio-item filter-user">
+                <h3>Users</h3>
+                {% if users %}
+                {% for user in users %}
+                {% if request.user != user %}
+                <div class="d-flex">
+                    <div id="quick_view">
+                        <img src="{{ user.profile.image.url }}" alt="@{{ user.username }}" width="50"
+                            style="border-radius: 50%;">
+                        <div id="name">
+                            {% if user.first_name %}
+                            <h4 id="first_name">{{ user.first_name }}</h4>
+                            {% endif %}
                             <div>
-                                <form class="w-100" action="{% url 'app:follow' user.username %}" method="post" style="z-index: 1;">
-                                    {% csrf_token %}
-                                    {% if user in request.user.followers.all %}
-                                    <button type="submit" class="btn text-danger">Unfollow</button>
-                                    {% else %}
-                                    <button type="submit" class="btn text-info">Follow</button>
-                                    {% endif %}
-                                  </form>
+                                <a class="text-dark" href="{% url 'app:profile' user.username %}">@{{ user.username}}</a>
+                                {% if user.profile.is_verify %}
+                                <i class="bi bi-check-circle-fill"></i>
+                                {% endif %}
                             </div>
                         </div>
-                        {% endif  %}
-                        {% endfor %}
-                        {% else %}
-                        <h1>Topilmadi</h1>
-                        {% endif %}
                     </div>
 
-                    <div class="chart_div">
-                    {% if charts %}
-                        {% for chart in charts %}
-                        <div class="d-flex" >
-                            <div>
-                                <a href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
-                                <p>{{ chart.caption }}</p>
-                            </div>
-                            <form action="{% url 'app:like' chart.slug %}">
-                                ({{ chart.likee.count }})
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn">
-                                  {% if chart in request.user.like.all %}
-                                  <i class="bi bi-star text-danger"></i>
-                                  {% else %}
-                                  <i class="bi bi-star"></i>
-                                  {% endif %}
-                                </button>
-                              </form>
-                        </div>
-                        {% endfor %}
-                        {% else %}
-                        <h1>Topilmadi</h1>
-                        {% endif %}
+                    <div>
+                        <form class="w-100" action="{% url 'app:follow' user.username %}" method="post"
+                            style="z-index: 1;">
+                            {% csrf_token %}
+                            {% if user in request.user.followers.all %}
+                            <button type="submit" class="btn text-danger">Unfollow</button>
+                            {% else %}
+                            <button type="submit" class="btn text-info">Follow</button>
+                            {% endif %}
+                        </form>
                     </div>
                 </div>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <h1>Topilmadi</h1>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4 col-md-6 portfolio-item filter-chart">
+                <h3>Charts</h3>
+                {% if charts %}
+                {% for chart in charts %}
+                <div class="d-flex">
+                    <div>
+                        <a href="{% url 'app:chart' chart.slug %}">{{ chart.name }}</a>
+                        <p>{{ chart.caption }}</p>
+                    </div>
+                    <form action="{% url 'app:like' chart.slug %}">
+                        ({{ chart.likee.count }})
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn">
+                            {% if chart in request.user.like.all %}
+                            <i class="bi bi-star text-danger"></i>
+                            {% else %}
+                            <i class="bi bi-star"></i>
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h1>Topilmadi</h1>
+                {% endif %}
+            </div>
             </div>
         </div>
-    </section>
-</main>
+
+    </div>
+</section>
+
+
 {% endblock content %}
