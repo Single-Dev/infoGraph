@@ -62,5 +62,14 @@ def ChartApiView(request):
     return Response(serializer.data)
 # ----------------------------- Get Charts
 
+# ----------------------------- View Chart
+@api_view(["GET"])
+@permission_classes((permissions.AllowAny, ))
+def SingleChartApi(request, slug):
+    chart = Chart.objects.get(slug=slug)
+    serializer = ChartAPi(chart, many=False)
+    return Response(serializer.data)
+
+# ----------------------------- View Chart
 
 # ----------------------------- Charts API ----------------------------- #
