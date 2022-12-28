@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chart',
+    "API",
     'rest_framework',
+
 
     'widget_tweaks'
 ]
