@@ -253,6 +253,34 @@
   </div>
 
   <script src="{% static 'js/profile.js' %}"></script>
+  <!-- <script src="{% static 'js/jquery.min.js' %}"></script> -->
+  <script>
+    // $(document).ready(function () {
+    //         $('form').on('submit', function (event) {
+    //             event.preventDefault();
+                      
+    //             let userinfo = $(this).serializeArray();
+    //             let user = {};
+    //             userinfo.forEach((value) => {
+
+    //                 // Dynamically create an object
+    //                 user[value.name] = value.value;
+    //             });
+    //             let url = "https://reqres.in/api/users";
+    //             $.ajax({
+    //                 method: "POST",
+    //                 url: url,
+    //                 data: user
+    //             }).done(function (msg) {
+
+    //                 // When the request is successful
+    //                 $('span').text('user is successfully created with Id ' + msg.id);
+    //             }).fail(function (err, textstatus, error) {
+    //                 $('span').text(textstatus);
+    //             });
+    //         });
+    //     });
+</script>
 </body>
 
 </html>
