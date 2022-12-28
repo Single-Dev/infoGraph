@@ -344,7 +344,7 @@ def SearchView(request):
         charts = Chart.objects.filter(chart_search)
         user_count = users.count()
         chart_count = charts.count()
-    if search==None or len(search) < 3: # bitta harf bilan qidirmaslig uchun
+    if search==None or len(search) < 3: # 3ta harfdan kam qidira olmaydi
         return redirect('app:home')
     context={
         "users":users,
