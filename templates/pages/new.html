@@ -38,11 +38,13 @@
         <div class="d-flex" style="align-items: center;">
             <span id="doclochref" style="margin-right: 15px;">doclochref</span>
             {% render_field NewChart.slug type="text" class="form-control mt-2 mb-2" placeholder="Public Url" id="slug"%}
+            <span id="res_msg"></span>
         </div>
         {% render_field NewChart.caption class="form-control mt-2 mb-2" placeholder="Chart Caption"  %}
         <button type="submit" class="w-100 btn btn-outline-info">Create New Chart</button>
     </form>
     
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/check-slug.js' %}"></script>
 </body>
 </html>
