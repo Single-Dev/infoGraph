@@ -15,3 +15,14 @@ class ChartAPi(serializers.ModelSerializer):
     class Meta:
         model = Chart
         fields = ("id", "author","name", "slug", "caption", "chart_type", "created_on",)
+
+# Element API
+class ElementApi(serializers.ModelSerializer):
+    class Meta:
+        model = Element
+        fields = ("id","post", "title", "value")
+
+class ContactUsApi(serializers.ModelSerializer):
+    class Meta:
+        model = ContactUs
+        fields = ("id", "name", "email", "subject", "message", "is_view")

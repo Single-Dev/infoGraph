@@ -73,3 +73,17 @@ def SingleChartApi(request, slug):
 # ----------------------------- View Chart
 
 # ----------------------------- Charts API ----------------------------- #
+# ----------------------------- Chart Element API ----------------------------- #
+# ----------------------------- View Element
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def ElementApiView(request):
+    elem = Element.objects.all()
+    serializer = ElementApi(elem, many=True)
+    return Response(serializer.data)
+
+# ----------------------------- View Element
+
+
+# ----------------------------- Chart Element API ----------------------------- #

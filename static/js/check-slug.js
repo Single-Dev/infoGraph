@@ -37,7 +37,7 @@ function show(data) {
             if(slug_input.value != ""){
                 if(slug_input.value == chart.slug){
                     alert("Bu slug band")
-                    slug_input.value += "894545"
+                    slug_input.value += "1"
                 }
             }
         }, 1);

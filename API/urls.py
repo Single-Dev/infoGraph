@@ -10,5 +10,6 @@ urlpatterns =[
     path('update-user/<int:pk>', UpdateUserViaApi, name="update_user"),
     path('<str:username>', SingleUserApi, name="single_user"),
     path('charts/', ChartApiView, name="charts"),
-    path("chart/<str:slug>/", SingleChartApi, name="single_chart")
+    path("chart/<str:slug>/", SingleChartApi, name="single_chart"),
+    path("elements/", ElementApiView, name="elems")
 ]
