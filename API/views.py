@@ -13,24 +13,23 @@ def home(request):
     return render(request, 'pages/home.html')
 
 # ----------------------------- Users API ----------------------------- #
-
-# users get data
+# ----------------------------- Users Api View
 @api_view(["GET"])
 @permission_classes((permissions.AllowAny, ))
 def UsersApiView(request):
     user = User.objects.all()
     serializer = UsersApi(user, many=True)
     return Response(serializer.data)
-
-# View User
+# ----------------------------- Users Api View
+# ----------------------------- View User
 @api_view(["GET"])
 @permission_classes((permissions.AllowAny, ))
 def SingleUserApi(request, username):
     user = User.objects.get(username=username)
     serializer = UsersApi(user, many=False)
     return Response(serializer.data)
-
-# Creat User via API
+# ----------------------------- View User
+# ----------------------------- Creat User via API
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny, ))
 def CreateUserViaApi(request):
@@ -38,8 +37,8 @@ def CreateUserViaApi(request):
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
-
-# Update User via API
+# ----------------------------- Creat User via API
+# ----------------------------- Update User via API
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
 def UpdateUserViaApi(request, pk):
@@ -49,9 +48,9 @@ def UpdateUserViaApi(request, pk):
         if request.user.id == user_data.id:
             serializer.save()
     return Response(serializer.data)
-
-
+# ----------------------------- Update User via API
 # ----------------------------- Users API ----------------------------- #
+
 # ----------------------------- Charts API ----------------------------- #
 # ----------------------------- Get Charts
 @api_view(['GET'])
@@ -61,7 +60,6 @@ def ChartApiView(request):
     serializer = ChartAPi(chart, many=True)
     return Response(serializer.data)
 # ----------------------------- Get Charts
-
 # ----------------------------- View Chart
 @api_view(["GET"])
 @permission_classes((permissions.AllowAny, ))
@@ -71,10 +69,10 @@ def SingleChartApi(request, slug):
     return Response(serializer.data)
 
 # ----------------------------- View Chart
-
 # ----------------------------- Charts API ----------------------------- #
-# ----------------------------- Chart Element API ----------------------------- #
-# ----------------------------- View Element
+
+# ----------------------------- Chart.Element API ----------------------------- #
+# ----------------------------- View Elements
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
@@ -83,7 +81,44 @@ def ElementApiView(request):
     serializer = ElementApi(elem, many=True)
     return Response(serializer.data)
 
-# ----------------------------- View Element
+# ----------------------------- View Elements
+# ----------------------------- Chart.Element API ----------------------------- #
 
+# ----------------------------- ContactUs API ----------------------------- #
+# ----------------------------- View Requests
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def ContactUsApiView(request):
+    requests = ContactUs.objects.all()
+    serializer = ContactUsApi(requests, many=True)
+    return Response(serializer.data)
+# ----------------------------- View Requests
+# ----------------------------- View Request
+@api_view(["GET"])
+@permission_classes((permissions.AllowAny, ))
+def SingleRequestApi(request, pk):
+    request_ = ContactUs.objects.get(id=pk)
+    serializer = ContactUsApi(request_, many=False)
+    return Response(serializer.data)
+# ----------------------------- View Request
+# ----------------------------- Create Request
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny, ))
+def CreateRequestViaApi(request):
+    serializer = ContactUsApi(data=request.data) 
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+# ----------------------------- Create Request
+# ----------------------------- Update Request
+@api_view(["POST"])
+@permission_classes((permissions.AllowAny, ))
+def UpdateRequestApi(request, pk):
+    request_ = ContactUs.objects.get(id=pk)
+    serializer = ContactUsApi(instance=request_, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+# ----------------------------- Update Request
+# ----------------------------- ContactUs API ----------------------------- #
 
-# ----------------------------- Chart Element API ----------------------------- #

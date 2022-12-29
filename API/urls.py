@@ -11,5 +11,9 @@ urlpatterns =[
     path('<str:username>', SingleUserApi, name="single_user"),
     path('charts/', ChartApiView, name="charts"),
     path("chart/<str:slug>/", SingleChartApi, name="single_chart"),
-    path("elements/", ElementApiView, name="elems")
+    path("elements/", ElementApiView, name="elems"),
+    path("requests/", ContactUsApiView, name="contact"),
+    path("create-request/", CreateRequestViaApi, name="create_request"),
+    path("requests/<int:pk>/", SingleRequestApi, name="request"),
+    path("update-requests/<int:pk>/", UpdateRequestApi, name="request"),
 ]
