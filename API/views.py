@@ -1,12 +1,10 @@
 from django.shortcuts import render
 from API.serializers import *
-from django.contrib.auth import get_user_model
-User = get_user_model()
-
-#rest_framework
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import permissions, filters, generics
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 def home(request):
@@ -32,8 +30,8 @@ def SingleUserApi(request, username):
 # ----------------------------- Creat User via API
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny, ))
-def CreateUserViaApi(request):
-    serializer = UsersApi(data=request.data) 
+def CreateUserViaApiView(request):
+    serializer = CreateUserViaApi(data=request.data) 
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
@@ -61,7 +59,7 @@ def UpdateUserViaApi(request, pk):
 # ----------------------------- Get Profile data
 @api_view(["GET"])
 @permission_classes((permissions.AllowAny, ))
-def ProfileApiView(request):
+def ProfilesApiView(request):
     profiles = Profile.objects.all()
     serializer = ProfileApi(profiles, many=True)
     return Response(serializer.data)
