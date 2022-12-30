@@ -9,6 +9,12 @@ class UsersApi(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "username","email", "first_name", "last_name", "is_organiser", "is_agent",)
+# User Profile
+class ProfileApi(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['id', 'custom_user', 'image', 'bio', 'is_verify', ]
+
 
 # Chart API
 class ChartAPi(serializers.ModelSerializer):

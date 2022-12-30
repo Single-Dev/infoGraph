@@ -36,7 +36,9 @@ def CreateUserViaApi(request):
     serializer = UsersApi(data=request.data) 
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
+        return Response(serializer.data)
+    else:
+        return Response({"err": "saqlanmadi. Nimadir xato ketdi"})
 # ----------------------------- Creat User via API
 # ----------------------------- Update User via API
 @api_view(['POST'])
@@ -47,9 +49,32 @@ def UpdateUserViaApi(request, pk):
     if serializer.is_valid():
         if request.user.id == user_data.id:
             serializer.save()
-    return Response(serializer.data)
+            return Response(serializer.data)
+        else:
+            return Response({"err": "Siz bu hisob egasi emassiz."})
+    else:
+        return Response({"err": "saqlanmadi. Nimadir xato ketdi"})
 # ----------------------------- Update User via API
 # ----------------------------- Users API ----------------------------- #
+
+# ----------------------------- Profile API ----------------------------- #
+# ----------------------------- Get Profile data
+@api_view(["GET"])
+@permission_classes((permissions.AllowAny, ))
+def ProfileApiView(request):
+    profiles = Profile.objects.all()
+    serializer = ProfileApi(profiles, many=True)
+    return Response(serializer.data)
+# ----------------------------- Get Profile data
+# ----------------------------- Single Profile View
+@api_view(["GET"])
+@permission_classes((permissions.AllowAny, ))
+def SingleProfileApiView(request, pk):
+    profile = Profile.objects.get(id=pk)
+    serializer = ProfileApi(profile, many=False)
+    return Response(serializer.data)
+# ----------------------------- Single Profile View
+# ----------------------------- Profile API ----------------------------- #
 
 # ----------------------------- Charts API ----------------------------- #
 # ----------------------------- Get Charts
