@@ -12,12 +12,12 @@ def home(request):
 
 # ----------------------------- Users API ----------------------------- #
 # ----------------------------- Users Api View
-@api_view(["GET"])
-@permission_classes((permissions.AllowAny, ))
-def UsersApiView(request):
-    user = User.objects.all()
-    serializer = UsersApi(user, many=True)
-    return Response(serializer.data)
+# @api_view(["GET"])
+# @permission_classes((permissions.AllowAny, ))
+# def UsersApiView(request):
+#     user = User.objects.all()
+#     serializer = UsersApi(user, many=True)
+#     return Response(serializer.data)
 # ----------------------------- Users Api View
 # ----------------------------- View User
 @api_view(["GET"])
@@ -53,6 +53,13 @@ def UpdateUserViaApi(request, pk):
     else:
         return Response({"err": "saqlanmadi. Nimadir xato ketdi"})
 # ----------------------------- Update User via API
+# ----------------------------- Search Users via API
+class UserSearchViaApiView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UsersApi
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["username", "email", "first_name"]
+# ----------------------------- Search Users via API
 # ----------------------------- Users API ----------------------------- #
 
 # ----------------------------- Profile API ----------------------------- #
