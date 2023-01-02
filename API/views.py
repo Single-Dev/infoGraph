@@ -83,12 +83,12 @@ def SingleProfileApiView(request, pk):
 
 # ----------------------------- Charts API ----------------------------- #
 # ----------------------------- Get Charts
-@api_view(['GET'])
-@permission_classes((permissions.AllowAny,))
-def ChartApiView(request):
-    chart = Chart.objects.all()
-    serializer = ChartAPi(chart, many=True)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# @permission_classes((permissions.AllowAny,))
+# def ChartApiView(request):
+#     chart = Chart.objects.all()
+#     serializer = ChartAPi(chart, many=True)
+#     return Response(serializer.data)
 # ----------------------------- Get Charts
 # ----------------------------- View Chart
 @api_view(["GET"])
@@ -99,6 +99,13 @@ def SingleChartApi(request, slug):
     return Response(serializer.data)
 
 # ----------------------------- View Chart
+# ----------------------------- Search Chart
+class ChartSearchViaApiView(generics.ListAPIView):
+    queryset = Chart.objects.all()
+    serializer_class = ChartAPi
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["slug", "name",]
+# ----------------------------- Search Chart
 # ----------------------------- Charts API ----------------------------- #
 
 # ----------------------------- Chart.Element API ----------------------------- #
