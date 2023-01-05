@@ -6,7 +6,6 @@ app_name = "api"
 urlpatterns =[
     path('', home, name="home"),
     path("profiles/", ProfilesApiView, name="profile"),
-    path('create-user/', CreateUserViaApiView, name="create_user"),
     path('update-user/<int:pk>', UpdateUserViaApi, name="update_user"),
     path('profile/<int:pk>', SingleProfileApiView, name="profile_id"),
     path('<str:username>', SingleUserApi, name="single_user"),

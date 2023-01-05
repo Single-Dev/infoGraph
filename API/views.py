@@ -11,14 +11,6 @@ def home(request):
     return render(request, 'pages/home.html')
 
 # ----------------------------- Users API ----------------------------- #
-# ----------------------------- Users Api View
-# @api_view(["GET"])
-# @permission_classes((permissions.AllowAny, ))
-# def UsersApiView(request):
-#     user = User.objects.all()
-#     serializer = UsersApi(user, many=True)
-#     return Response(serializer.data)
-# ----------------------------- Users Api View
 # ----------------------------- View User
 @api_view(["GET"])
 @permission_classes((permissions.AllowAny, ))
@@ -27,17 +19,6 @@ def SingleUserApi(request, username):
     serializer = UsersApi(user, many=False)
     return Response(serializer.data)
 # ----------------------------- View User
-# ----------------------------- Creat User via API
-@api_view(['POST'])
-@permission_classes((permissions.AllowAny, ))
-def CreateUserViaApiView(request):
-    serializer = CreateUserViaApi(data=request.data) 
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    else:
-        return Response({"err": "saqlanmadi. Nimadir xato ketdi"})
-# ----------------------------- Creat User via API
 # ----------------------------- Update User via API
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
@@ -82,14 +63,6 @@ def SingleProfileApiView(request, pk):
 # ----------------------------- Profile API ----------------------------- #
 
 # ----------------------------- Charts API ----------------------------- #
-# ----------------------------- Get Charts
-# @api_view(['GET'])
-# @permission_classes((permissions.AllowAny,))
-# def ChartApiView(request):
-#     chart = Chart.objects.all()
-#     serializer = ChartAPi(chart, many=True)
-#     return Response(serializer.data)
-# ----------------------------- Get Charts
 # ----------------------------- View Chart
 @api_view(["GET"])
 @permission_classes((permissions.AllowAny, ))
