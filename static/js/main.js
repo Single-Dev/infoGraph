@@ -2,7 +2,7 @@ let msg = document.getElementById("msg")
 let make_msg_none = document.getElementById("make_msg_none")
 
 let doclochref = document.getElementById("doclochref")
-doclochref.innerHTML = `${document.location.host}/chart/`
+doclochref.innerHTML = `${document.location.origin}/chart/`
 
 function noneFun() {
     msg.classList.add("d-none")
