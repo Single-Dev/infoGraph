@@ -121,7 +121,7 @@ def ProfileView(request, username):
             pined_charts = user_p.chart.filter(pin=True)
             title = f"Charts - @{user_p.username}"
 
-        # Epdate Profile
+        # Update Profile
         if request.user.is_authenticated:
             user_form = UpdateUserForm(instance=request.user)
             profile_form = UpdateProfileForm(instance=request.user.profile)
