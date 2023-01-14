@@ -48,15 +48,11 @@ def home(request):
     }
     return render(request, 'pages/home.html', context)
 
-def signup(request):
-    form = Registration()
-    if request.method == "POST":
-        form = Registration(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('app:login')
-    
-    return render(request, 'registration/signup.html', {"form":form})
+class CreateAccountView(generic.CreateView):
+    template_name = 'registration/signup.html'
+    form_class = Registration
+    def get_success_url(self):
+        return reverse("base:login")
 
 def loginView(request, self):
     if request.method == "POST":
