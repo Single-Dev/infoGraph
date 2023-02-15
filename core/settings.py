@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-m#l7g5g3i&+2p928smyen%czx-o!m8x*si(!=i4u9)9jdo@24r
 # DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'chart',
     "API",
     'rest_framework',
+    "corsheaders",
 
 
     'widget_tweaks'
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
