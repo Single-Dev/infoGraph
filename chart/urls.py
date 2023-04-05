@@ -1,4 +1,3 @@
-from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView 
 from django.urls import path
 from .views import *
@@ -24,9 +23,6 @@ urlpatterns = [
     path("edit/<str:slug>/<int:pk>", UpdateElementView, name="edit_element"),
     path("delete/<str:slug>/<int:pk>", deleteElementView, name="delete_element"),
     path("result/", SearchView, name="results"),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='pages/settings/password_resest_done.html'), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="pages/settings/password_reset_confirm.html"), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='pages/settings/password_reset_complete.html'), name='password_reset_complete'),      
     path("settings/verify-request/", VerifyRequestView, name="verify_request_view"),
     path("submit-success/", SuccessView.as_view(), name="success_view"),
 ]
