@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+#tugma{
+    list-style: none;
+    margin-left: 15px;
+    padding: 5px 25px;
+    border-radius: 15px;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+#results_div{
+    display: flex;
+    justify-content: center;
+}
+
+.card{
+    width: 600px;
+    padding: 15px 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card span{
+    padding: 0px 5px;
+    background-color: rgba(23, 26, 29, 0.8);
+    border-radius: 15px;
+    color: #fff;
+}
+
+#users_count_div{
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+#charts_count_div{
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.chart_div{
+    display: none;
+}
+
+.activate_1{
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+#quick_view{
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#quick_view #name{
+    margin-left: 20px;
+}
+
+#quick_view #name #first_name{
+    margin-bottom: -8px;
+}

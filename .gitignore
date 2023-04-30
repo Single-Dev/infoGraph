@@ -1,5 +1,5 @@
 .venv
 desktop.ini
 media
-staicfiles
+# staicfiles
 db.sqlite3

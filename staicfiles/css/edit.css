@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+}
+
+#modal{
+    position: absolute;
+    display: none;
+}
+
+.icon{
+    margin-left: 1020px;
+    margin-top: 10px;
+    color: red;
+    cursor: pointer;
+    font-size: 40px;
+}
