@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-m#l7g5g3i&+2p928smyen%czx-o!m8x*si(!=i4u9)9jdo@24r
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh', '*']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
@@ -46,12 +46,12 @@ INSTALLED_APPS = [
     'widget_tweaks'
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_USE_TSL = True
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "bekzodbek06062006@gmail.com"
-EMAIL_HOST_PASSWORD = "Password2006"
-EMAIL_PORT = 587
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_USE_TSL = True
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_HOST_USER = "bekzodbek06062006@gmail.com"
+# EMAIL_HOST_PASSWORD = "Password2006"
+# EMAIL_PORT = 587
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
